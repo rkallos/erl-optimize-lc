@@ -1,0 +1,969 @@
+module 'lc_tests' ['function_param_lc'/2,
+		   'intermediary_list'/1,
+		   'intermediary_list2'/1,
+		   'intermediary_list3'/1,
+		   'make_n'/2,
+		   'module_info'/0,
+		   'module_info'/1,
+		   'nested_lc_gen'/1,
+		   'pen'/1,
+		   'pen2'/1,
+		   'random'/1,
+		   'random_bin'/1,
+		   'random_test_records'/2,
+		   'record_extract'/1,
+		   'rng'/2,
+		   'ses'/1,
+		   'single_filter'/1,
+		   'sorted_gen'/1,
+		   'ss'/1,
+		   'stats'/0,
+		   'test'/2]
+    attributes []
+'random'/1 =
+    %% Line 14
+    fun (_cor0) ->
+	let <_cor1> =
+	    %% Line 15
+	    call 'erlang':'length'
+		(_cor0)
+	in  let <_cor2> =
+		%% Line 15
+		call 'random':'uniform'
+		    (_cor1)
+	    in  %% Line 15
+		call 'lists':'nth'
+		    (_cor2, _cor0)
+'random_bin'/1 =
+    %% Line 17
+    fun (_cor0) ->
+	let <_cor7> =
+	    %% Line 18
+	    ( letrec
+		  'lc$^0'/1 =
+		      fun (_cor4) ->
+			  case _cor4 of
+			    <[_cor9|_cor2]> when 'true' ->
+				let <_cor5> =
+				    call 'random':'uniform'
+					(255)
+				in  let <_cor6> =
+					apply 'lc$^0'/1
+					    (_cor2)
+				    in  ( [_cor5|_cor6]
+					  -| ['compiler_generated'] )
+			    <[]> when 'true' ->
+				[]
+			    ( <_cor4> when 'true' ->
+				  ( primop 'match_fail'
+					({'function_clause',_cor4})
+				    -| [{'function_name',{'lc$^0',1}}] )
+			      -| ['compiler_generated'] )
+			  end
+	      in  let <_cor3> =
+		      call 'lists':'seq'
+			  (1, _cor0)
+		  in  apply 'lc$^0'/1
+			  (_cor3)
+	      -| ['list_comprehension'] )
+	in  %% Line 18
+	    call 'erlang':'list_to_binary'
+		(_cor7)
+'rng'/2 =
+    %% Line 20
+    fun (_cor1,_cor0) ->
+	case <_cor1,_cor0> of
+	  <0,_X_N> when 'true' ->
+	      []
+	  %% Line 21
+	  <Length,N> when 'true' ->
+	      let <_cor2> =
+		  %% Line 22
+		  call 'random':'uniform'
+		      (N)
+	      in  let <_cor3> =
+		      %% Line 22
+		      call 'erlang':'-'
+			  (Length, 1)
+		  in  let <_cor4> =
+			  %% Line 22
+			  apply 'rng'/2
+			      (_cor3, N)
+		      in  %% Line 22
+			  [_cor2|_cor4]
+	end
+'random_test_records'/2 =
+    %% Line 24
+    fun (_cor1,_cor0) ->
+	case <_cor1,_cor0> of
+	  <0,_X_N> when 'true' ->
+	      []
+	  %% Line 25
+	  <Length,N> when 'true' ->
+	      let <_cor3> =
+		  %% Line 26
+		  call 'random':'uniform'
+		      (N)
+	      in  let <_cor2> =
+		      %% Line 26
+		      call 'random':'uniform'
+			  (N)
+		  in  let <_cor4> =
+			  %% Line 27
+			  call 'erlang':'-'
+			      (Length, 1)
+		      in  let <_cor5> =
+			      %% Line 27
+			      apply 'random_test_records'/2
+				  (_cor4, N)
+			  in  %% Line 26
+			      [{'test_record',_cor3,_cor2}|_cor5]
+	end
+'stats'/0 =
+    %% Line 32
+    fun () ->
+	['memory'|['heap_size'|['total_heap_size'|['stack_size'|['garbage_collection']]]]]
+'test'/2 =
+    %% Line 34
+    fun (_cor1,_cor0) ->
+	case <_cor1,_cor0> of
+	  <Fn,Args>
+	      when call 'erlang':'is_list'
+		    (Args) ->
+	      let <_cor9> =
+		  %% Line 36
+		  ( fun () ->
+			%% Line 37
+			receive
+			  %% Line 38
+			  <{Parent,_cor14}>
+			      when call 'erlang':'=:='
+				    (_cor14,
+				     Args) ->
+			      let <_cor3> =
+				  %% Line 40
+				  call 'erlang':'self'
+				      ()
+			      in  let <_cor2> =
+				      %% Line 40
+				      apply 'stats'/0
+					  ()
+				  in  let <Before> =
+					  %% Line 40
+					  call 'erlang':'process_info'
+					      (_cor3, _cor2)
+				      in  do  %% Line 41
+					      call 'erlang':'apply'
+						  (Fn, Args)
+					      let <_cor6> =
+						  %% Line 43
+						  call 'erlang':'self'
+						      ()
+					      in  let <_cor5> =
+						      %% Line 43
+						      apply 'stats'/0
+							  ()
+						  in  let <After> =
+							  %% Line 43
+							  call 'erlang':'process_info'
+							      (_cor6, _cor5)
+						      in  let <_cor8> =
+							      %% Line 44
+							      call 'erlang':'self'
+								  ()
+							  in  %% Line 44
+							      call 'erlang':'!'
+								  (Parent, {_cor8,Before,After})
+			after 'infinity' ->
+			  'true'
+		    -| [{'id',{0,0,'-test/2-fun-0-'}}] )
+	      in  let <Pid> =
+		      %% Line 35
+		      call 'erlang':'spawn'
+			  (_cor9)
+		  in  let <_cor11> =
+			  %% Line 48
+			  call 'erlang':'self'
+			      ()
+		      in  do  %% Line 48
+			      call 'erlang':'!'
+				  (Pid, {_cor11,Args})
+			      %% Line 49
+			      receive
+				%% Line 50
+				<{Cid,B,A}> when 'true' ->
+				    call 'io':'format'
+					([126|[112|[126|[110]]]], [{Cid,B,A}|[]])
+			      after 'infinity' ->
+				'true'
+	  %% Line 52
+	  <Fn,Arg> when 'true' ->
+	      %% Line 53
+	      apply 'test'/2
+		  (Fn, [Arg|[]])
+	end
+'ss'/1 =
+    %% Line 58
+    fun (_cor0) ->
+	let <_cor7> =
+	    %% Line 59
+	    ( letrec
+		  'lc$^0'/1 =
+		      fun (_cor4) ->
+			  case _cor4 of
+			    <[X|_cor2]> when 'true' ->
+				let <_cor5> =
+				    call 'erlang':'*'
+					(X, X)
+				in  let <_cor6> =
+					apply 'lc$^0'/1
+					    (_cor2)
+				    in  ( [_cor5|_cor6]
+					  -| ['compiler_generated'] )
+			    <[]> when 'true' ->
+				[]
+			    ( <_cor4> when 'true' ->
+				  ( primop 'match_fail'
+					({'function_clause',_cor4})
+				    -| [{'function_name',{'lc$^0',1}}] )
+			      -| ['compiler_generated'] )
+			  end
+	      in  let <_cor3> =
+		      call 'lists':'seq'
+			  (1, _cor0)
+		  in  apply 'lc$^0'/1
+			  (_cor3)
+	      -| ['list_comprehension'] )
+	in  %% Line 59
+	    call 'lists':'sum'
+		(_cor7)
+'ses'/1 =
+    %% Line 62
+    fun (_cor0) ->
+	let <_cor8> =
+	    %% Line 63
+	    ( letrec
+		  'lc$^0'/1 =
+		      fun (_cor5) ->
+			  case _cor5 of
+			    <[X|_cor2]>
+				when %% Line 64
+				  try
+				      let <_cor3> =
+					  call 'erlang':'rem'
+					      (X, 2)
+				      in  call 'erlang':'=:='
+					      (_cor3, 0)
+				  of <Try> ->
+				      Try
+				  catch <T,R> ->
+				      'false' ->
+				let <_cor6> =
+				    call 'erlang':'*'
+					(X, X)
+				in  let <_cor7> =
+					apply 'lc$^0'/1
+					    (_cor2)
+				    in  ( [_cor6|_cor7]
+					  -| ['compiler_generated'] )
+			    ( <[X|_cor2]> when 'true' ->
+				  apply 'lc$^0'/1
+				      (_cor2)
+			      -| ['compiler_generated'] )
+			    <[]> when 'true' ->
+				[]
+			    ( <_cor5> when 'true' ->
+				  ( primop 'match_fail'
+					({'function_clause',_cor5})
+				    -| [{'function_name',{'lc$^0',1}}] )
+			      -| ['compiler_generated'] )
+			  end
+	      in  let <_cor4> =
+		      call 'lists':'seq'
+			  (1, _cor0)
+		  in  apply 'lc$^0'/1
+			  (_cor4)
+	      -| ['list_comprehension'] )
+	in  %% Line 63
+	    call 'lists':'sum'
+		(_cor8)
+'pen'/1 =
+    %% Line 67
+    fun (_cor0) ->
+	%% Line 68
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor9) ->
+		      case _cor9 of
+			<[X|_cor2]>
+			    when %% Line 69
+			      try
+				  let <_cor3> =
+				      call 'erlang':'rem'
+					  (X, 2)
+				  in  call 'erlang':'=:='
+					  (_cor3, 0)
+			      of <Try> ->
+				  Try
+			      catch <T,R> ->
+				  'false' ->
+			    ( letrec
+				  'lc$^1'/1 =
+				      fun (_cor10) ->
+					  case _cor10 of
+					    <[%% Line 70
+					      Y|_cor6]>
+						when %% Line 71
+						  try
+						      let <_cor7> =
+							  call 'erlang':'rem'
+							      (Y, 2)
+						      in  call 'erlang':'=:='
+							      (_cor7, 1)
+						  of <Try> ->
+						      Try
+						  catch <T,R> ->
+						      'false' ->
+						let <_cor11> =
+						    %% Line 70
+						    apply 'lc$^1'/1
+							(_cor6)
+						in  ( [[X|[Y|[]]]|_cor11]
+						      -| ['compiler_generated'] )
+					    ( <[%% Line 70
+						Y|_cor6]> when 'true' ->
+						  %% Line 70
+						  apply 'lc$^1'/1
+						      (_cor6)
+					      -| ['compiler_generated'] )
+					    <[]> when 'true' ->
+						apply 'lc$^0'/1
+						    (_cor2)
+					    ( <_cor10> when 'true' ->
+						  ( primop 'match_fail'
+							({'function_clause',_cor10})
+						    -| [{'function_name',{'lc$^1',1}}] )
+					      -| ['compiler_generated'] )
+					  end
+			      in  let <_cor8> =
+				      %% Line 70
+				      call 'lists':'seq'
+					  (1, _cor0)
+				  in  apply 'lc$^1'/1
+					  (_cor8)
+			      -| ['list_comprehension'] )
+			( <[X|_cor2]> when 'true' ->
+			      apply 'lc$^0'/1
+				  (_cor2)
+			  -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor9> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor9})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  let <_cor4> =
+		  call 'lists':'seq'
+		      (1, _cor0)
+	      in  apply 'lc$^0'/1
+		      (_cor4)
+	  -| ['list_comprehension'] )
+'pen2'/1 =
+    %% Line 74
+    fun (_cor0) ->
+	%% Line 75
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor13) ->
+		      case _cor13 of
+			<[X|_cor2]>
+			    when %% Line 76
+			      try
+				  let <_cor3> =
+				      call 'erlang':'rem'
+					  (X, 2)
+				  in  call 'erlang':'=:='
+					  (_cor3, 0)
+			      of <Try> ->
+				  Try
+			      catch <T,R> ->
+				  'false' ->
+			    ( letrec
+				  'lc$^1'/1 =
+				      fun (_cor14) ->
+					  case _cor14 of
+					    <[%% Line 77
+					      Y|_cor6]>
+						when %% Line 78
+						  try
+						      let <_cor7> =
+							  call 'erlang':'rem'
+							      (Y, 2)
+						      in  let <_cor8> =
+							      call 'erlang':'=:='
+								  (_cor7, 1)
+							  in  let <_cor9> =
+								  %% Line 79
+								  call 'erlang':'+'
+								      (X, Y)
+							      in  let <_cor10> =
+								      %% Line 79
+								      call 'erlang':'rem'
+									  (_cor9, 5)
+								  in  let <_cor11> =
+									  %% Line 79
+									  call 'erlang':'=/='
+									      (_cor10, 0)
+								      in  call 'erlang':'and'
+									      (_cor8, _cor11)
+						  of <Try> ->
+						      Try
+						  catch <T,R> ->
+						      'false' ->
+						let <_cor15> =
+						    %% Line 77
+						    apply 'lc$^1'/1
+							(_cor6)
+						in  ( [[X|[Y|[]]]|_cor15]
+						      -| ['compiler_generated'] )
+					    ( <[%% Line 77
+						Y|_cor6]> when 'true' ->
+						  %% Line 77
+						  apply 'lc$^1'/1
+						      (_cor6)
+					      -| ['compiler_generated'] )
+					    <[]> when 'true' ->
+						apply 'lc$^0'/1
+						    (_cor2)
+					    ( <_cor14> when 'true' ->
+						  ( primop 'match_fail'
+							({'function_clause',_cor14})
+						    -| [{'function_name',{'lc$^1',1}}] )
+					      -| ['compiler_generated'] )
+					  end
+			      in  let <_cor12> =
+				      %% Line 77
+				      call 'lists':'seq'
+					  (1, _cor0)
+				  in  apply 'lc$^1'/1
+					  (_cor12)
+			      -| ['list_comprehension'] )
+			( <[X|_cor2]> when 'true' ->
+			      apply 'lc$^0'/1
+				  (_cor2)
+			  -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor13> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor13})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  let <_cor4> =
+		  call 'lists':'seq'
+		      (1, _cor0)
+	      in  apply 'lc$^0'/1
+		      (_cor4)
+	  -| ['list_comprehension'] )
+'single_filter'/1 =
+    %% Line 84
+    fun (_cor0) ->
+	%% Line 85
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor3) ->
+		      case _cor3 of
+			<[Entry|_cor2]>
+			    when %% Line 86
+			      call 'erlang':'is_integer'
+				  (Entry) ->
+			    let <_cor4> =
+				apply 'lc$^0'/1
+				    (_cor2)
+			    in  ( [Entry|_cor4]
+				  -| ['compiler_generated'] )
+			( <[Entry|_cor2]> when 'true' ->
+			      apply 'lc$^0'/1
+				  (_cor2)
+			  -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor3> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor3})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  apply 'lc$^0'/1
+		  (_cor0)
+	  -| ['list_comprehension'] )
+'record_extract'/1 =
+    %% Line 90
+    fun (_cor0) ->
+	%% Line 91
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor3) ->
+		      case _cor3 of
+			<[Entry|_cor2]> when 'true' ->
+			    ( case Entry of
+				( <( {'test_record',_rec0,_cor8}
+				     -| ['compiler_generated'] )> when 'true' ->
+				      let <_cor6> =
+					  apply 'lc$^0'/1
+					      (_cor2)
+				      in  ( [_rec0|_cor6]
+					    -| ['compiler_generated'] )
+				  -| ['compiler_generated'] )
+				( <_cor9> when 'true' ->
+				      ( call ( 'erlang'
+					       -| ['compiler_generated'] ):( 'error'
+									     -| ['compiler_generated'] )
+					    (( {'badrecord','test_record'}
+					       -| ['compiler_generated'] ))
+					-| ['compiler_generated'] )
+				  -| ['compiler_generated'] )
+			      end
+			      -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor3> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor3})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  apply 'lc$^0'/1
+		  (_cor0)
+	  -| ['list_comprehension'] )
+'function_param_lc'/2 =
+    %% Line 94
+    fun (_cor1,_cor0) ->
+	%% Line 95
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor4) ->
+		      case _cor4 of
+			<[V|_cor3]> when 'true' ->
+			    let <_cor5> =
+				apply 'lc$^0'/1
+				    (_cor3)
+			    in  ( [[_cor1|[V|[]]]|_cor5]
+				  -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor4> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor4})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  apply 'lc$^0'/1
+		  (_cor0)
+	  -| ['list_comprehension'] )
+'sorted_gen'/1 =
+    %% Line 98
+    fun (_cor0) ->
+	%% Line 99
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor13) ->
+		      case _cor13 of
+			<[%% Line 100
+			  Entry|_cor2]> when 'true' ->
+			    ( case Entry of
+				( <( {'test_record',_rec3,_cor18}
+				     -| ['compiler_generated'] )> when 'true' ->
+				      let <_cor16> =
+					  %% Line 100
+					  apply 'lc$^0'/1
+					      (_cor2)
+				      in  ( [_rec3|_cor16]
+					    -| ['compiler_generated'] )
+				  -| ['compiler_generated'] )
+				( <_cor19> when 'true' ->
+				      ( call ( 'erlang'
+					       -| ['compiler_generated'] ):( 'error'
+									     -| ['compiler_generated'] )
+					    (( {'badrecord','test_record'}
+					       -| ['compiler_generated'] ))
+					-| ['compiler_generated'] )
+				  -| ['compiler_generated'] )
+			      end
+			      -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor13> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor13})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  let <_cor11> =
+		  %% Line 100
+		  ( fun (_cor8,_cor7) ->
+			%% Line 101
+			( case _cor8 of
+			    ( <( {'test_record',_rec1,_cor20}
+				 -| ['compiler_generated'] )> when 'true' ->
+				  ( case _cor7 of
+				      ( <( {'test_record',_rec2,_cor22}
+					   -| ['compiler_generated'] )> when 'true' ->
+					    call 'erlang':'<'
+						(_rec1, _rec2)
+					-| ['compiler_generated'] )
+				      ( <_cor23> when 'true' ->
+					    ( call ( 'erlang'
+						     -| ['compiler_generated'] ):( 'error'
+										   -| ['compiler_generated'] )
+						  (( {'badrecord','test_record'}
+						     -| ['compiler_generated'] ))
+					      -| ['compiler_generated'] )
+					-| ['compiler_generated'] )
+				    end
+				    -| ['compiler_generated'] )
+			      -| ['compiler_generated'] )
+			    ( <_cor21> when 'true' ->
+				  ( call ( 'erlang'
+					   -| ['compiler_generated'] ):( 'error'
+									 -| ['compiler_generated'] )
+					(( {'badrecord','test_record'}
+					   -| ['compiler_generated'] ))
+				    -| ['compiler_generated'] )
+			      -| ['compiler_generated'] )
+			  end
+			  -| ['compiler_generated'] )
+		    -| [{'id',{0,0,'-sorted_gen/1-fun-0-'}}] )
+	      in  let <_cor12> =
+		      %% Line 100
+		      call 'lists':'sort'
+			  (_cor11, _cor0)
+		  in  apply 'lc$^0'/1
+			  (_cor12)
+	  -| ['list_comprehension'] )
+'make_n'/2 =
+    %% Line 108
+    fun (_cor1,_cor0) ->
+	%% Line 109
+	( letrec
+	      'lc$^0'/1 =
+		  fun (_cor5) ->
+		      case _cor5 of
+			<[_cor9|_cor3]> when 'true' ->
+			    let <_cor6> =
+				apply 'lc$^0'/1
+				    (_cor3)
+			    in  ( [_cor1|_cor6]
+				  -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor5> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor5})
+				-| [{'function_name',{'lc$^0',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  let <_cor4> =
+		  call 'lists':'seq'
+		      (1, _cor0)
+	      in  apply 'lc$^0'/1
+		      (_cor4)
+	  -| ['list_comprehension'] )
+'intermediary_list'/1 =
+    %% Line 112
+    fun (_cor0) ->
+	let <Inter> =
+	    %% Line 113
+	    apply 'random_test_records'/2
+		(_cor0, 50)
+	in  %% Line 114
+	    ( letrec
+		  'lc$^0'/1 =
+		      fun (_cor4) ->
+			  case _cor4 of
+			    <[Entry|_cor3]> when 'true' ->
+				( case Entry of
+				    ( <( {'test_record',_cor9,_rec4}
+					 -| ['compiler_generated'] )> when 'true' ->
+					  let <_cor7> =
+					      apply 'lc$^0'/1
+						  (_cor3)
+					  in  ( [_rec4|_cor7]
+						-| ['compiler_generated'] )
+				      -| ['compiler_generated'] )
+				    ( <_cor10> when 'true' ->
+					  ( call ( 'erlang'
+						   -| ['compiler_generated'] ):( 'error'
+										 -| ['compiler_generated'] )
+						(( {'badrecord','test_record'}
+						   -| ['compiler_generated'] ))
+					    -| ['compiler_generated'] )
+				      -| ['compiler_generated'] )
+				  end
+				  -| ['compiler_generated'] )
+			    <[]> when 'true' ->
+				[]
+			    ( <_cor4> when 'true' ->
+				  ( primop 'match_fail'
+					({'function_clause',_cor4})
+				    -| [{'function_name',{'lc$^0',1}}] )
+			      -| ['compiler_generated'] )
+			  end
+	      in  apply 'lc$^0'/1
+		      (Inter)
+	      -| ['list_comprehension'] )
+'intermediary_list2'/1 =
+    %% Line 116
+    fun (_cor0) ->
+	let <Inter1> =
+	    %% Line 117
+	    apply 'random_test_records'/2
+		(_cor0, 50)
+	in  let <_cor8> =
+		%% Line 118
+		( letrec
+		      'lc$^0'/1 =
+			  fun (_cor4) ->
+			      case _cor4 of
+				<[Entry|_cor3]> when 'true' ->
+				    ( case Entry of
+					( <( {'test_record',_cor16,_rec5}
+					     -| ['compiler_generated'] )> when 'true' ->
+					      let <_cor7> =
+						  apply 'lc$^0'/1
+						      (_cor3)
+					      in  ( [_rec5|_cor7]
+						    -| ['compiler_generated'] )
+					  -| ['compiler_generated'] )
+					( <_cor17> when 'true' ->
+					      ( call ( 'erlang'
+						       -| ['compiler_generated'] ):( 'error'
+										     -| ['compiler_generated'] )
+						    (( {'badrecord','test_record'}
+						       -| ['compiler_generated'] ))
+						-| ['compiler_generated'] )
+					  -| ['compiler_generated'] )
+				      end
+				      -| ['compiler_generated'] )
+				<[]> when 'true' ->
+				    []
+				( <_cor4> when 'true' ->
+				      ( primop 'match_fail'
+					    ({'function_clause',_cor4})
+					-| [{'function_name',{'lc$^0',1}}] )
+				  -| ['compiler_generated'] )
+			      end
+		  in  apply 'lc$^0'/1
+			  (Inter1)
+		  -| ['list_comprehension'] )
+	    in  %% Line 119
+		( letrec
+		      'lc$^1'/1 =
+			  fun (_cor12) ->
+			      case _cor12 of
+				<[X|_cor11]> when 'true' ->
+				    let <_cor13> =
+					call 'erlang':'*'
+					    (X, X)
+				    in  let <_cor14> =
+					    apply 'lc$^1'/1
+						(_cor11)
+					in  ( [_cor13|_cor14]
+					      -| ['compiler_generated'] )
+				<[]> when 'true' ->
+				    []
+				( <_cor12> when 'true' ->
+				      ( primop 'match_fail'
+					    ({'function_clause',_cor12})
+					-| [{'function_name',{'lc$^1',1}}] )
+				  -| ['compiler_generated'] )
+			      end
+		  in  apply 'lc$^1'/1
+			  (_cor8)
+		  -| ['list_comprehension'] )
+'intermediary_list3'/1 =
+    %% Line 121
+    fun (_cor0) ->
+	let <Inter1> =
+	    %% Line 122
+	    apply 'random_test_records'/2
+		(_cor0, 50)
+	in  let <_cor7> =
+		%% Line 123
+		( letrec
+		      'lc$^0'/1 =
+			  fun (_cor4) ->
+			      case _cor4 of
+				<[Entry|_cor3]> when 'true' ->
+				    let <_cor5> =
+					call 'random':'uniform'
+					    (50)
+				    in  let <_cor6> =
+					    apply 'lc$^0'/1
+						(_cor3)
+					in  ( [{_cor5,Entry}|_cor6]
+					      -| ['compiler_generated'] )
+				<[]> when 'true' ->
+				    []
+				( <_cor4> when 'true' ->
+				      ( primop 'match_fail'
+					    ({'function_clause',_cor4})
+					-| [{'function_name',{'lc$^0',1}}] )
+				  -| ['compiler_generated'] )
+			      end
+		  in  apply 'lc$^0'/1
+			  (Inter1)
+		  -| ['list_comprehension'] )
+	    in  let <_cor14> =
+		    %% Line 124
+		    ( letrec
+			  'lc$^1'/1 =
+			      fun (_cor11) ->
+				  case _cor11 of
+				    <[Entry|_cor10]> when 'true' ->
+					let <_cor12> =
+					    call 'random':'uniform'
+						(100)
+					in  let <_cor13> =
+						apply 'lc$^1'/1
+						    (_cor10)
+					    in  ( [{_cor12,Entry}|_cor13]
+						  -| ['compiler_generated'] )
+				    <[]> when 'true' ->
+					[]
+				    ( <_cor11> when 'true' ->
+					  ( primop 'match_fail'
+						({'function_clause',_cor11})
+					    -| [{'function_name',{'lc$^1',1}}] )
+				      -| ['compiler_generated'] )
+				  end
+		      in  apply 'lc$^1'/1
+			      (_cor7)
+		      -| ['list_comprehension'] )
+		in  %% Line 125
+		    ( letrec
+			  'lc$^2'/1 =
+			      fun (_cor18) ->
+				  case _cor18 of
+				    <[{A,{B,{'test_record',C,D}}}|_cor17]> when 'true' ->
+					let <_cor19> =
+					    call 'erlang':'*'
+						(A, B)
+					in  let <_cor20> =
+						call 'erlang':'*'
+						    (_cor19, C)
+					    in  let <_cor21> =
+						    call 'erlang':'*'
+							(_cor20, D)
+						in  let <_cor22> =
+							apply 'lc$^2'/1
+							    (_cor17)
+						    in  ( [_cor21|_cor22]
+							  -| ['compiler_generated'] )
+				    ( <[_cor16|_cor17]> when 'true' ->
+					  apply 'lc$^2'/1
+					      (_cor17)
+				      -| ['compiler_generated'] )
+				    <[]> when 'true' ->
+					[]
+				    ( <_cor18> when 'true' ->
+					  ( primop 'match_fail'
+						({'function_clause',_cor18})
+					    -| [{'function_name',{'lc$^2',1}}] )
+				      -| ['compiler_generated'] )
+				  end
+		      in  apply 'lc$^2'/1
+			      (_cor14)
+		      -| ['list_comprehension'] )
+'nested_lc_gen'/1 =
+    %% Line 131
+    fun (_cor0) ->
+	%% Line 132
+	( letrec
+	      'lc$^1'/1 =
+		  fun (_cor9) ->
+		      case _cor9 of
+			<[%% Line 133
+			  Entry|_cor2]> when 'true' ->
+			    let <_cor10> =
+				call 'erlang':'*'
+				    (Entry, Entry)
+			    in  let <_cor11> =
+				    %% Line 133
+				    apply 'lc$^1'/1
+					(_cor2)
+				in  ( [{'test_record',Entry,_cor10}|_cor11]
+				      -| ['compiler_generated'] )
+			<[]> when 'true' ->
+			    []
+			( <_cor9> when 'true' ->
+			      ( primop 'match_fail'
+				    ({'function_clause',_cor9})
+				-| [{'function_name',{'lc$^1',1}}] )
+			  -| ['compiler_generated'] )
+		      end
+	  in  let <_cor8> =
+		  %% Line 133
+		  ( letrec
+			'lc$^0'/1 =
+			    fun (_cor6) ->
+				case _cor6 of
+				  <[Val|_cor4]>
+				      when %% Line 134
+					try
+					    let <_cor5> =
+						call 'erlang':'rem'
+						    (Val, 2)
+					    in  call 'erlang':'=:='
+						    (_cor5, 1)
+					of <Try> ->
+					    Try
+					catch <T,R> ->
+					    'false' ->
+				      let <_cor7> =
+					  apply 'lc$^0'/1
+					      (_cor4)
+				      in  ( [Val|_cor7]
+					    -| ['compiler_generated'] )
+				  ( <[Val|_cor4]> when 'true' ->
+					apply 'lc$^0'/1
+					    (_cor4)
+				    -| ['compiler_generated'] )
+				  <[]> when 'true' ->
+				      []
+				  ( <_cor6> when 'true' ->
+					( primop 'match_fail'
+					      ({'function_clause',_cor6})
+					  -| [{'function_name',{'lc$^0',1}}] )
+				    -| ['compiler_generated'] )
+				end
+		    in  apply 'lc$^0'/1
+			    (_cor0)
+		    -| ['list_comprehension'] )
+	      in  apply 'lc$^1'/1
+		      (_cor8)
+	  -| ['list_comprehension'] )
+'module_info'/0 =
+    ( fun () ->
+	  ( call ( 'erlang'
+		   -| ['compiler_generated'] ):( 'get_module_info'
+						 -| ['compiler_generated'] )
+		(( 'lc_tests'
+		   -| ['compiler_generated'] ))
+	    -| ['compiler_generated'] )
+      -| ['compiler_generated'] )
+'module_info'/1 =
+    ( fun (( _cor0
+	     -| ['compiler_generated'] )) ->
+	  ( call ( 'erlang'
+		   -| ['compiler_generated'] ):( 'get_module_info'
+						 -| ['compiler_generated'] )
+		(( 'lc_tests'
+		   -| ['compiler_generated'] ), ( _cor0
+						  -| ['compiler_generated'] ))
+	    -| ['compiler_generated'] )
+      -| ['compiler_generated'] )
+end
