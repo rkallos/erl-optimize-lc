@@ -10,6 +10,7 @@ main([]) ->
     
     c:cd(Cd),
     stage(fun() -> compile_tests() end, "Compiling lc_tests.erl"),
+    stage(fun() -> compile_alt_compiler() end, "Compiling alternate compiler"),
     stage(fun() -> load_alt_compiler() end, "Loading alternate compiler"),
     stage(fun() -> compile_opt_tests() end, "Compiling lc_tests_opt.erl");
 main(_) ->
@@ -39,6 +40,11 @@ check_erl_top() ->
        _ -> ok
     end.
 
+compile_alt_compiler() ->
+    c:cd("lib/compiler"),
+    os:cmd("make"),
+    c:cd("../../").
+
 load_alt_compiler() ->
     code:add_patha("lib/compiler/ebin/").
 
@@ -54,17 +60,11 @@ compile_opt_tests() ->
     c:cd("..").
 
 compile(Module) ->
-    Opts = [
+    Opts = [[],
             [to_core],
             [to_asm],
             ['P'],
             ['E']
            ],
     [c:c(Module,Opt) || Opt <- Opts ].
-    %% lists:foldl(
-    %%   fun(Opt, Acc) ->
-    %%           [c:c(Module, Opt) | Acc]
-    %%   end,
-    %%   [],
-    %%   Opts).
     

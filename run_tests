@@ -1,0 +1,105 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -smp enable -sname make
+
+main([]) ->
+    {module, Mod} = code:load_abs("lc_tests/lc_tests"),
+    io:format("Loaded ~p~n", [Mod]),
+    io:format("Compiler dir: ~s~n", [code:compiler_dir()]),
+
+    % Generate tests
+    Tests = lc_tests:all_tests(),
+    io:format("Generated test data~n"),
+
+    % Run all lc_tests tests
+    io:format("Running lc_tests~n"),
+    Lc = lc_tests:run_tests(Tests),
+
+    % Load alternate compiler
+    code:add_patha("lib/compiler/ebin"),
+    application:start(compiler),
+
+    % Run all lc_tests_opt tests
+    {module, ModOpt} = code:load_abs("lc_tests_opt/lc_tests_opt"),
+    io:format("Loaded ~p~n", [ModOpt]),
+    io:format("Compiler dir: ~s~n", [code:compiler_dir()]),
+    io:format("Running lc_tests_opt~n"),
+    Lco = lc_tests_opt:run_tests(Tests),
+
+    % Generate Gnuplot .dat files
+    io:format("Generating .dat files~n"),
+    generate_dat("lc_tests", Lc),
+    generate_dat("lc_tests_opt", Lco),
+    generate_dat("comp_before", Lc, Lco),
+    generate_dat("comp_after", Lc, Lco),
+    generate_dat("all", Lc, Lco)
+    % Create plots
+        ;
+main(_) ->
+    usage().
+
+usage() ->
+    io:format("Make sure the compiler is present in lib, and that lc_tests/lc_tests.beam and lc_tests_opt/lc_tests_opt.beam are present.").
+
+generate_dat(Filename, Data) ->
+    {ok, File} = file:open("data/" ++ Filename ++ ".dat", [read,write]),
+    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
+                                string:left(integer_to_list(Before), 10,$ ),
+                                integer_to_list(After)]) ||
+        {Fun, {B, A}, _} <- Data,
+        {total_heap_size,Before} <- B,
+        {total_heap_size,After}  <- A
+    ].
+
+generate_dat("comp_before", Data1, Data2) ->
+    {ok, File} = file:open("data/" ++ "comp_before.dat", [read,write]),
+    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
+                                  string:left(integer_to_list(Before), 10, $ ),
+                                  integer_to_list(BeforeOpt)]) ||
+        {Fun, {B, Bo}}
+            <- lists:zipwith(
+                 fun({F, {B, _A}, _},
+                     {_G, {Bo, _Ao}, _}) ->
+                         {F, {B, Bo}}
+                 end,
+                 Data1,
+                 Data2),
+        {total_heap_size, Before} <- B,
+        {total_heap_size, BeforeOpt} <- Bo
+    ];
+generate_dat("comp_after", Data1, Data2) ->
+    {ok, File} = file:open("data/" ++ "comp_after.dat", [read,write]),
+    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
+                                  string:left(integer_to_list(After), 10, $ ),
+                                  integer_to_list(AfterOpt)]) ||
+        {Fun, {A, Ao}}
+            <- lists:zipwith(
+                 fun({F, {_B, A}, _},
+                     {_G, {_Bo, Ao}, _}) ->
+                         {F, {A, Ao}}
+                 end,
+                 Data1,
+                 Data2),
+        {total_heap_size, After} <- A,
+        {total_heap_size, AfterOpt} <- Ao
+    ];
+generate_dat("all", Data1, Data2) ->
+    {ok, File} = file:open("data/" ++ "all.dat", [read,write]),
+    [io:fwrite(File, "~s~s~s~s~s~n", [string:left(Fun, 20, $ ),
+                                    string:left(integer_to_list(Before), 10, $ ),
+                                    string:left(integer_to_list(After), 10, $ ),
+                                    string:left(integer_to_list(BeforeOpt), 10, $ ),
+                                    integer_to_list(AfterOpt)]) ||
+        {Fun, {B, A, Bo, Ao}}
+            <- lists:zipwith(
+                 fun({F, {B, A}, _},
+                     {_G, {Bo, Ao}, _}) ->
+                         {F, {B, A, Bo, Ao}}
+                 end,
+                 Data1,
+                 Data2),
+        {total_heap_size, Before} <- B,
+        {total_heap_size, BeforeOpt} <- Bo,
+        {total_heap_size, After} <- A,
+        {total_heap_size, AfterOpt} <- Ao
+].
