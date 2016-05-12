@@ -32,9 +32,15 @@ main([]) ->
     generate_dat("lc_tests_opt", Lco),
     generate_dat("comp_before", Lc, Lco),
     generate_dat("comp_after", Lc, Lco),
-    generate_dat("all", Lc, Lco)
+    generate_dat("all", Lc, Lco),
     % Create plots
-        ;
+    c:cd("./plots"),
+    os:cmd("for file1 in *.gnu
+do
+    file2=\"${file1%.gnu}.svg\"
+    gnuplot \"$file1\" >> \"$file2\"
+done"),
+    c:cd("../");
 main(_) ->
     usage().
 
@@ -43,9 +49,8 @@ usage() ->
 
 generate_dat(Filename, Data) ->
     {ok, File} = file:open("data/" ++ Filename ++ ".dat", [read,write]),
-    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
-                                string:left(integer_to_list(Before), 10,$ ),
-                                integer_to_list(After)]) ||
+    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","After"]),
+    [io:fwrite(File, "~-20s~-20s~-20s~n", [Fun, integer_to_list(Before), integer_to_list(After)]) ||
         {Fun, {B, A}, _} <- Data,
         {total_heap_size,Before} <- B,
         {total_heap_size,After}  <- A
@@ -53,8 +58,9 @@ generate_dat(Filename, Data) ->
 
 generate_dat("comp_before", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "comp_before.dat", [read,write]),
+    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","BeforeOpt"]),
     [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
-                                  string:left(integer_to_list(Before), 10, $ ),
+                                  string:left(integer_to_list(Before), 20, $ ),
                                   integer_to_list(BeforeOpt)]) ||
         {Fun, {B, Bo}}
             <- lists:zipwith(
@@ -69,8 +75,9 @@ generate_dat("comp_before", Data1, Data2) ->
     ];
 generate_dat("comp_after", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "comp_after.dat", [read,write]),
+    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","AfterOpt"]),
     [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
-                                  string:left(integer_to_list(After), 10, $ ),
+                                  string:left(integer_to_list(After), 20, $ ),
                                   integer_to_list(AfterOpt)]) ||
         {Fun, {A, Ao}}
             <- lists:zipwith(
@@ -85,11 +92,14 @@ generate_dat("comp_after", Data1, Data2) ->
     ];
 generate_dat("all", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "all.dat", [read,write]),
-    [io:fwrite(File, "~s~s~s~s~s~n", [string:left(Fun, 20, $ ),
-                                    string:left(integer_to_list(Before), 10, $ ),
-                                    string:left(integer_to_list(After), 10, $ ),
-                                    string:left(integer_to_list(BeforeOpt), 10, $ ),
-                                    integer_to_list(AfterOpt)]) ||
+    io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~n",
+              ["Test","Before","After","BeforeOpt","AfterOpt"]),
+    [io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~n",
+               [string:left(Fun, 20, $ ),
+                string:left(integer_to_list(Before), 20, $ ),
+                string:left(integer_to_list(After), 20, $ ),
+                string:left(integer_to_list(BeforeOpt), 20, $ ),
+                integer_to_list(AfterOpt)]) ||
         {Fun, {B, A, Bo, Ao}}
             <- lists:zipwith(
                  fun({F, {B, A}, _},

@@ -1,9 +1,12 @@
 {module, lc_tests_opt}.  %% version = 0
 
-{exports, [{function_param_lc,2},
+{exports, [{all_tests,0},
+           {function_param_lc,2},
+           {int_arg,0},
            {intermediary_list,1},
            {intermediary_list2,1},
            {intermediary_list3,1},
+           {list_arg,0},
            {make_n,2},
            {module_info,0},
            {module_info,1},
@@ -13,18 +16,21 @@
            {random,1},
            {random_bin,1},
            {random_test_records,2},
+           {record_arg,0},
            {record_extract,1},
            {rng,2},
+           {run_tests,1},
+           {run_tests,2},
            {ses,1},
            {single_filter,1},
            {sorted_gen,1},
            {ss,1},
            {stats,0},
-           {test,2}]}.
+           {test,3}]}.
 
 {attributes, []}.
 
-{labels, 135}.
+{labels, 171}.
 
 
 {function, random, 1, 2}.
@@ -55,7 +61,7 @@
     {line,[{location,"lc_tests_opt.erl",18}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
     {line,[{location,"lc_tests_opt.erl",18}]}.
-    {call,1,{f,133}}.
+    {call,1,{f,169}}.
     {line,[{location,"lc_tests_opt.erl",18}]}.
     {call_ext_last,1,{extfunc,erlang,list_to_binary,1},0}.
 
@@ -140,30 +146,23 @@
     return.
 
 
-{function, test, 2, 14}.
+{function, test, 3, 14}.
   {label,13}.
     {line,[{location,"lc_tests_opt.erl",34}]}.
-    {func_info,{atom,lc_tests_opt},{atom,test},2}.
+    {func_info,{atom,lc_tests_opt},{atom,test},3}.
   {label,14}.
-    {test,is_list,{f,18},[{x,1}]}.
-    {allocate,1,2}.
-    {move,{x,1},{x,2}}.
-    {move,{x,0},{x,1}}.
-    {move,{x,2},{x,0}}.
+    {test,is_list,{f,18},[{x,2}]}.
+    {allocate_zero,1,3}.
+    {bif,self,{f,0},[],{x,3}}.
     {move,{x,0},{y,0}}.
-    {make_fun2,{f,128},0,0,2}.
-    {line,[{location,"lc_tests_opt.erl",35}]}.
-    {call_ext,1,{extfunc,erlang,spawn,1}}.
-    {test_heap,3,1}.
-    {bif,self,{f,0},[],{x,1}}.
-    {put_tuple,2,{x,2}}.
-    {put,{x,1}}.
-    {put,{y,0}}.
+    {move,{x,1},{x,5}}.
     {move,{x,2},{x,1}}.
-    {kill,{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",48}]}.
-    send.
-    {line,[{location,"lc_tests_opt.erl",49}]}.
+    {move,{x,5},{x,2}}.
+    {move,{x,3},{x,0}}.
+    {make_fun2,{f,167},0,0,3}.
+    {line,[{location,"lc_tests_opt.erl",36}]}.
+    {call_ext,1,{extfunc,erlang,spawn,1}}.
+    {line,[{location,"lc_tests_opt.erl",44}]}.
   {label,15}.
     {loop_rec,{f,17},{x,0}}.
     {test,is_tuple,{f,16},[{x,0}]}.
@@ -172,257 +171,459 @@
     {get_tuple_element,{x,0},1,{x,2}}.
     {get_tuple_element,{x,0},2,{x,3}}.
     remove_message.
-    {test_heap,6,4}.
-    {put_tuple,3,{x,0}}.
+    {test_heap,7,4}.
+    {put_tuple,2,{x,4}}.
     {put,{x,1}}.
     {put,{x,2}}.
+    {put_tuple,3,{x,0}}.
+    {put,{y,0}}.
+    {put,{x,4}}.
     {put,{x,3}}.
-    {put_list,{x,0},nil,{x,1}}.
-    {move,{literal,"~p~n"},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",50}]}.
-    {call_ext_last,2,{extfunc,io,format,2},1}.
+    {deallocate,1}.
+    return.
   {label,16}.
     {loop_rec_end,{f,15}}.
   {label,17}.
     {wait,{f,15}}.
   {label,18}.
-    {test_heap,2,2}.
-    {put_list,{x,1},nil,{x,1}}.
-    {call_only,2,{f,14}}.
+    {test_heap,2,3}.
+    {put_list,{x,2},nil,{x,2}}.
+    {call_only,3,{f,14}}.
 
 
-{function, ss, 1, 20}.
+{function, run_tests, 2, 20}.
   {label,19}.
-    {line,[{location,"lc_tests_opt.erl",58}]}.
-    {func_info,{atom,lc_tests_opt},{atom,ss},1}.
+    {line,[{location,"lc_tests_opt.erl",50}]}.
+    {func_info,{atom,lc_tests_opt},{atom,run_tests},2}.
   {label,20}.
-    {allocate,0,1}.
-    {move,{x,0},{x,1}}.
-    {move,{integer,1},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
-    {call_ext,2,{extfunc,lists,seq,2}}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
-    {call,1,{f,125}}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
-    {call_ext_last,1,{extfunc,lists,sum,1},0}.
-
-
-{function, ses, 1, 22}.
+    {test,is_nonempty_list,{f,21},[{x,0}]}.
+    {get_list,{x,0},{x,2},{x,3}}.
+    {test,is_tuple,{f,19},[{x,2}]}.
+    {test,test_arity,{f,19},[{x,2},3]}.
+    {allocate,2,4}.
+    {get_tuple_element,{x,2},0,{x,0}}.
+    {get_tuple_element,{x,2},1,{x,5}}.
+    {get_tuple_element,{x,2},2,{x,2}}.
+    {move,{x,1},{y,0}}.
+    {move,{x,5},{x,1}}.
+    {move,{x,3},{y,1}}.
+    {line,[{location,"lc_tests_opt.erl",53}]}.
+    {call,3,{f,14}}.
+    {test_heap,2,1}.
+    {put_list,{x,0},{y,0},{x,1}}.
+    {move,{y,1},{x,0}}.
+    {call_last,2,{f,20},2}.
   {label,21}.
-    {line,[{location,"lc_tests_opt.erl",62}]}.
-    {func_info,{atom,lc_tests_opt},{atom,ses},1}.
+    {test,is_nil,{f,19},[{x,0}]}.
+    {move,{x,1},{x,0}}.
+    return.
+
+
+{function, run_tests, 1, 23}.
   {label,22}.
+    {line,[{location,"lc_tests_opt.erl",56}]}.
+    {func_info,{atom,lc_tests_opt},{atom,run_tests},1}.
+  {label,23}.
+    {test,is_list,{f,22},[{x,0}]}.
+    {move,nil,{x,1}}.
+    {call_only,2,{f,20}}.
+
+
+{function, int_arg, 0, 25}.
+  {label,24}.
+    {line,[{location,"lc_tests_opt.erl",59}]}.
+    {func_info,{atom,lc_tests_opt},{atom,int_arg},0}.
+  {label,25}.
+    {move,{integer,50},{x,0}}.
+    return.
+
+
+{function, list_arg, 0, 27}.
+  {label,26}.
+    {line,[{location,"lc_tests_opt.erl",61}]}.
+    {func_info,{atom,lc_tests_opt},{atom,list_arg},0}.
+  {label,27}.
+    {move,{integer,50},{x,1}}.
+    {move,{integer,50},{x,0}}.
+    {call_only,2,{f,6}}.
+
+
+{function, record_arg, 0, 29}.
+  {label,28}.
+    {line,[{location,"lc_tests_opt.erl",63}]}.
+    {func_info,{atom,lc_tests_opt},{atom,record_arg},0}.
+  {label,29}.
+    {move,{integer,50},{x,1}}.
+    {move,{integer,50},{x,0}}.
+    {call_only,2,{f,9}}.
+
+
+{function, all_tests, 0, 31}.
+  {label,30}.
+    {line,[{location,"lc_tests_opt.erl",66}]}.
+    {func_info,{atom,lc_tests_opt},{atom,all_tests},0}.
+  {label,31}.
+    {allocate_zero,17,0}.
+    {move,{integer,50},{x,1}}.
+    {move,{integer,500},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",68}]}.
+    {call,2,{f,6}}.
+    {move,{x,0},{y,16}}.
+    {move,{integer,50},{x,1}}.
+    {move,{integer,500},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",69}]}.
+    {call,2,{f,9}}.
+    {move,{x,0},{y,15}}.
+    {make_fun2,{f,165},0,0,0}.
+    {move,{x,0},{y,14}}.
+    {make_fun2,{f,163},0,0,0}.
+    {move,{x,0},{y,13}}.
+    {make_fun2,{f,161},0,0,0}.
+    {move,{x,0},{y,12}}.
+    {make_fun2,{f,159},0,0,0}.
+    {move,{x,0},{y,11}}.
+    {make_fun2,{f,157},0,0,0}.
+    {test_heap,2,1}.
+    {put_list,{y,16},nil,{y,9}}.
+    {move,{x,0},{y,10}}.
+    {make_fun2,{f,155},0,0,0}.
+    {test_heap,2,1}.
+    {put_list,{y,15},nil,{y,7}}.
+    {move,{x,0},{y,8}}.
+    {make_fun2,{f,153},0,0,0}.
+    {test_heap,4,1}.
+    {put_list,{y,16},nil,{x,1}}.
+    {put_list,{atom,param},{x,1},{y,5}}.
+    {move,{x,0},{y,6}}.
+    {make_fun2,{f,151},0,0,0}.
+    {test_heap,2,1}.
+    {put_list,{y,15},nil,{y,4}}.
+    {move,{x,0},{y,15}}.
+    {make_fun2,{f,149},0,0,0}.
+    {move,{x,0},{y,3}}.
+    {make_fun2,{f,147},0,0,0}.
+    {move,{x,0},{y,2}}.
+    {make_fun2,{f,145},0,0,0}.
+    {move,{x,0},{y,1}}.
+    {make_fun2,{f,143},0,0,0}.
+    {move,{x,0},{y,0}}.
+    {make_fun2,{f,141},0,0,0}.
+    {test_heap,80,1}.
+    {put_list,{y,16},nil,{x,1}}.
+    {put_tuple,3,{x,2}}.
+    {put,{literal,"nested_lc_gen"}}.
+    {put,{x,0}}.
+    {put,{x,1}}.
+    {put_list,{x,2},nil,{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"intermediary_list3"}}.
+    {put,{y,0}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"intermediary_list2"}}.
+    {put,{y,1}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"intermediary_list"}}.
+    {put,{y,2}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"make_n"}}.
+    {put,{y,3}}.
+    {put,{literal,[{param1,param2},500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"sorted_gen"}}.
+    {put,{y,15}}.
+    {put,{y,4}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"function_param"}}.
+    {put,{y,6}}.
+    {put,{y,5}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"record_extract"}}.
+    {put,{y,8}}.
+    {put,{y,7}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"single_filter"}}.
+    {put,{y,10}}.
+    {put,{y,9}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"pen2"}}.
+    {put,{y,11}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"pen"}}.
+    {put,{y,12}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {put_tuple,3,{x,1}}.
+    {put,{literal,"ses"}}.
+    {put,{y,13}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,1},{x,0},{x,1}}.
+    {put_tuple,3,{x,2}}.
+    {put,{literal,"ss"}}.
+    {put,{y,14}}.
+    {put,{literal,[500]}}.
+    {put_list,{x,2},{x,1},{x,0}}.
+    {deallocate,17}.
+    return.
+
+
+{function, ss, 1, 33}.
+  {label,32}.
+    {line,[{location,"lc_tests_opt.erl",88}]}.
+    {func_info,{atom,lc_tests_opt},{atom,ss},1}.
+  {label,33}.
+    {test,is_integer,{f,32},[{x,0}]}.
     {allocate,0,1}.
     {move,{x,0},{x,1}}.
     {move,{integer,1},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
-    {call,1,{f,121}}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
+    {call,1,{f,138}}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
     {call_ext_last,1,{extfunc,lists,sum,1},0}.
 
 
-{function, pen, 1, 24}.
-  {label,23}.
-    {line,[{location,"lc_tests_opt.erl",67}]}.
+{function, ses, 1, 35}.
+  {label,34}.
+    {line,[{location,"lc_tests_opt.erl",92}]}.
+    {func_info,{atom,lc_tests_opt},{atom,ses},1}.
+  {label,35}.
+    {test,is_integer,{f,34},[{x,0}]}.
+    {allocate,0,1}.
+    {move,{x,0},{x,1}}.
+    {move,{integer,1},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
+    {call_ext,2,{extfunc,lists,seq,2}}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
+    {call,1,{f,134}}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
+    {call_ext_last,1,{extfunc,lists,sum,1},0}.
+
+
+{function, pen, 1, 37}.
+  {label,36}.
+    {line,[{location,"lc_tests_opt.erl",97}]}.
     {func_info,{atom,lc_tests_opt},{atom,pen},1}.
-  {label,24}.
+  {label,37}.
+    {test,is_integer,{f,36},[{x,0}]}.
     {allocate,1,1}.
     {move,{x,0},{x,1}}.
     {move,{integer,1},{x,0}}.
     {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",68}]}.
+    {line,[{location,"lc_tests_opt.erl",98}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
     {move,{y,0},{x,1}}.
-    {call_last,2,{f,111},1}.
+    {call_last,2,{f,124},1}.
 
 
-{function, pen2, 1, 26}.
-  {label,25}.
-    {line,[{location,"lc_tests_opt.erl",74}]}.
+{function, pen2, 1, 39}.
+  {label,38}.
+    {line,[{location,"lc_tests_opt.erl",104}]}.
     {func_info,{atom,lc_tests_opt},{atom,pen2},1}.
-  {label,26}.
+  {label,39}.
+    {test,is_integer,{f,38},[{x,0}]}.
     {allocate,1,1}.
     {move,{x,0},{x,1}}.
     {move,{integer,1},{x,0}}.
     {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",75}]}.
+    {line,[{location,"lc_tests_opt.erl",105}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
     {move,{y,0},{x,1}}.
-    {call_last,2,{f,101},1}.
+    {call_last,2,{f,114},1}.
 
 
-{function, single_filter, 1, 28}.
-  {label,27}.
-    {line,[{location,"lc_tests_opt.erl",84}]}.
+{function, single_filter, 1, 41}.
+  {label,40}.
+    {line,[{location,"lc_tests_opt.erl",114}]}.
     {func_info,{atom,lc_tests_opt},{atom,single_filter},1}.
-  {label,28}.
-    {call_only,1,{f,97}}.
+  {label,41}.
+    {test,is_list,{f,40},[{x,0}]}.
+    {call_only,1,{f,110}}.
 
 
-{function, record_extract, 1, 30}.
-  {label,29}.
-    {line,[{location,"lc_tests_opt.erl",90}]}.
+{function, record_extract, 1, 43}.
+  {label,42}.
+    {line,[{location,"lc_tests_opt.erl",120}]}.
     {func_info,{atom,lc_tests_opt},{atom,record_extract},1}.
-  {label,30}.
-    {call_only,1,{f,93}}.
+  {label,43}.
+    {test,is_list,{f,42},[{x,0}]}.
+    {call_only,1,{f,106}}.
 
 
-{function, function_param_lc, 2, 32}.
-  {label,31}.
-    {line,[{location,"lc_tests_opt.erl",94}]}.
+{function, function_param_lc, 2, 45}.
+  {label,44}.
+    {line,[{location,"lc_tests_opt.erl",124}]}.
     {func_info,{atom,lc_tests_opt},{atom,function_param_lc},2}.
-  {label,32}.
+  {label,45}.
+    {test,is_list,{f,44},[{x,1}]}.
     {move,{x,1},{x,2}}.
     {move,{x,0},{x,1}}.
     {move,{x,2},{x,0}}.
-    {call_only,2,{f,89}}.
+    {call_only,2,{f,102}}.
 
 
-{function, sorted_gen, 1, 34}.
-  {label,33}.
-    {line,[{location,"lc_tests_opt.erl",98}]}.
+{function, sorted_gen, 1, 47}.
+  {label,46}.
+    {line,[{location,"lc_tests_opt.erl",128}]}.
     {func_info,{atom,lc_tests_opt},{atom,sorted_gen},1}.
-  {label,34}.
+  {label,47}.
+    {test,is_list,{f,46},[{x,0}]}.
     {allocate,1,1}.
     {move,{x,0},{y,0}}.
-    {make_fun2,{f,82},0,0,0}.
+    {make_fun2,{f,95},0,0,0}.
     {move,{y,0},{x,1}}.
     {trim,1,0}.
-    {line,[{location,"lc_tests_opt.erl",100}]}.
+    {line,[{location,"lc_tests_opt.erl",130}]}.
     {call_ext,2,{extfunc,lists,sort,2}}.
-    {call_last,1,{f,85},0}.
+    {call_last,1,{f,98},0}.
 
 
-{function, make_n, 2, 36}.
-  {label,35}.
-    {line,[{location,"lc_tests_opt.erl",108}]}.
+{function, make_n, 2, 49}.
+  {label,48}.
+    {line,[{location,"lc_tests_opt.erl",138}]}.
     {func_info,{atom,lc_tests_opt},{atom,make_n},2}.
-  {label,36}.
+  {label,49}.
+    {test,is_integer,{f,48},[{x,1}]}.
     {allocate,1,2}.
     {move,{x,0},{y,0}}.
     {move,{integer,1},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",109}]}.
+    {line,[{location,"lc_tests_opt.erl",139}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
     {move,{y,0},{x,1}}.
-    {call_last,2,{f,78},1}.
+    {call_last,2,{f,91},1}.
 
 
-{function, intermediary_list, 1, 38}.
-  {label,37}.
-    {line,[{location,"lc_tests_opt.erl",112}]}.
+{function, intermediary_list, 1, 51}.
+  {label,50}.
+    {line,[{location,"lc_tests_opt.erl",142}]}.
     {func_info,{atom,lc_tests_opt},{atom,intermediary_list},1}.
-  {label,38}.
+  {label,51}.
+    {test,is_integer,{f,50},[{x,0}]}.
     {allocate,0,1}.
     {move,{integer,50},{x,1}}.
-    {line,[{location,"lc_tests_opt.erl",113}]}.
+    {line,[{location,"lc_tests_opt.erl",143}]}.
     {call,2,{f,9}}.
-    {call_last,1,{f,74},0}.
+    {call_last,1,{f,87},0}.
 
 
-{function, intermediary_list2, 1, 40}.
-  {label,39}.
-    {line,[{location,"lc_tests_opt.erl",116}]}.
+{function, intermediary_list2, 1, 53}.
+  {label,52}.
+    {line,[{location,"lc_tests_opt.erl",146}]}.
     {func_info,{atom,lc_tests_opt},{atom,intermediary_list2},1}.
-  {label,40}.
+  {label,53}.
+    {test,is_integer,{f,52},[{x,0}]}.
     {allocate,0,1}.
     {move,{integer,50},{x,1}}.
-    {line,[{location,"lc_tests_opt.erl",117}]}.
+    {line,[{location,"lc_tests_opt.erl",147}]}.
     {call,2,{f,9}}.
-    {line,[{location,"lc_tests_opt.erl",118}]}.
-    {call,1,{f,70}}.
+    {line,[{location,"lc_tests_opt.erl",148}]}.
+    {call,1,{f,83}}.
+    {call_last,1,{f,80},0}.
+
+
+{function, intermediary_list3, 1, 55}.
+  {label,54}.
+    {line,[{location,"lc_tests_opt.erl",151}]}.
+    {func_info,{atom,lc_tests_opt},{atom,intermediary_list3},1}.
+  {label,55}.
+    {test,is_integer,{f,54},[{x,0}]}.
+    {allocate,0,1}.
+    {move,{integer,50},{x,1}}.
+    {line,[{location,"lc_tests_opt.erl",152}]}.
+    {call,2,{f,9}}.
+    {line,[{location,"lc_tests_opt.erl",153}]}.
+    {call,1,{f,77}}.
+    {line,[{location,"lc_tests_opt.erl",154}]}.
+    {call,1,{f,74}}.
+    {call_last,1,{f,70},0}.
+
+
+{function, nested_lc_gen, 1, 57}.
+  {label,56}.
+    {line,[{location,"lc_tests_opt.erl",161}]}.
+    {func_info,{atom,lc_tests_opt},{atom,nested_lc_gen},1}.
+  {label,57}.
+    {test,is_list,{f,56},[{x,0}]}.
+    {allocate,0,1}.
+    {line,[{location,"lc_tests_opt.erl",163}]}.
+    {call,1,{f,63}}.
     {call_last,1,{f,67},0}.
 
 
-{function, intermediary_list3, 1, 42}.
-  {label,41}.
-    {line,[{location,"lc_tests_opt.erl",121}]}.
-    {func_info,{atom,lc_tests_opt},{atom,intermediary_list3},1}.
-  {label,42}.
-    {allocate,0,1}.
-    {move,{integer,50},{x,1}}.
-    {line,[{location,"lc_tests_opt.erl",122}]}.
-    {call,2,{f,9}}.
-    {line,[{location,"lc_tests_opt.erl",123}]}.
-    {call,1,{f,64}}.
-    {line,[{location,"lc_tests_opt.erl",124}]}.
-    {call,1,{f,61}}.
-    {call_last,1,{f,57},0}.
-
-
-{function, nested_lc_gen, 1, 44}.
-  {label,43}.
-    {line,[{location,"lc_tests_opt.erl",131}]}.
-    {func_info,{atom,lc_tests_opt},{atom,nested_lc_gen},1}.
-  {label,44}.
-    {allocate,0,1}.
-    {line,[{location,"lc_tests_opt.erl",133}]}.
-    {call,1,{f,50}}.
-    {call_last,1,{f,54},0}.
-
-
-{function, module_info, 0, 46}.
-  {label,45}.
+{function, module_info, 0, 59}.
+  {label,58}.
     {line,[]}.
     {func_info,{atom,lc_tests_opt},{atom,module_info},0}.
-  {label,46}.
+  {label,59}.
     {move,{atom,lc_tests_opt},{x,0}}.
     {line,[]}.
     {call_ext_only,1,{extfunc,erlang,get_module_info,1}}.
 
 
-{function, module_info, 1, 48}.
-  {label,47}.
+{function, module_info, 1, 61}.
+  {label,60}.
     {line,[]}.
     {func_info,{atom,lc_tests_opt},{atom,module_info},1}.
-  {label,48}.
+  {label,61}.
     {move,{x,0},{x,1}}.
     {move,{atom,lc_tests_opt},{x,0}}.
     {line,[]}.
     {call_ext_only,2,{extfunc,erlang,get_module_info,2}}.
 
 
-{function, '-nested_lc_gen/1-lc$^0/1-1-', 1, 50}.
-  {label,49}.
-    {line,[{location,"lc_tests_opt.erl",133}]}.
+{function, '-nested_lc_gen/1-lc$^0/1-1-', 1, 63}.
+  {label,62}.
+    {line,[{location,"lc_tests_opt.erl",163}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-nested_lc_gen/1-lc$^0/1-1-'},1}.
-  {label,50}.
-    {test,is_nonempty_list,{f,52},[{x,0}]}.
+  {label,63}.
+    {test,is_nonempty_list,{f,65},[{x,0}]}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {gc_bif,'rem',{f,51},3,[{x,1},{integer,2}],{x,3}}.
-    {test,is_eq_exact,{f,51},[{x,3},{integer,1}]}.
+    {gc_bif,'rem',{f,64},3,[{x,1},{integer,2}],{x,3}}.
+    {test,is_eq_exact,{f,64},[{x,3},{integer,1}]}.
     {allocate,1,3}.
     {move,{x,2},{x,0}}.
     {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",133}]}.
-    {call,1,{f,50}}.
+    {line,[{location,"lc_tests_opt.erl",163}]}.
+    {call,1,{f,63}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,51}.
+  {label,64}.
     {move,{x,2},{x,0}}.
-    {call_only,1,{f,50}}.
-  {label,52}.
-    {test,is_nil,{f,49},[{x,0}]}.
+    {call_only,1,{f,63}}.
+  {label,65}.
+    {test,is_nil,{f,62},[{x,0}]}.
     return.
 
 
-{function, '-nested_lc_gen/1-lc$^1/1-0-', 1, 54}.
-  {label,53}.
-    {line,[{location,"lc_tests_opt.erl",132}]}.
+{function, '-nested_lc_gen/1-lc$^1/1-0-', 1, 67}.
+  {label,66}.
+    {line,[{location,"lc_tests_opt.erl",162}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-nested_lc_gen/1-lc$^1/1-0-'},1}.
-  {label,54}.
-    {test,is_nonempty_list,{f,55},[{x,0}]}.
+  {label,67}.
+    {test,is_nonempty_list,{f,68},[{x,0}]}.
     {allocate_zero,2,1}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {line,[{location,"lc_tests_opt.erl",132}]}.
+    {line,[{location,"lc_tests_opt.erl",162}]}.
     {gc_bif,'*',{f,0},3,[{x,1},{x,1}],{y,0}}.
     {move,{x,2},{x,0}}.
     {move,{x,1},{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",133}]}.
-    {call,1,{f,54}}.
+    {line,[{location,"lc_tests_opt.erl",163}]}.
+    {call,1,{f,67}}.
     {test_heap,6,1}.
     {put_tuple,3,{x,1}}.
     {put,{atom,test_record}}.
@@ -431,387 +632,298 @@
     {put_list,{x,1},{x,0},{x,0}}.
     {deallocate,2}.
     return.
-  {label,55}.
-    {test,is_nil,{f,53},[{x,0}]}.
-    return.
-
-
-{function, '-intermediary_list3/1-lc$^2/1-2-', 1, 57}.
-  {label,56}.
-    {line,[{location,"lc_tests_opt.erl",125}]}.
-    {func_info,{atom,lc_tests_opt},
-               {atom,'-intermediary_list3/1-lc$^2/1-2-'},
-               1}.
-  {label,57}.
-    {test,is_nonempty_list,{f,59},[{x,0}]}.
-    {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_tuple,{f,58},[{x,1}]}.
-    {test,test_arity,{f,58},[{x,1},2]}.
-    {get_tuple_element,{x,1},0,{x,3}}.
-    {get_tuple_element,{x,1},1,{x,4}}.
-    {test,is_tuple,{f,58},[{x,4}]}.
-    {test,test_arity,{f,58},[{x,4},2]}.
-    {get_tuple_element,{x,4},0,{x,5}}.
-    {get_tuple_element,{x,4},1,{x,6}}.
-    {test,is_tuple,{f,58},[{x,6}]}.
-    {test,test_arity,{f,58},[{x,6},3]}.
-    {get_tuple_element,{x,6},0,{x,7}}.
-    {get_tuple_element,{x,6},1,{x,8}}.
-    {get_tuple_element,{x,6},2,{x,9}}.
-    {test,is_eq_exact,{f,58},[{x,7},{atom,test_record}]}.
-    {allocate_zero,1,10}.
-    {line,[{location,"lc_tests_opt.erl",125}]}.
-    {gc_bif,'*',{f,0},10,[{x,3},{x,5}],{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",125}]}.
-    {gc_bif,'*',{f,0},10,[{x,0},{x,8}],{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",125}]}.
-    {gc_bif,'*',{f,0},10,[{x,0},{x,9}],{y,0}}.
-    {move,{x,2},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",125}]}.
-    {call,1,{f,57}}.
-    {test_heap,2,1}.
-    {put_list,{y,0},{x,0},{x,0}}.
-    {deallocate,1}.
-    return.
-  {label,58}.
-    {move,{x,2},{x,0}}.
-    {call_only,1,{f,57}}.
-  {label,59}.
-    {test,is_nil,{f,56},[{x,0}]}.
-    return.
-
-
-{function, '-intermediary_list3/1-lc$^1/1-1-', 1, 61}.
-  {label,60}.
-    {line,[{location,"lc_tests_opt.erl",124}]}.
-    {func_info,{atom,lc_tests_opt},
-               {atom,'-intermediary_list3/1-lc$^1/1-1-'},
-               1}.
-  {label,61}.
-    {test,is_nonempty_list,{f,62},[{x,0}]}.
-    {allocate,2,1}.
-    {get_list,{x,0},{y,1},{y,0}}.
-    {move,{integer,100},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",124}]}.
-    {call_ext,1,{extfunc,random,uniform,1}}.
-    {move,{x,0},{x,1}}.
-    {move,{y,0},{x,0}}.
-    {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",124}]}.
-    {call,1,{f,61}}.
-    {test_heap,5,1}.
-    {put_tuple,2,{x,1}}.
-    {put,{y,0}}.
-    {put,{y,1}}.
-    {put_list,{x,1},{x,0},{x,0}}.
-    {deallocate,2}.
-    return.
-  {label,62}.
-    {test,is_nil,{f,60},[{x,0}]}.
-    return.
-
-
-{function, '-intermediary_list3/1-lc$^0/1-0-', 1, 64}.
-  {label,63}.
-    {line,[{location,"lc_tests_opt.erl",123}]}.
-    {func_info,{atom,lc_tests_opt},
-               {atom,'-intermediary_list3/1-lc$^0/1-0-'},
-               1}.
-  {label,64}.
-    {test,is_nonempty_list,{f,65},[{x,0}]}.
-    {allocate,2,1}.
-    {get_list,{x,0},{y,1},{y,0}}.
-    {move,{integer,50},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",123}]}.
-    {call_ext,1,{extfunc,random,uniform,1}}.
-    {move,{x,0},{x,1}}.
-    {move,{y,0},{x,0}}.
-    {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",123}]}.
-    {call,1,{f,64}}.
-    {test_heap,5,1}.
-    {put_tuple,2,{x,1}}.
-    {put,{y,0}}.
-    {put,{y,1}}.
-    {put_list,{x,1},{x,0},{x,0}}.
-    {deallocate,2}.
-    return.
-  {label,65}.
-    {test,is_nil,{f,63},[{x,0}]}.
-    return.
-
-
-{function, '-intermediary_list2/1-lc$^1/1-1-', 1, 67}.
-  {label,66}.
-    {line,[{location,"lc_tests_opt.erl",119}]}.
-    {func_info,{atom,lc_tests_opt},
-               {atom,'-intermediary_list2/1-lc$^1/1-1-'},
-               1}.
-  {label,67}.
-    {test,is_nonempty_list,{f,68},[{x,0}]}.
-    {allocate_zero,1,1}.
-    {get_list,{x,0},{x,1},{x,2}}.
-    {line,[{location,"lc_tests_opt.erl",119}]}.
-    {gc_bif,'*',{f,0},3,[{x,1},{x,1}],{y,0}}.
-    {move,{x,2},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",119}]}.
-    {call,1,{f,67}}.
-    {test_heap,2,1}.
-    {put_list,{y,0},{x,0},{x,0}}.
-    {deallocate,1}.
-    return.
   {label,68}.
     {test,is_nil,{f,66},[{x,0}]}.
     return.
 
 
-{function, '-intermediary_list2/1-lc$^0/1-0-', 1, 70}.
+{function, '-intermediary_list3/1-lc$^2/1-2-', 1, 70}.
   {label,69}.
-    {line,[{location,"lc_tests_opt.erl",118}]}.
+    {line,[{location,"lc_tests_opt.erl",155}]}.
     {func_info,{atom,lc_tests_opt},
-               {atom,'-intermediary_list2/1-lc$^0/1-0-'},
+               {atom,'-intermediary_list3/1-lc$^2/1-2-'},
                1}.
   {label,70}.
-    {test,is_nonempty_list,{f,71},[{x,0}]}.
-    {allocate_zero,1,1}.
+    {test,is_nonempty_list,{f,72},[{x,0}]}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_tuple,{f,72},[{x,1}]}.
-    {test,test_arity,{f,72},[{x,1},3]}.
-    {get_tuple_element,{x,1},0,{x,0}}.
-    {get_tuple_element,{x,1},2,{x,3}}.
-    {test,is_eq_exact,{f,72},[{x,0},{atom,test_record}]}.
+    {test,is_tuple,{f,71},[{x,1}]}.
+    {test,test_arity,{f,71},[{x,1},2]}.
+    {get_tuple_element,{x,1},0,{x,3}}.
+    {get_tuple_element,{x,1},1,{x,4}}.
+    {test,is_tuple,{f,71},[{x,4}]}.
+    {test,test_arity,{f,71},[{x,4},2]}.
+    {get_tuple_element,{x,4},0,{x,5}}.
+    {get_tuple_element,{x,4},1,{x,6}}.
+    {test,is_tuple,{f,71},[{x,6}]}.
+    {test,test_arity,{f,71},[{x,6},3]}.
+    {get_tuple_element,{x,6},0,{x,7}}.
+    {get_tuple_element,{x,6},1,{x,8}}.
+    {get_tuple_element,{x,6},2,{x,9}}.
+    {test,is_eq_exact,{f,71},[{x,7},{atom,test_record}]}.
+    {allocate_zero,1,10}.
+    {line,[{location,"lc_tests_opt.erl",155}]}.
+    {gc_bif,'*',{f,0},10,[{x,3},{x,5}],{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",155}]}.
+    {gc_bif,'*',{f,0},10,[{x,0},{x,8}],{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",155}]}.
+    {gc_bif,'*',{f,0},10,[{x,0},{x,9}],{y,0}}.
     {move,{x,2},{x,0}}.
-    {move,{x,3},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",118}]}.
+    {line,[{location,"lc_tests_opt.erl",155}]}.
     {call,1,{f,70}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
   {label,71}.
+    {move,{x,2},{x,0}}.
+    {call_only,1,{f,70}}.
+  {label,72}.
     {test,is_nil,{f,69},[{x,0}]}.
     return.
-  {label,72}.
-    {move,{literal,{badrecord,test_record}},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",118}]}.
-    {call_ext,1,{extfunc,erlang,error,1}}.
 
 
-{function, '-intermediary_list/1-lc$^0/1-0-', 1, 74}.
+{function, '-intermediary_list3/1-lc$^1/1-1-', 1, 74}.
   {label,73}.
-    {line,[{location,"lc_tests_opt.erl",114}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-intermediary_list/1-lc$^0/1-0-'},1}.
+    {line,[{location,"lc_tests_opt.erl",154}]}.
+    {func_info,{atom,lc_tests_opt},
+               {atom,'-intermediary_list3/1-lc$^1/1-1-'},
+               1}.
   {label,74}.
     {test,is_nonempty_list,{f,75},[{x,0}]}.
-    {allocate_zero,1,1}.
-    {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_tuple,{f,76},[{x,1}]}.
-    {test,test_arity,{f,76},[{x,1},3]}.
-    {get_tuple_element,{x,1},0,{x,0}}.
-    {get_tuple_element,{x,1},2,{x,3}}.
-    {test,is_eq_exact,{f,76},[{x,0},{atom,test_record}]}.
-    {move,{x,2},{x,0}}.
-    {move,{x,3},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",114}]}.
+    {allocate,2,1}.
+    {get_list,{x,0},{y,1},{y,0}}.
+    {move,{integer,100},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",154}]}.
+    {call_ext,1,{extfunc,random,uniform,1}}.
+    {move,{x,0},{x,1}}.
+    {move,{y,0},{x,0}}.
+    {move,{x,1},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",154}]}.
     {call,1,{f,74}}.
-    {test_heap,2,1}.
-    {put_list,{y,0},{x,0},{x,0}}.
-    {deallocate,1}.
+    {test_heap,5,1}.
+    {put_tuple,2,{x,1}}.
+    {put,{y,0}}.
+    {put,{y,1}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {deallocate,2}.
     return.
   {label,75}.
     {test,is_nil,{f,73},[{x,0}]}.
     return.
+
+
+{function, '-intermediary_list3/1-lc$^0/1-0-', 1, 77}.
   {label,76}.
+    {line,[{location,"lc_tests_opt.erl",153}]}.
+    {func_info,{atom,lc_tests_opt},
+               {atom,'-intermediary_list3/1-lc$^0/1-0-'},
+               1}.
+  {label,77}.
+    {test,is_nonempty_list,{f,78},[{x,0}]}.
+    {allocate,2,1}.
+    {get_list,{x,0},{y,1},{y,0}}.
+    {move,{integer,50},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",153}]}.
+    {call_ext,1,{extfunc,random,uniform,1}}.
+    {move,{x,0},{x,1}}.
+    {move,{y,0},{x,0}}.
+    {move,{x,1},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",153}]}.
+    {call,1,{f,77}}.
+    {test_heap,5,1}.
+    {put_tuple,2,{x,1}}.
+    {put,{y,0}}.
+    {put,{y,1}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {deallocate,2}.
+    return.
+  {label,78}.
+    {test,is_nil,{f,76},[{x,0}]}.
+    return.
+
+
+{function, '-intermediary_list2/1-lc$^1/1-1-', 1, 80}.
+  {label,79}.
+    {line,[{location,"lc_tests_opt.erl",149}]}.
+    {func_info,{atom,lc_tests_opt},
+               {atom,'-intermediary_list2/1-lc$^1/1-1-'},
+               1}.
+  {label,80}.
+    {test,is_nonempty_list,{f,81},[{x,0}]}.
+    {allocate_zero,1,1}.
+    {get_list,{x,0},{x,1},{x,2}}.
+    {line,[{location,"lc_tests_opt.erl",149}]}.
+    {gc_bif,'*',{f,0},3,[{x,1},{x,1}],{y,0}}.
+    {move,{x,2},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",149}]}.
+    {call,1,{f,80}}.
+    {test_heap,2,1}.
+    {put_list,{y,0},{x,0},{x,0}}.
+    {deallocate,1}.
+    return.
+  {label,81}.
+    {test,is_nil,{f,79},[{x,0}]}.
+    return.
+
+
+{function, '-intermediary_list2/1-lc$^0/1-0-', 1, 83}.
+  {label,82}.
+    {line,[{location,"lc_tests_opt.erl",148}]}.
+    {func_info,{atom,lc_tests_opt},
+               {atom,'-intermediary_list2/1-lc$^0/1-0-'},
+               1}.
+  {label,83}.
+    {test,is_nonempty_list,{f,84},[{x,0}]}.
+    {allocate_zero,1,1}.
+    {get_list,{x,0},{x,1},{x,2}}.
+    {test,is_tuple,{f,85},[{x,1}]}.
+    {test,test_arity,{f,85},[{x,1},3]}.
+    {get_tuple_element,{x,1},0,{x,0}}.
+    {get_tuple_element,{x,1},2,{x,3}}.
+    {test,is_eq_exact,{f,85},[{x,0},{atom,test_record}]}.
+    {move,{x,2},{x,0}}.
+    {move,{x,3},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",148}]}.
+    {call,1,{f,83}}.
+    {test_heap,2,1}.
+    {put_list,{y,0},{x,0},{x,0}}.
+    {deallocate,1}.
+    return.
+  {label,84}.
+    {test,is_nil,{f,82},[{x,0}]}.
+    return.
+  {label,85}.
     {move,{literal,{badrecord,test_record}},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",114}]}.
+    {line,[{location,"lc_tests_opt.erl",148}]}.
     {call_ext,1,{extfunc,erlang,error,1}}.
 
 
-{function, '-make_n/2-lc$^0/1-0-', 2, 78}.
-  {label,77}.
-    {line,[{location,"lc_tests_opt.erl",109}]}.
+{function, '-intermediary_list/1-lc$^0/1-0-', 1, 87}.
+  {label,86}.
+    {line,[{location,"lc_tests_opt.erl",144}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-intermediary_list/1-lc$^0/1-0-'},1}.
+  {label,87}.
+    {test,is_nonempty_list,{f,88},[{x,0}]}.
+    {allocate_zero,1,1}.
+    {get_list,{x,0},{x,1},{x,2}}.
+    {test,is_tuple,{f,89},[{x,1}]}.
+    {test,test_arity,{f,89},[{x,1},3]}.
+    {get_tuple_element,{x,1},0,{x,0}}.
+    {get_tuple_element,{x,1},2,{x,3}}.
+    {test,is_eq_exact,{f,89},[{x,0},{atom,test_record}]}.
+    {move,{x,2},{x,0}}.
+    {move,{x,3},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",144}]}.
+    {call,1,{f,87}}.
+    {test_heap,2,1}.
+    {put_list,{y,0},{x,0},{x,0}}.
+    {deallocate,1}.
+    return.
+  {label,88}.
+    {test,is_nil,{f,86},[{x,0}]}.
+    return.
+  {label,89}.
+    {move,{literal,{badrecord,test_record}},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",144}]}.
+    {call_ext,1,{extfunc,erlang,error,1}}.
+
+
+{function, '-make_n/2-lc$^0/1-0-', 2, 91}.
+  {label,90}.
+    {line,[{location,"lc_tests_opt.erl",139}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-make_n/2-lc$^0/1-0-'},2}.
-  {label,78}.
-    {test,is_nonempty_list,{f,79},[{x,0}]}.
+  {label,91}.
+    {test,is_nonempty_list,{f,92},[{x,0}]}.
     {allocate,1,2}.
     {get_list,{x,0},{x,2},{x,0}}.
     {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",109}]}.
-    {call,2,{f,78}}.
+    {line,[{location,"lc_tests_opt.erl",139}]}.
+    {call,2,{f,91}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,79}.
-    {test,is_nil,{f,80},[{x,0}]}.
+  {label,92}.
+    {test,is_nil,{f,93},[{x,0}]}.
     return.
-  {label,80}.
+  {label,93}.
     {test_heap,2,1}.
     {put_list,{x,0},nil,{x,1}}.
     {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",109}]}.
+    {line,[{location,"lc_tests_opt.erl",139}]}.
     {call_ext,2,{extfunc,erlang,error,2}}.
 
 
-{function, '-sorted_gen/1-fun-0-', 2, 82}.
-  {label,81}.
-    {line,[{location,"lc_tests_opt.erl",100}]}.
+{function, '-sorted_gen/1-fun-0-', 2, 95}.
+  {label,94}.
+    {line,[{location,"lc_tests_opt.erl",130}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-sorted_gen/1-fun-0-'},2}.
-  {label,82}.
-    {test,is_tuple,{f,83},[{x,0}]}.
-    {test,test_arity,{f,83},[{x,0},3]}.
+  {label,95}.
+    {test,is_tuple,{f,96},[{x,0}]}.
+    {test,test_arity,{f,96},[{x,0},3]}.
     {get_tuple_element,{x,0},0,{x,2}}.
     {get_tuple_element,{x,0},1,{x,3}}.
-    {test,is_eq_exact,{f,83},[{x,2},{atom,test_record}]}.
-    {test,is_tuple,{f,83},[{x,1}]}.
-    {test,test_arity,{f,83},[{x,1},3]}.
+    {test,is_eq_exact,{f,96},[{x,2},{atom,test_record}]}.
+    {test,is_tuple,{f,96},[{x,1}]}.
+    {test,test_arity,{f,96},[{x,1},3]}.
     {get_tuple_element,{x,1},0,{x,0}}.
     {get_tuple_element,{x,1},1,{x,2}}.
-    {test,is_eq_exact,{f,83},[{x,0},{atom,test_record}]}.
+    {test,is_eq_exact,{f,96},[{x,0},{atom,test_record}]}.
     {bif,'<',{f,0},[{x,3},{x,2}],{x,0}}.
     return.
-  {label,83}.
+  {label,96}.
     {move,{literal,{badrecord,test_record}},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",101}]}.
+    {line,[{location,"lc_tests_opt.erl",131}]}.
     {call_ext,1,{extfunc,erlang,error,1}}.
 
 
-{function, '-sorted_gen/1-lc$^0/1-0-', 1, 85}.
-  {label,84}.
-    {line,[{location,"lc_tests_opt.erl",99}]}.
+{function, '-sorted_gen/1-lc$^0/1-0-', 1, 98}.
+  {label,97}.
+    {line,[{location,"lc_tests_opt.erl",129}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-sorted_gen/1-lc$^0/1-0-'},1}.
-  {label,85}.
-    {test,is_nonempty_list,{f,86},[{x,0}]}.
+  {label,98}.
+    {test,is_nonempty_list,{f,99},[{x,0}]}.
     {allocate_zero,1,1}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_tuple,{f,87},[{x,1}]}.
-    {test,test_arity,{f,87},[{x,1},3]}.
+    {test,is_tuple,{f,100},[{x,1}]}.
+    {test,test_arity,{f,100},[{x,1},3]}.
     {get_tuple_element,{x,1},0,{x,0}}.
     {get_tuple_element,{x,1},1,{x,3}}.
-    {test,is_eq_exact,{f,87},[{x,0},{atom,test_record}]}.
+    {test,is_eq_exact,{f,100},[{x,0},{atom,test_record}]}.
     {move,{x,2},{x,0}}.
     {move,{x,3},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",100}]}.
-    {call,1,{f,85}}.
+    {line,[{location,"lc_tests_opt.erl",130}]}.
+    {call,1,{f,98}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,86}.
-    {test,is_nil,{f,84},[{x,0}]}.
+  {label,99}.
+    {test,is_nil,{f,97},[{x,0}]}.
     return.
-  {label,87}.
+  {label,100}.
     {move,{literal,{badrecord,test_record}},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",99}]}.
+    {line,[{location,"lc_tests_opt.erl",129}]}.
     {call_ext,1,{extfunc,erlang,error,1}}.
 
 
-{function, '-function_param_lc/2-lc$^0/1-0-', 2, 89}.
-  {label,88}.
-    {line,[{location,"lc_tests_opt.erl",95}]}.
+{function, '-function_param_lc/2-lc$^0/1-0-', 2, 102}.
+  {label,101}.
+    {line,[{location,"lc_tests_opt.erl",125}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-function_param_lc/2-lc$^0/1-0-'},2}.
-  {label,89}.
-    {test,is_nonempty_list,{f,90},[{x,0}]}.
+  {label,102}.
+    {test,is_nonempty_list,{f,103},[{x,0}]}.
     {allocate,2,2}.
     {get_list,{x,0},{y,0},{x,0}}.
     {move,{x,1},{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",95}]}.
-    {call,2,{f,89}}.
+    {line,[{location,"lc_tests_opt.erl",125}]}.
+    {call,2,{f,102}}.
     {test_heap,6,1}.
     {put_list,{y,0},nil,{x,1}}.
     {put_list,{y,1},{x,1},{x,1}}.
     {put_list,{x,1},{x,0},{x,0}}.
     {deallocate,2}.
     return.
-  {label,90}.
-    {test,is_nil,{f,91},[{x,0}]}.
-    return.
-  {label,91}.
-    {test_heap,2,1}.
-    {put_list,{x,0},nil,{x,1}}.
-    {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",95}]}.
-    {call_ext,2,{extfunc,erlang,error,2}}.
-
-
-{function, '-record_extract/1-lc$^0/1-0-', 1, 93}.
-  {label,92}.
-    {line,[{location,"lc_tests_opt.erl",91}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-record_extract/1-lc$^0/1-0-'},1}.
-  {label,93}.
-    {test,is_nonempty_list,{f,94},[{x,0}]}.
-    {allocate_zero,1,1}.
-    {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_tuple,{f,95},[{x,1}]}.
-    {test,test_arity,{f,95},[{x,1},3]}.
-    {get_tuple_element,{x,1},0,{x,0}}.
-    {get_tuple_element,{x,1},1,{x,3}}.
-    {test,is_eq_exact,{f,95},[{x,0},{atom,test_record}]}.
-    {move,{x,2},{x,0}}.
-    {move,{x,3},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",91}]}.
-    {call,1,{f,93}}.
-    {test_heap,2,1}.
-    {put_list,{y,0},{x,0},{x,0}}.
-    {deallocate,1}.
-    return.
-  {label,94}.
-    {test,is_nil,{f,92},[{x,0}]}.
-    return.
-  {label,95}.
-    {move,{literal,{badrecord,test_record}},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",91}]}.
-    {call_ext,1,{extfunc,erlang,error,1}}.
-
-
-{function, '-single_filter/1-lc$^0/1-0-', 1, 97}.
-  {label,96}.
-    {line,[{location,"lc_tests_opt.erl",85}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-single_filter/1-lc$^0/1-0-'},1}.
-  {label,97}.
-    {test,is_nonempty_list,{f,99},[{x,0}]}.
-    {get_list,{x,0},{x,1},{x,2}}.
-    {test,is_integer,{f,98},[{x,1}]}.
-    {allocate,1,3}.
-    {move,{x,2},{x,0}}.
-    {move,{x,1},{y,0}}.
-    {line,[{location,"lc_tests_opt.erl",85}]}.
-    {call,1,{f,97}}.
-    {test_heap,2,1}.
-    {put_list,{y,0},{x,0},{x,0}}.
-    {deallocate,1}.
-    return.
-  {label,98}.
-    {move,{x,2},{x,0}}.
-    {call_only,1,{f,97}}.
-  {label,99}.
-    {test,is_nil,{f,96},[{x,0}]}.
-    return.
-
-
-{function, '-pen2/1-lc$^0/1-0-', 2, 101}.
-  {label,100}.
-    {line,[{location,"lc_tests_opt.erl",75}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-pen2/1-lc$^0/1-0-'},2}.
-  {label,101}.
-    {test,is_nonempty_list,{f,103},[{x,0}]}.
-    {get_list,{x,0},{x,2},{x,3}}.
-    {gc_bif,'rem',{f,102},4,[{x,2},{integer,2}],{x,4}}.
-    {test,is_eq_exact,{f,102},[{x,4},{integer,0}]}.
-    {allocate,3,4}.
-    {move,{integer,1},{x,0}}.
-    {move,{x,1},{y,0}}.
-    {move,{x,3},{y,1}}.
-    {move,{x,2},{y,2}}.
-    {line,[{location,"lc_tests_opt.erl",77}]}.
-    {call_ext,2,{extfunc,lists,seq,2}}.
-    {move,{y,1},{x,2}}.
-    {move,{y,2},{x,3}}.
-    {move,{y,0},{x,1}}.
-    {call_last,4,{f,106},3}.
-  {label,102}.
-    {move,{x,3},{x,0}}.
-    {call_only,2,{f,101}}.
   {label,103}.
     {test,is_nil,{f,104},[{x,0}]}.
     return.
@@ -819,233 +931,412 @@
     {test_heap,2,1}.
     {put_list,{x,0},nil,{x,1}}.
     {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",75}]}.
+    {line,[{location,"lc_tests_opt.erl",125}]}.
     {call_ext,2,{extfunc,erlang,error,2}}.
 
 
-{function, '-pen2/1-lc$^1/1-1-', 4, 106}.
+{function, '-record_extract/1-lc$^0/1-0-', 1, 106}.
   {label,105}.
-    {line,[{location,"lc_tests_opt.erl",75}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-pen2/1-lc$^1/1-1-'},4}.
+    {line,[{location,"lc_tests_opt.erl",121}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-record_extract/1-lc$^0/1-0-'},1}.
   {label,106}.
-    {test,is_nonempty_list,{f,108},[{x,0}]}.
-    {get_list,{x,0},{x,4},{x,5}}.
-    {gc_bif,'rem',{f,107},6,[{x,4},{integer,2}],{x,6}}.
-    {gc_bif,'+',{f,107},7,[{x,3},{x,4}],{x,7}}.
-    {gc_bif,'rem',{f,107},8,[{x,7},{integer,5}],{x,8}}.
-    {test,is_eq_exact,{f,107},[{x,6},{integer,1}]}.
-    {test,is_ne_exact,{f,107},[{x,8},{integer,0}]}.
-    {allocate,2,6}.
-    {move,{x,5},{x,0}}.
-    {move,{x,4},{y,0}}.
-    {move,{x,3},{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",77}]}.
-    {call,4,{f,106}}.
-    {test_heap,6,1}.
-    {put_list,{y,0},nil,{x,1}}.
-    {put_list,{y,1},{x,1},{x,1}}.
-    {put_list,{x,1},{x,0},{x,0}}.
-    {deallocate,2}.
+    {test,is_nonempty_list,{f,107},[{x,0}]}.
+    {allocate_zero,1,1}.
+    {get_list,{x,0},{x,1},{x,2}}.
+    {test,is_tuple,{f,108},[{x,1}]}.
+    {test,test_arity,{f,108},[{x,1},3]}.
+    {get_tuple_element,{x,1},0,{x,0}}.
+    {get_tuple_element,{x,1},1,{x,3}}.
+    {test,is_eq_exact,{f,108},[{x,0},{atom,test_record}]}.
+    {move,{x,2},{x,0}}.
+    {move,{x,3},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",121}]}.
+    {call,1,{f,106}}.
+    {test_heap,2,1}.
+    {put_list,{y,0},{x,0},{x,0}}.
+    {deallocate,1}.
     return.
   {label,107}.
-    {move,{x,5},{x,0}}.
-    {call_only,4,{f,106}}.
+    {test,is_nil,{f,105},[{x,0}]}.
+    return.
   {label,108}.
-    {test,is_nil,{f,109},[{x,0}]}.
-    {move,{x,2},{x,0}}.
-    {call_only,2,{f,101}}.
+    {move,{literal,{badrecord,test_record}},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",121}]}.
+    {call_ext,1,{extfunc,erlang,error,1}}.
+
+
+{function, '-single_filter/1-lc$^0/1-0-', 1, 110}.
   {label,109}.
-    {test_heap,2,1}.
-    {put_list,{x,0},nil,{x,1}}.
-    {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",75}]}.
-    {call_ext,2,{extfunc,erlang,error,2}}.
-
-
-{function, '-pen/1-lc$^0/1-0-', 2, 111}.
+    {line,[{location,"lc_tests_opt.erl",115}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-single_filter/1-lc$^0/1-0-'},1}.
   {label,110}.
-    {line,[{location,"lc_tests_opt.erl",68}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-pen/1-lc$^0/1-0-'},2}.
+    {test,is_nonempty_list,{f,112},[{x,0}]}.
+    {get_list,{x,0},{x,1},{x,2}}.
+    {test,is_integer,{f,111},[{x,1}]}.
+    {allocate,1,3}.
+    {move,{x,2},{x,0}}.
+    {move,{x,1},{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",115}]}.
+    {call,1,{f,110}}.
+    {test_heap,2,1}.
+    {put_list,{y,0},{x,0},{x,0}}.
+    {deallocate,1}.
+    return.
   {label,111}.
-    {test,is_nonempty_list,{f,113},[{x,0}]}.
+    {move,{x,2},{x,0}}.
+    {call_only,1,{f,110}}.
+  {label,112}.
+    {test,is_nil,{f,109},[{x,0}]}.
+    return.
+
+
+{function, '-pen2/1-lc$^0/1-0-', 2, 114}.
+  {label,113}.
+    {line,[{location,"lc_tests_opt.erl",105}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-pen2/1-lc$^0/1-0-'},2}.
+  {label,114}.
+    {test,is_nonempty_list,{f,116},[{x,0}]}.
     {get_list,{x,0},{x,2},{x,3}}.
-    {gc_bif,'rem',{f,112},4,[{x,2},{integer,2}],{x,4}}.
-    {test,is_eq_exact,{f,112},[{x,4},{integer,0}]}.
+    {gc_bif,'rem',{f,115},4,[{x,2},{integer,2}],{x,4}}.
+    {test,is_eq_exact,{f,115},[{x,4},{integer,0}]}.
     {allocate,3,4}.
     {move,{integer,1},{x,0}}.
     {move,{x,1},{y,0}}.
     {move,{x,3},{y,1}}.
     {move,{x,2},{y,2}}.
-    {line,[{location,"lc_tests_opt.erl",70}]}.
+    {line,[{location,"lc_tests_opt.erl",107}]}.
     {call_ext,2,{extfunc,lists,seq,2}}.
     {move,{y,1},{x,2}}.
     {move,{y,2},{x,3}}.
     {move,{y,0},{x,1}}.
-    {call_last,4,{f,116},3}.
-  {label,112}.
+    {call_last,4,{f,119},3}.
+  {label,115}.
     {move,{x,3},{x,0}}.
-    {call_only,2,{f,111}}.
-  {label,113}.
-    {test,is_nil,{f,114},[{x,0}]}.
+    {call_only,2,{f,114}}.
+  {label,116}.
+    {test,is_nil,{f,117},[{x,0}]}.
     return.
-  {label,114}.
+  {label,117}.
     {test_heap,2,1}.
     {put_list,{x,0},nil,{x,1}}.
     {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",68}]}.
+    {line,[{location,"lc_tests_opt.erl",105}]}.
     {call_ext,2,{extfunc,erlang,error,2}}.
 
 
-{function, '-pen/1-lc$^1/1-1-', 4, 116}.
-  {label,115}.
-    {line,[{location,"lc_tests_opt.erl",68}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-pen/1-lc$^1/1-1-'},4}.
-  {label,116}.
-    {test,is_nonempty_list,{f,118},[{x,0}]}.
+{function, '-pen2/1-lc$^1/1-1-', 4, 119}.
+  {label,118}.
+    {line,[{location,"lc_tests_opt.erl",105}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-pen2/1-lc$^1/1-1-'},4}.
+  {label,119}.
+    {test,is_nonempty_list,{f,121},[{x,0}]}.
     {get_list,{x,0},{x,4},{x,5}}.
-    {gc_bif,'rem',{f,117},6,[{x,4},{integer,2}],{x,6}}.
-    {test,is_eq_exact,{f,117},[{x,6},{integer,1}]}.
+    {gc_bif,'rem',{f,120},6,[{x,4},{integer,2}],{x,6}}.
+    {gc_bif,'+',{f,120},7,[{x,3},{x,4}],{x,7}}.
+    {gc_bif,'rem',{f,120},8,[{x,7},{integer,5}],{x,8}}.
+    {test,is_eq_exact,{f,120},[{x,6},{integer,1}]}.
+    {test,is_ne_exact,{f,120},[{x,8},{integer,0}]}.
     {allocate,2,6}.
     {move,{x,5},{x,0}}.
     {move,{x,4},{y,0}}.
     {move,{x,3},{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",70}]}.
-    {call,4,{f,116}}.
+    {line,[{location,"lc_tests_opt.erl",107}]}.
+    {call,4,{f,119}}.
     {test_heap,6,1}.
     {put_list,{y,0},nil,{x,1}}.
     {put_list,{y,1},{x,1},{x,1}}.
     {put_list,{x,1},{x,0},{x,0}}.
     {deallocate,2}.
     return.
-  {label,117}.
+  {label,120}.
     {move,{x,5},{x,0}}.
-    {call_only,4,{f,116}}.
-  {label,118}.
-    {test,is_nil,{f,119},[{x,0}]}.
+    {call_only,4,{f,119}}.
+  {label,121}.
+    {test,is_nil,{f,122},[{x,0}]}.
     {move,{x,2},{x,0}}.
-    {call_only,2,{f,111}}.
-  {label,119}.
+    {call_only,2,{f,114}}.
+  {label,122}.
     {test_heap,2,1}.
     {put_list,{x,0},nil,{x,1}}.
     {move,{atom,function_clause},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",68}]}.
+    {line,[{location,"lc_tests_opt.erl",105}]}.
     {call_ext,2,{extfunc,erlang,error,2}}.
 
 
-{function, '-ses/1-lc$^0/1-0-', 1, 121}.
-  {label,120}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
+{function, '-pen/1-lc$^0/1-0-', 2, 124}.
+  {label,123}.
+    {line,[{location,"lc_tests_opt.erl",98}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-pen/1-lc$^0/1-0-'},2}.
+  {label,124}.
+    {test,is_nonempty_list,{f,126},[{x,0}]}.
+    {get_list,{x,0},{x,2},{x,3}}.
+    {gc_bif,'rem',{f,125},4,[{x,2},{integer,2}],{x,4}}.
+    {test,is_eq_exact,{f,125},[{x,4},{integer,0}]}.
+    {allocate,3,4}.
+    {move,{integer,1},{x,0}}.
+    {move,{x,1},{y,0}}.
+    {move,{x,3},{y,1}}.
+    {move,{x,2},{y,2}}.
+    {line,[{location,"lc_tests_opt.erl",100}]}.
+    {call_ext,2,{extfunc,lists,seq,2}}.
+    {move,{y,1},{x,2}}.
+    {move,{y,2},{x,3}}.
+    {move,{y,0},{x,1}}.
+    {call_last,4,{f,129},3}.
+  {label,125}.
+    {move,{x,3},{x,0}}.
+    {call_only,2,{f,124}}.
+  {label,126}.
+    {test,is_nil,{f,127},[{x,0}]}.
+    return.
+  {label,127}.
+    {test_heap,2,1}.
+    {put_list,{x,0},nil,{x,1}}.
+    {move,{atom,function_clause},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",98}]}.
+    {call_ext,2,{extfunc,erlang,error,2}}.
+
+
+{function, '-pen/1-lc$^1/1-1-', 4, 129}.
+  {label,128}.
+    {line,[{location,"lc_tests_opt.erl",98}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-pen/1-lc$^1/1-1-'},4}.
+  {label,129}.
+    {test,is_nonempty_list,{f,131},[{x,0}]}.
+    {get_list,{x,0},{x,4},{x,5}}.
+    {gc_bif,'rem',{f,130},6,[{x,4},{integer,2}],{x,6}}.
+    {test,is_eq_exact,{f,130},[{x,6},{integer,1}]}.
+    {allocate,2,6}.
+    {move,{x,5},{x,0}}.
+    {move,{x,4},{y,0}}.
+    {move,{x,3},{y,1}}.
+    {line,[{location,"lc_tests_opt.erl",100}]}.
+    {call,4,{f,129}}.
+    {test_heap,6,1}.
+    {put_list,{y,0},nil,{x,1}}.
+    {put_list,{y,1},{x,1},{x,1}}.
+    {put_list,{x,1},{x,0},{x,0}}.
+    {deallocate,2}.
+    return.
+  {label,130}.
+    {move,{x,5},{x,0}}.
+    {call_only,4,{f,129}}.
+  {label,131}.
+    {test,is_nil,{f,132},[{x,0}]}.
+    {move,{x,2},{x,0}}.
+    {call_only,2,{f,124}}.
+  {label,132}.
+    {test_heap,2,1}.
+    {put_list,{x,0},nil,{x,1}}.
+    {move,{atom,function_clause},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",98}]}.
+    {call_ext,2,{extfunc,erlang,error,2}}.
+
+
+{function, '-ses/1-lc$^0/1-0-', 1, 134}.
+  {label,133}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-ses/1-lc$^0/1-0-'},1}.
-  {label,121}.
-    {test,is_nonempty_list,{f,123},[{x,0}]}.
+  {label,134}.
+    {test,is_nonempty_list,{f,136},[{x,0}]}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {gc_bif,'rem',{f,122},3,[{x,1},{integer,2}],{x,3}}.
-    {test,is_eq_exact,{f,122},[{x,3},{integer,0}]}.
+    {gc_bif,'rem',{f,135},3,[{x,1},{integer,2}],{x,3}}.
+    {test,is_eq_exact,{f,135},[{x,3},{integer,0}]}.
     {allocate_zero,1,3}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
     {gc_bif,'*',{f,0},3,[{x,1},{x,1}],{y,0}}.
     {move,{x,2},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",63}]}.
-    {call,1,{f,121}}.
+    {line,[{location,"lc_tests_opt.erl",93}]}.
+    {call,1,{f,134}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,122}.
+  {label,135}.
     {move,{x,2},{x,0}}.
-    {call_only,1,{f,121}}.
-  {label,123}.
-    {test,is_nil,{f,120},[{x,0}]}.
+    {call_only,1,{f,134}}.
+  {label,136}.
+    {test,is_nil,{f,133},[{x,0}]}.
     return.
 
 
-{function, '-ss/1-lc$^0/1-0-', 1, 125}.
-  {label,124}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
+{function, '-ss/1-lc$^0/1-0-', 1, 138}.
+  {label,137}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-ss/1-lc$^0/1-0-'},1}.
-  {label,125}.
-    {test,is_nonempty_list,{f,126},[{x,0}]}.
+  {label,138}.
+    {test,is_nonempty_list,{f,139},[{x,0}]}.
     {allocate_zero,1,1}.
     {get_list,{x,0},{x,1},{x,2}}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
     {gc_bif,'*',{f,0},3,[{x,1},{x,1}],{y,0}}.
     {move,{x,2},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",59}]}.
-    {call,1,{f,125}}.
+    {line,[{location,"lc_tests_opt.erl",89}]}.
+    {call,1,{f,138}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,126}.
-    {test,is_nil,{f,124},[{x,0}]}.
+  {label,139}.
+    {test,is_nil,{f,137},[{x,0}]}.
     return.
 
 
-{function, '-test/2-fun-0-', 2, 128}.
-  {label,127}.
-    {line,[{location,"lc_tests_opt.erl",36}]}.
-    {func_info,{atom,lc_tests_opt},{atom,'-test/2-fun-0-'},2}.
-  {label,128}.
-    {allocate_zero,4,2}.
-    {move,{x,0},{y,2}}.
-    {move,{x,1},{y,3}}.
+{function, '-all_tests/0-fun-12-', 1, 141}.
+  {label,140}.
+    {line,[{location,"lc_tests_opt.erl",82}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-12-'},1}.
+  {label,141}.
+    {call_only,1,{f,57}}.
+
+
+{function, '-all_tests/0-fun-11-', 1, 143}.
+  {label,142}.
+    {line,[{location,"lc_tests_opt.erl",81}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-11-'},1}.
+  {label,143}.
+    {call_only,1,{f,55}}.
+
+
+{function, '-all_tests/0-fun-10-', 1, 145}.
+  {label,144}.
+    {line,[{location,"lc_tests_opt.erl",80}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-10-'},1}.
+  {label,145}.
+    {call_only,1,{f,53}}.
+
+
+{function, '-all_tests/0-fun-9-', 1, 147}.
+  {label,146}.
+    {line,[{location,"lc_tests_opt.erl",79}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-9-'},1}.
+  {label,147}.
+    {call_only,1,{f,51}}.
+
+
+{function, '-all_tests/0-fun-8-', 2, 149}.
+  {label,148}.
+    {line,[{location,"lc_tests_opt.erl",78}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-8-'},2}.
+  {label,149}.
+    {call_only,2,{f,49}}.
+
+
+{function, '-all_tests/0-fun-7-', 1, 151}.
+  {label,150}.
+    {line,[{location,"lc_tests_opt.erl",77}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-7-'},1}.
+  {label,151}.
+    {call_only,1,{f,47}}.
+
+
+{function, '-all_tests/0-fun-6-', 2, 153}.
+  {label,152}.
+    {line,[{location,"lc_tests_opt.erl",76}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-6-'},2}.
+  {label,153}.
+    {call_only,2,{f,45}}.
+
+
+{function, '-all_tests/0-fun-5-', 1, 155}.
+  {label,154}.
+    {line,[{location,"lc_tests_opt.erl",75}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-5-'},1}.
+  {label,155}.
+    {call_only,1,{f,43}}.
+
+
+{function, '-all_tests/0-fun-4-', 1, 157}.
+  {label,156}.
+    {line,[{location,"lc_tests_opt.erl",74}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-4-'},1}.
+  {label,157}.
+    {call_only,1,{f,41}}.
+
+
+{function, '-all_tests/0-fun-3-', 1, 159}.
+  {label,158}.
+    {line,[{location,"lc_tests_opt.erl",73}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-3-'},1}.
+  {label,159}.
+    {call_only,1,{f,39}}.
+
+
+{function, '-all_tests/0-fun-2-', 1, 161}.
+  {label,160}.
+    {line,[{location,"lc_tests_opt.erl",72}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-2-'},1}.
+  {label,161}.
+    {call_only,1,{f,37}}.
+
+
+{function, '-all_tests/0-fun-1-', 1, 163}.
+  {label,162}.
+    {line,[{location,"lc_tests_opt.erl",71}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-1-'},1}.
+  {label,163}.
+    {call_only,1,{f,35}}.
+
+
+{function, '-all_tests/0-fun-0-', 1, 165}.
+  {label,164}.
+    {line,[{location,"lc_tests_opt.erl",70}]}.
+    {func_info,{atom,lc_tests_opt},{atom,'-all_tests/0-fun-0-'},1}.
+  {label,165}.
+    {call_only,1,{f,33}}.
+
+
+{function, '-test/3-fun-0-', 3, 167}.
+  {label,166}.
     {line,[{location,"lc_tests_opt.erl",37}]}.
-  {label,129}.
-    {loop_rec,{f,131},{x,0}}.
-    {test,is_tuple,{f,130},[{x,0}]}.
-    {test,test_arity,{f,130},[{x,0},2]}.
-    {get_tuple_element,{x,0},0,{x,1}}.
-    {get_tuple_element,{x,0},1,{x,2}}.
-    {test,is_eq_exact,{f,130},[{x,2},{y,2}]}.
-    remove_message.
+    {func_info,{atom,lc_tests_opt},{atom,'-test/3-fun-0-'},3}.
+  {label,167}.
+    {allocate_zero,4,3}.
     {bif,self,{f,0},[],{y,0}}.
     {move,{x,1},{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",40}]}.
+    {move,{x,2},{y,2}}.
+    {move,{x,0},{y,3}}.
+    {line,[{location,"lc_tests_opt.erl",38}]}.
     {call,0,{f,12}}.
     {move,{x,0},{x,1}}.
     {move,{y,0},{x,0}}.
-    {trim,1,3}.
-    {line,[{location,"lc_tests_opt.erl",40}]}.
+    {kill,{y,0}}.
+    {line,[{location,"lc_tests_opt.erl",38}]}.
     {call_ext,2,{extfunc,erlang,process_info,2}}.
     {move,{x,0},{x,2}}.
     {move,{y,1},{x,1}}.
     {move,{y,2},{x,0}}.
     {move,{x,2},{y,2}}.
     {kill,{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",41}]}.
+    {line,[{location,"lc_tests_opt.erl",39}]}.
     {call_ext,2,{extfunc,erlang,apply,2}}.
-    {bif,self,{f,0},[],{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",43}]}.
+    {bif,self,{f,0},[],{y,0}}.
+    {move,{x,0},{y,1}}.
+    {line,[{location,"lc_tests_opt.erl",41}]}.
     {call,0,{f,12}}.
     {move,{x,0},{x,1}}.
-    {move,{y,1},{x,0}}.
-    {kill,{y,1}}.
-    {line,[{location,"lc_tests_opt.erl",43}]}.
+    {move,{y,0},{x,0}}.
+    {trim,1,3}.
+    {line,[{location,"lc_tests_opt.erl",41}]}.
     {call_ext,2,{extfunc,erlang,process_info,2}}.
     {test_heap,4,1}.
-    {bif,self,{f,0},[],{x,1}}.
-    {put_tuple,3,{x,2}}.
-    {put,{x,1}}.
-    {put,{y,2}}.
+    {put_tuple,3,{x,1}}.
+    {put,{y,1}}.
     {put,{x,0}}.
-    {move,{x,2},{x,1}}.
-    {move,{y,0},{x,0}}.
-    {line,[{location,"lc_tests_opt.erl",44}]}.
+    {put,{y,0}}.
+    {move,{y,2},{x,0}}.
+    {line,[{location,"lc_tests_opt.erl",42}]}.
     send.
     {deallocate,3}.
     return.
-  {label,130}.
-    {loop_rec_end,{f,129}}.
-  {label,131}.
-    {wait,{f,129}}.
 
 
-{function, '-random_bin/1-lc$^0/1-0-', 1, 133}.
-  {label,132}.
+{function, '-random_bin/1-lc$^0/1-0-', 1, 169}.
+  {label,168}.
     {line,[{location,"lc_tests_opt.erl",18}]}.
     {func_info,{atom,lc_tests_opt},{atom,'-random_bin/1-lc$^0/1-0-'},1}.
-  {label,133}.
-    {test,is_nonempty_list,{f,134},[{x,0}]}.
+  {label,169}.
+    {test,is_nonempty_list,{f,170},[{x,0}]}.
     {allocate,1,1}.
     {get_list,{x,0},{x,1},{y,0}}.
     {move,{integer,255},{x,0}}.
@@ -1055,11 +1346,11 @@
     {move,{y,0},{x,0}}.
     {move,{x,1},{y,0}}.
     {line,[{location,"lc_tests_opt.erl",18}]}.
-    {call,1,{f,133}}.
+    {call,1,{f,169}}.
     {test_heap,2,1}.
     {put_list,{y,0},{x,0},{x,0}}.
     {deallocate,1}.
     return.
-  {label,134}.
-    {test,is_nil,{f,132},[{x,0}]}.
+  {label,170}.
+    {test,is_nil,{f,168},[{x,0}]}.
     return.

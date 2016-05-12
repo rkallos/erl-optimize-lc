@@ -8,6 +8,6 @@ set style data histograms
 set xtics rotate by -45 scale 0
 set logscale y 2
 set key autotitle columnhead
-set title "Pre- and post-optimization Heap Usage"
+set title "Before/After Heap Usage - Erlang R18"
 
-plot for [COL=2:5] '../data/all.dat' using COL:xticlabels(1)
+plot for [COL=2:5] '../data/lc_tests.dat' using COL:xticlabels(1)

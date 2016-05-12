@@ -1,0 +1,14 @@
+Test                Before              AfterOpt            
+nested_lc_gen       4184                4184
+intermediary_list3  10957               10957
+intermediary_list2  10957               10957
+intermediary_list   4185                4185
+make_n              3196                3196
+sorted_gen          13544               13544
+function_param      6771                6771
+record_extract      4185                4185
+single_filter       1598                1598
+pen2                318187              318187
+pen                 833025              833025
+ses                 1598                1598
+ss                  3196                3196

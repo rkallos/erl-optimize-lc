@@ -1,0 +1,14 @@
+Test                Before              After               
+nested_lc_gen       1598                4184                
+intermediary_list3  233                 10957               
+intermediary_list2  233                 10957               
+intermediary_list   233                 4185                
+make_n              233                 3196                
+sorted_gen          4185                13544               
+function_param      1598                6771                
+record_extract      4185                4185                
+single_filter       1598                1598                
+pen2                233                 318187              
+pen                 233                 833025              
+ses                 233                 1598                
+ss                  233                 3196                
