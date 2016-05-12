@@ -26,6 +26,12 @@ main([]) ->
     io:format("Running lc_tests_opt~n"),
     Lco = lc_tests_opt:run_tests(Tests),
 
+    % Verify correctness
+    case Lc =:= Lco of
+        true -> io:format("Tests succeeded. Results match.~n");
+        _ -> io:format("Tests failed. Results do not match.~n")
+    end,
+
     % Generate Gnuplot .dat files
     io:format("Generating .dat files~n"),
     generate_dat("lc_tests", Lc),
