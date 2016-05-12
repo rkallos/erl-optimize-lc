@@ -10,4 +10,4 @@ set logscale y 2
 set key autotitle columnhead
 set title "Heap Usage After Test - R18 and Optimized Compiler"
 
-plot for [COL=2:5] '../data/comp_before.dat' using COL:xticlabels(1)
+plot for [COL=2:5] '../data/comp_after.dat' using COL:xticlabels(1)

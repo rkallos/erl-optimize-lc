@@ -38,7 +38,7 @@ main([]) ->
     os:cmd("for file1 in *.gnu
 do
     file2=\"${file1%.gnu}.svg\"
-    gnuplot \"$file1\" >> \"$file2\"
+    gnuplot \"$file1\" > \"$file2\"
 done"),
     c:cd("../");
 main(_) ->
