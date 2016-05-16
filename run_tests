@@ -81,7 +81,7 @@ generate_dat("comp_before", Data1, Data2) ->
     ];
 generate_dat("comp_after", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "comp_after.dat", [read,write]),
-    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","AfterOpt"]),
+    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","After","AfterOpt"]),
     [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
                                   string:left(integer_to_list(After), 20, $ ),
                                   integer_to_list(AfterOpt)]) ||

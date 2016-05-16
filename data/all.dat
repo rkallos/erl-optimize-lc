@@ -1,4 +1,5 @@
 Test                Before              After               BeforeOpt           AfterOpt            
+unused              233                 4184                233                 4184                
 nested_lc_gen       1598                4184                1598                4184                
 intermediary_list3  233                 10957               233                 10957               
 intermediary_list2  233                 10957               233                 10957               
@@ -8,6 +9,11 @@ sorted_gen          4185                13544               4185                
 function_param      1598                6771                1598                6771                
 record_extract      4185                4185                4185                4185                
 single_filter       1598                1598                1598                1598                
+pen2_lazier         233                 318187              233                 318187              
+pen2_mr             233                 318187              233                 318187              
+pen2_listsfuns      233                 833025              233                 833025              
+pen2_foldl          233                 514837              233                 514837              
+pen2_foldr          233                 393300              233                 393300              
 pen2                233                 318187              233                 318187              
 pen                 233                 833025              233                 833025              
 ses                 233                 1598                233                 1598                

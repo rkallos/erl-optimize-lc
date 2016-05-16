@@ -26,6 +26,19 @@ random_test_records(Length, N) ->
     [#test_record{num1 = random:uniform(N),num2 = random:uniform(N)}|
      random_test_records(Length - 1, N)].
 
+lazy_seq(M, N) when M > N ->
+    [];
+lazy_seq(M, N) ->
+    [M|
+     fun() ->
+            lazy_seq(M + 1, N)
+     end].
+
+lazy_foldr(F, Acc, [Hd|Tl]) ->
+    F(Hd, lazy_foldr(F, Acc, apply(Tl, [])));
+lazy_foldr(_F, Acc, []) ->
+    Acc.
+
 stats() ->
     [memory,heap_size,total_heap_size,stack_size,garbage_collection].
 
@@ -70,6 +83,11 @@ all_tests() ->
      {"ses",fun ses/1,[IntArg]},
      {"pen",fun pen/1,[IntArg]},
      {"pen2",fun pen2/1,[IntArg]},
+     {"pen2_foldr",fun pen2_foldr/1,[IntArg]},
+     {"pen2_foldl",fun pen2_foldl/1,[IntArg]},
+     {"pen2_listsfuns",fun pen2_listsfuns/1,[IntArg]},
+     {"pen2_mr",fun pen2_mr/1,[IntArg]},
+     {"pen2_lazier",fun pen2_lazier/1,[IntArg]},
      {"single_filter",fun single_filter/1,[LstArg]},
      {"record_extract",fun record_extract/1,[RecArg]},
      {"function_param",fun function_param_lc/2,[param,LstArg]},
@@ -78,7 +96,8 @@ all_tests() ->
      {"intermediary_list",fun intermediary_list/1,[IntArg]},
      {"intermediary_list2",fun intermediary_list2/1,[IntArg]},
      {"intermediary_list3",fun intermediary_list3/1,[IntArg]},
-     {"nested_lc_gen",fun nested_lc_gen/1,[LstArg]}].
+     {"nested_lc_gen",fun nested_lc_gen/1,[LstArg]},
+     {"unused",fun unused/0,[]}].
 
 ss(N) when is_integer(N) ->
     lists:sum([ 
@@ -111,6 +130,155 @@ pen2(N) when is_integer(N) ->
          Y rem 2 =:= 1,
          (X + Y) rem 5 /= 0
     ].
+
+pen2_foldl(N) when is_integer(N) ->
+    Gen = lists:seq(1, N),
+    lists:reverse(lists:foldl(fun(X, Acc1) ->
+                                     if
+                                         X rem 2 =:= 0 ->
+                                             lists:foldl(fun(Y, Acc2) ->
+                                                                if
+                                                                    Y
+                                                                    rem
+                                                                    2
+                                                                    =:=
+                                                                    1
+                                                                    andalso
+                                                                    (X
+                                                                     +
+                                                                     Y)
+                                                                    rem
+                                                                    5
+                                                                    /=
+                                                                    0 ->
+                                                                        [[X,
+                                                                          Y]|
+                                                                         Acc2];
+                                                                    true ->
+                                                                        Acc2
+                                                                end
+                                                         end,
+                                                         [],
+                                                         Gen)
+                                             ++
+                                             Acc1;
+                                         true ->
+                                             Acc1
+                                     end
+                              end,
+                              [],
+                              Gen)).
+
+pen2_foldr(N) when is_integer(N) ->
+    Gen = lists:seq(1, N),
+    lists:foldr(fun(X, Acc1) ->
+                       if
+                           X rem 2 =:= 0 ->
+                               lists:foldr(fun(Y, Acc2) ->
+                                                  if
+                                                      Y rem 2 =:= 1
+                                                      andalso
+                                                      (X + Y) rem 5 /= 0 ->
+                                                          [[X,Y]|Acc2];
+                                                      true ->
+                                                          Acc2
+                                                  end
+                                           end,
+                                           [],
+                                           Gen)
+                               ++
+                               Acc1;
+                           true ->
+                               Acc1
+                       end
+                end,
+                [],
+                Gen).
+
+pen2_listsfuns(N) when is_integer(N) ->
+    Gen = lists:seq(1, N),
+    lists:filter(fun([X,Y]) ->
+                        (X + Y) rem 5 /= 0
+                 end,
+                 [ 
+                  [X,Y] ||
+                      X <-
+                          lists:filter(fun(X) ->
+                                              X rem 2 =:= 0
+                                       end,
+                                       Gen),
+                      Y <-
+                          lists:filter(fun(Y) ->
+                                              Y rem 2 =:= 1
+                                       end,
+                                       Gen)
+                 ]).
+
+pen2_mr(N) when is_integer(N) ->
+    Gen = lists:seq(1, N),
+    RedYs =
+        fun Red_ys(AX = [X|_Xs], [Y|Ys], MR) ->
+                if
+                    Y rem 2 =:= 1
+                    andalso
+                    (X + Y) rem 5 /= 0 ->
+                        [[X,Y]|Red_ys(AX, Ys, MR)];
+                    true ->
+                        Red_ys(AX, Ys, MR)
+                end;
+            Red_ys([_X|Xs], [], MR) ->
+                MR(Xs)
+        end,
+    RedXs =
+        fun Red_xs(AX = [X|Xs]) ->
+                if
+                    X rem 2 =:= 0 ->
+                        RedYs(AX, Gen, Red_xs);
+                    true ->
+                        Red_xs(Xs)
+                end;
+            Red_xs([]) ->
+                []
+        end,
+    RedXs(Gen).
+
+pen2_lazier(N) when is_integer(N) ->
+    Gen =
+        fun() ->
+               lazy_seq(1, N)
+        end,
+    RedYs =
+        fun Red_ys(AX = [X|_Xs], [Y|Ys], MR) ->
+                if
+                    Y rem 2 =:= 1
+                    andalso
+                    (X + Y) rem 5 /= 0 ->
+                        [[X,Y]|Red_ys(AX, Ys(), MR)];
+                    true ->
+                        Red_ys(AX, Ys(), MR)
+                end;
+            Red_ys([_X|Xs], [], MR) ->
+                MR(Xs())
+        end,
+    RedXs =
+        fun Red_xs(AX = [X|Xs]) ->
+                if
+                    X rem 2 =:= 0 ->
+                        RedYs(AX, Gen(), Red_xs);
+                    true ->
+                        Red_xs(Xs())
+                end;
+            Red_xs([]) ->
+                []
+        end,
+    RedXs(Gen()).
+
+unused() ->
+    _ = [ 
+         [X,timer:sleep(1)] ||
+             X <- lists:seq(1, 1000)
+        ],
+    ok.
 
 single_filter(N) when is_list(N) ->
     [ 
