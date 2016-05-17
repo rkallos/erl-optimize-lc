@@ -8,6 +8,6 @@ set style data histograms
 set xtics rotate by -45 scale 0
 set logscale y 2
 set key autotitle columnhead
-set title "Pre- and post-optimization Heap Usage"
+set title "Number of Frees - R18 and Optimized Compiler"
 
-plot for [COL=2:7] '../data/all.dat' using COL:xticlabels(1)
+plot for [COL=2:5] '../data/frees.dat' using COL:xticlabels(1)

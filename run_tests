@@ -36,6 +36,7 @@ main([]) ->
     io:format("Generating .dat files~n"),
     generate_dat("lc_tests", Lc),
     generate_dat("lc_tests_opt", Lco),
+    generate_dat("frees", Lc, Lco),
     generate_dat("comp_before", Lc, Lco),
     generate_dat("comp_after", Lc, Lco),
     generate_dat("all", Lc, Lco),
@@ -57,21 +58,31 @@ generate_dat(Filename, Data) ->
     {ok, File} = file:open("data/" ++ Filename ++ ".dat", [read,write]),
     io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","After"]),
     [io:fwrite(File, "~-20s~-20s~-20s~n", [Fun, integer_to_list(Before), integer_to_list(After)]) ||
-        {Fun, {B, A}, _} <- Data,
+        {Fun, _, {B, A}, _} <- Data,
         {total_heap_size,Before} <- B,
         {total_heap_size,After}  <- A
     ].
 
+generate_dat("frees", Data1, Data2) ->
+    {ok,File} = file:open("data/" ++ "frees.dat", [read,write]),
+    io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","BFrees","AFrees"]),
+    [io:fwrite(File, "~-20s~-20s~-20s~n", [Fun, integer_to_list(Before), integer_to_list(After)]) ||
+        {Fun, Before, After}
+            <- lists:zipwith(
+                 fun({F, BF, _, _},
+                     {_G, AF, _, _}) ->
+                         {F, BF, AF}
+                 end, Data1, Data2)
+    ];
+
 generate_dat("comp_before", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "comp_before.dat", [read,write]),
     io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","Before","BeforeOpt"]),
-    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
-                                  string:left(integer_to_list(Before), 20, $ ),
-                                  integer_to_list(BeforeOpt)]) ||
+    [io:fwrite(File, "~-20s~-20s~-20s~n", [Fun, integer_to_list(Before), integer_to_list(BeforeOpt)]) ||
         {Fun, {B, Bo}}
             <- lists:zipwith(
-                 fun({F, {B, _A}, _},
-                     {_G, {Bo, _Ao}, _}) ->
+                 fun({F, _, {B, _A}, _},
+                     {_G, _, {Bo, _Ao}, _}) ->
                          {F, {B, Bo}}
                  end,
                  Data1,
@@ -82,13 +93,11 @@ generate_dat("comp_before", Data1, Data2) ->
 generate_dat("comp_after", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "comp_after.dat", [read,write]),
     io:fwrite(File, "~-20s~-20s~-20s~n", ["Test","After","AfterOpt"]),
-    [io:fwrite(File, "~s~s~s~n", [string:left(Fun, 20, $ ),
-                                  string:left(integer_to_list(After), 20, $ ),
-                                  integer_to_list(AfterOpt)]) ||
+    [io:fwrite(File, "~-20s~-20s~-20s~n", [Fun, integer_to_list(After), integer_to_list(AfterOpt)]) ||
         {Fun, {A, Ao}}
             <- lists:zipwith(
-                 fun({F, {_B, A}, _},
-                     {_G, {_Bo, Ao}, _}) ->
+                 fun({F, _, {_B, A}, _},
+                     {_G, _, {_Bo, Ao}, _}) ->
                          {F, {A, Ao}}
                  end,
                  Data1,
@@ -98,19 +107,17 @@ generate_dat("comp_after", Data1, Data2) ->
     ];
 generate_dat("all", Data1, Data2) ->
     {ok, File} = file:open("data/" ++ "all.dat", [read,write]),
-    io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~n",
-              ["Test","Before","After","BeforeOpt","AfterOpt"]),
-    [io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~n",
-               [string:left(Fun, 20, $ ),
-                string:left(integer_to_list(Before), 20, $ ),
-                string:left(integer_to_list(After), 20, $ ),
-                string:left(integer_to_list(BeforeOpt), 20, $ ),
-                integer_to_list(AfterOpt)]) ||
-        {Fun, {B, A, Bo, Ao}}
+    io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~-20s~-20s~n",
+              ["Test","Before","After","BeforeOpt","AfterOpt","Frees","FreesOpt"]),
+    [io:fwrite(File, "~-20s~-20s~-20s~-20s~-20s~-20s~-20s~n",
+               [Fun, integer_to_list(Before), integer_to_list(After),
+                integer_to_list(BeforeOpt), integer_to_list(AfterOpt),
+               integer_to_list(Frees), integer_to_list(FreesOpt)]) ||
+        {Fun, {B, A, Bo, Ao, Frees, FreesOpt}}
             <- lists:zipwith(
-                 fun({F, {B, A}, _},
-                     {_G, {Bo, Ao}, _}) ->
-                         {F, {B, A, Bo, Ao}}
+                 fun({F, BF, {B, A}, _},
+                     {_G, AF, {Bo, Ao}, _}) ->
+                         {F, {B, A, Bo, Ao, BF, AF}}
                  end,
                  Data1,
                  Data2),

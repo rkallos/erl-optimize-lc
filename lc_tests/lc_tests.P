@@ -44,27 +44,71 @@ stats() ->
 
 test(Name, Fn, Args) when is_list(Args) ->
     Me = self(),
-    spawn(fun() ->
-                 Before = process_info(self(), stats()),
-                 Res = apply(Fn, Args),
-                 After = process_info(self(), stats()),
-                 Me ! {Before,After,Res}
-          end),
+    Pid =
+        spawn(fun() ->
+                     Before = process_info(self(), stats()),
+                     Res = apply(Fn, Args),
+                     After = process_info(self(), stats()),
+                     Me ! {Before,After,Res}
+              end),
+    Pid ! Me,
     receive
         {B,A,R} ->
-            {Name,{B,A},R}
+            {Name,Pid,{B,A},R}
     end;
 test(Name, Fn, Arg) ->
     test(Name, Fn, [Arg]).
 
-run_tests([], Acc) ->
-    Acc;
-run_tests([{Name,Fn,Args}|Tail], Acc) ->
+run_tests([], Pid, Acc) ->
+    timer:sleep(100),
+    Pid ! self(),
+    receive
+        Map ->
+            [ 
+             {Name,maps:get(Proc, Map, 0),{Before,After},Result} ||
+                 {Name,Proc,{Before,After},Result} <- Acc
+            ]
+    end;
+run_tests([{Name,Fn,Args}|Tail], Pid, Acc) ->
     Res = test(Name, Fn, Args),
-    run_tests(Tail, [Res|Acc]).
+    run_tests(Tail, Pid, [Res|Acc]).
 
 run_tests(Lst) when is_list(Lst) ->
-    run_tests(Lst, []).
+    Pid =
+        spawn(fun() ->
+                     handle_gc_evts()
+              end),
+    timer:sleep(100),
+    run_tests(Lst, Pid, []).
+
+handle_gc_evts() ->
+    erlang:trace(new, true, [garbage_collection]),
+    handle_gc_evts(maps:new()).
+
+handle_gc_evts(Map) ->
+    receive
+        {trace,Pid,Type,Details} ->
+            handle_gc_evts(handle_gc(Map, Pid, Type, Details));
+        Pid ->
+            begin
+                erlang:trace(new, false, [garbage_collection]),
+                Pid ! Map
+            end
+    end.
+
+handle_gc(Map, Pid, Type, Details) ->
+    HeapSize = proplists:get_value(heap_size, Details),
+    case maps:get(Pid, Map, undefined) of
+        undefined ->
+            maps:put(Pid, HeapSize, Map);
+        Frees ->
+            case Type of
+                gc_start ->
+                    maps:put(Pid, Frees + HeapSize, Map);
+                gc_end ->
+                    maps:put(Pid, Frees - HeapSize, Map)
+            end
+    end.
 
 int_arg() ->
     50.
