@@ -40,6 +40,7 @@ main([]) ->
     generate_dat("comp_before", Lc, Lco),
     generate_dat("comp_after", Lc, Lco),
     generate_dat("all", Lc, Lco),
+    
     % Create plots
     c:cd("./plots"),
     os:cmd("for file1 in *.gnu

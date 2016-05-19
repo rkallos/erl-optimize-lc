@@ -9,11 +9,13 @@ sorted_gen          7436                7436
 function_param      3134                3134                
 record_extract      0                   0                   
 single_filter       547                 547                 
-pen2_lazier         2261806             2261806             
+pen2_lazy_cps       3513805             3513805             
+pen2_lazy           2259048             2259048             
 pen2_mr             882298              882298              
 pen2_listsfuns      442664              442664              
 pen2_foldl          324506              324506              
 pen2_foldr          354628              354628              
+pen2_dumb           23                  23                  
 pen2                251023              251023              
 pen                 413314              413314              
 ses                 357                 357                 

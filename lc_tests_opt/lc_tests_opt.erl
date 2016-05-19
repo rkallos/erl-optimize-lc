@@ -34,7 +34,17 @@ lazy_seq(M,N) -> [M | fun() -> lazy_seq(M+1,N) end].
 lazy_foldr(F, Acc, [Hd|Tl]) ->
     F(Hd, lazy_foldr(F, Acc, apply(Tl,[])));
 lazy_foldr(_F, Acc, []) -> Acc.
-    
+
+% Produce a lazy sequence of [M..N] via contination passing
+cps_cons(Head, Tail, K) ->
+    K([Head|Tail]).
+
+lazy_cp_seq(M,N) ->
+    lazy_cp_seq(M,N,fun(Pair) -> Pair end).
+lazy_cp_seq(M,N,K) ->
+    if N < M -> [];
+       true -> [M | fun() -> lazy_cp_seq(M+1, N, fun(Lst) -> cps_cons(M,Lst,K) end) end]
+    end.
 
 % To run the tests, wrap each function inside a new process, then send the input as a message
 % This granularity helps to inspect process heap usage
@@ -115,11 +125,13 @@ all_tests() ->
      {"ses", fun ses/1, [IntArg]},
      {"pen", fun pen/1, [IntArg]},
      {"pen2", fun pen2/1, [IntArg]},
+     {"pen2_dumb", fun pen2_dumb/1, [IntArg]},
      {"pen2_foldr", fun pen2_foldr/1, [IntArg]},
      {"pen2_foldl", fun pen2_foldl/1, [IntArg]},
      {"pen2_listsfuns", fun pen2_listsfuns/1, [IntArg]},
      {"pen2_mr", fun pen2_mr/1, [IntArg]},
-     {"pen2_lazier", fun pen2_lazier/1, [IntArg]},
+     {"pen2_lazy", fun pen2_lazy/1, [IntArg]},
+     {"pen2_lazy_cps", fun pen2_lazy_cps/1, [IntArg]},
      {"single_filter", fun single_filter/1, [LstArg]},
      {"record_extract", fun record_extract/1, [RecArg]},
      {"function_param", fun function_param_lc/2, [param, LstArg]},
@@ -157,6 +169,18 @@ pen2(N) when is_integer(N) ->
               Y <- lists:seq(1,N),
               Y rem 2 =:= 1,
               (X + Y) rem 5 /= 0].
+
+% Equivalent to pen2, but doesn't generate any intermediate list
+pen2_dumb(N) ->
+    pen2_dumb_helper(N, 1, 1, []).
+pen2_dumb_helper(N, X, _Y, L) when X > N ->
+    L;
+pen2_dumb_helper(N, X, Y, L) when Y > N ->
+    pen2_dumb_helper(N, X+1, 0, L);
+pen2_dumb_helper(N, X, Y, L) when X rem 2 =:= 0 andalso Y rem 2 =:= 1 andalso (X+Y) rem 5 /= 0 ->
+    [[X,Y]|pen2_dumb_helper(N, X, Y+1, L)];
+pen2_dumb_helper(N, X, Y, L) ->
+    pen2_dumb_helper(N, X, Y+1, L).
 
 % Equivalent to pen2, but uses foldr instead of a list comprehension
 pen2_foldl(N) when is_integer(N) ->
@@ -215,20 +239,35 @@ pen2_mr(N) when is_integer(N) ->
     RedXs(Gen).
 
 % Uses lazy_seq instead of lists:seq()
-pen2_lazier(N) when is_integer(N) ->
-    Gen = fun() -> lazy_seq(1,N) end,
+pen2_lazy(N) when is_integer(N) ->
+    Gen = lazy_seq(1,N),
     RedYs = fun Red_ys(AX = [X|_Xs], [Y|Ys], MR) ->
                     if Y rem 2 =:= 1 andalso (X + Y) rem 5 /= 0 ->
                             [[X,Y]|Red_ys(AX, Ys(), MR)];
                        true -> Red_ys(AX, Ys(), MR) end;
                 Red_ys([_X|Xs], [], MR) -> MR(Xs()) end,
     RedXs = fun Red_xs(AX = [X|Xs]) ->
-                    if X rem 2 =:= 0 -> RedYs(AX, Gen(), Red_xs);
+                    if X rem 2 =:= 0 -> RedYs(AX, Gen, Red_xs);
                        true -> Red_xs(Xs())
                     end;
                 Red_xs([]) -> [] end,
-    RedXs(Gen()).
-                   
+    RedXs(Gen).
+
+% pen2 using continuation passing
+pen2_lazy_cps(N) when is_integer(N) ->
+    Gen = lazy_cp_seq(1,N),
+    RedYs = fun Red_ys(AX = [X|_Xs], [Y|Ys], MR) ->
+                    if Y rem 2 =:= 1 andalso (X + Y) rem 5 /= 0 ->
+                            [[X,Y]|Red_ys(AX, Ys(), MR)];
+                       true -> Red_ys(AX, Ys(), MR) end;
+                Red_ys([_X|Xs], [], MR) -> MR(Xs()) end,
+    RedXs = fun Red_xs(AX = [X|Xs]) ->
+                    if X rem 2 =:= 0 -> RedYs(AX, Gen, Red_xs);
+                       true -> Red_xs(Xs())
+                    end;
+                Red_xs([]) -> [] end,
+    RedXs(Gen).
+
 
 % Unused LC result
 unused() ->
