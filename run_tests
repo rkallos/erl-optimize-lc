@@ -5,7 +5,6 @@
 main([]) ->
     {module, Mod} = code:load_abs("lc_tests/lc_tests"),
     io:format("Loaded ~p~n", [Mod]),
-    io:format("Compiler dir: ~s~n", [code:compiler_dir()]),
 
     % Generate tests
     Tests = lc_tests:all_tests(),
@@ -15,19 +14,17 @@ main([]) ->
     io:format("Running lc_tests~n"),
     Lc = lc_tests:run_tests(Tests),
 
-    % Load alternate compiler
-    code:add_patha("lib/compiler/ebin"),
-    application:start(compiler),
-
     % Run all lc_tests_opt tests
     {module, ModOpt} = code:load_abs("lc_tests_opt/lc_tests_opt"),
     io:format("Loaded ~p~n", [ModOpt]),
-    io:format("Compiler dir: ~s~n", [code:compiler_dir()]),
     io:format("Running lc_tests_opt~n"),
     Lco = lc_tests_opt:run_tests(Tests),
 
     % Verify correctness
-    case Lc =:= Lco of
+    Matches = [{Name, Test} || {{Name,_,_,Res1}, {_,_,_,Res2}} <- lists:zip(Lc,Lco),
+                               Test = Res1 =:= Res2],
+    io:format("~p~n", [Matches]),
+    case lists:all(fun({_,E}) -> E =:= true end, Matches) of
         true -> io:format("Tests succeeded. Results match.~n");
         _ -> io:format("Tests failed. Results do not match.~n")
     end,

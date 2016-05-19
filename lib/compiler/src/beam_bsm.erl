@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %% 
-%% Copyright Ericsson AB 2007-2015. All Rights Reserved.
+%% Copyright Ericsson AB 2007-2016. All Rights Reserved.
 %% 
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -421,7 +421,8 @@ btb_follow_branches([], _, D) -> D.
 
 btb_follow_branch(0, _Regs, D) -> D;
 btb_follow_branch(Lbl, Regs, #btb{ok_br=Br0,index=Li}=D) ->
-    case gb_sets:is_member(Lbl, Br0) of
+    Key = {Lbl,Regs},
+    case gb_sets:is_member(Key, Br0) of
 	true ->
 	    %% We have already followed this branch and it was OK.
 	    D;
@@ -432,7 +433,7 @@ btb_follow_branch(Lbl, Regs, #btb{ok_br=Br0,index=Li}=D) ->
 		btb_reaches_match_1(Is, Regs, D),
 
 	    %% Since we got back, this branch is OK.
-	    D#btb{ok_br=gb_sets:insert(Lbl, Br),must_not_save=MustNotSave,
+	    D#btb{ok_br=gb_sets:insert(Key, Br),must_not_save=MustNotSave,
 		  must_save=MustSave}
     end.
 

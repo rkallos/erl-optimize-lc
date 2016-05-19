@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %%
-%% Copyright Ericsson AB 2001-2010. All Rights Reserved.
+%% Copyright Ericsson AB 2001-2016. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -126,6 +126,7 @@
 	 %% keep map exports here for now
 	 c_map_pattern/1,
 	 is_c_map/1,
+	 is_c_map_pattern/1,
 	 map_es/1,
 	 map_arg/1,
 	 update_c_map/3,
@@ -134,7 +135,7 @@
 	 ann_c_map_pattern/2,
 	 map_pair_op/1,map_pair_key/1,map_pair_val/1,
 	 update_c_map_pair/4,
-	 c_map_pair/2,
+	 c_map_pair/2, c_map_pair_exact/2,
 	 ann_c_map_pair/4
      ]).
 
@@ -1598,13 +1599,20 @@ is_c_map(#c_literal{val = V}) when is_map(V) ->
 is_c_map(_) ->
     false.
 
--spec map_es(c_map()) -> [c_map_pair()].
+-spec map_es(c_map() | c_literal()) -> [c_map_pair()].
 
+map_es(#c_literal{anno=As,val=M}) when is_map(M) ->
+    [ann_c_map_pair(As,
+                    #c_literal{anno=As,val='assoc'},
+                    #c_literal{anno=As,val=K},
+                    #c_literal{anno=As,val=V}) || {K,V} <- maps:to_list(M)];
 map_es(#c_map{es = Es}) ->
     Es.
 
--spec map_arg(c_map()) -> c_map() | c_literal().
+-spec map_arg(c_map() | c_literal()) -> c_map() | c_literal().
 
+map_arg(#c_literal{anno=As,val=M}) when is_map(M) ->
+    #c_literal{anno=As,val=#{}};
 map_arg(#c_map{arg=M}) ->
     M.
 
@@ -1628,6 +1636,11 @@ ann_c_map_pattern(As, Pairs) ->
 is_c_map_empty(#c_map{ es=[] }) -> true;
 is_c_map_empty(#c_literal{val=M}) when is_map(M),map_size(M) =:= 0 -> true;
 is_c_map_empty(_) -> false.
+
+-spec is_c_map_pattern(c_map()) -> boolean().
+
+is_c_map_pattern(#c_map{is_pat=IsPat}) ->
+    IsPat.
 
 -spec ann_c_map([term()], [c_map_pair()]) -> c_map() | c_literal().
 
@@ -1680,6 +1693,11 @@ map_pair_op(#c_map_pair{op=Op}) -> Op.
 
 c_map_pair(Key,Val) ->
     #c_map_pair{op=#c_literal{val=assoc},key=Key,val=Val}.
+
+-spec c_map_pair_exact(cerl(), cerl()) -> c_map_pair().
+
+c_map_pair_exact(Key,Val) ->
+    #c_map_pair{op=#c_literal{val=exact},key=Key,val=Val}.
 
 -spec ann_c_map_pair([term()], cerl(), cerl(), cerl()) ->
         c_map_pair().
