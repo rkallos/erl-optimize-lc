@@ -1,5 +1,6 @@
 Test                After               AfterOpt            
 unused              4184                4184                
+nested_lc_gen_opt   4184                4184                
 nested_lc_gen       4184                4184                
 intermediary_list3  10957               10957               
 intermediary_list2  10957               10957               
@@ -15,6 +16,7 @@ pen2_mr             318187              318187
 pen2_listsfuns      833025              833025              
 pen2_foldl          514837              514837              
 pen2_foldr          393300              393300              
+pen2_dumb_opt       318187              318187              
 pen2_dumb           318187              318187              
 pen2                318187              318187              
 pen                 833025              833025              

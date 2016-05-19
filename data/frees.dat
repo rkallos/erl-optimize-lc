@@ -1,5 +1,6 @@
 Test                BFrees              AFrees              
 unused              1218                1218                
+nested_lc_gen_opt   1591                1591                
 nested_lc_gen       1554                1554                
 intermediary_list3  32426               32426               
 intermediary_list2  16196               16196               
@@ -15,6 +16,7 @@ pen2_mr             882298              882298
 pen2_listsfuns      442664              442664              
 pen2_foldl          324506              324506              
 pen2_foldr          354628              354628              
+pen2_dumb_opt       182                 182                 
 pen2_dumb           23                  23                  
 pen2                251023              251023              
 pen                 413314              413314              

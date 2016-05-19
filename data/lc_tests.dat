@@ -1,5 +1,6 @@
 Test                Before              After               
 unused              233                 4184                
+nested_lc_gen_opt   1598                4184                
 nested_lc_gen       1598                4184                
 intermediary_list3  233                 10957               
 intermediary_list2  233                 10957               
@@ -15,6 +16,7 @@ pen2_mr             233                 318187
 pen2_listsfuns      233                 833025              
 pen2_foldl          233                 514837              
 pen2_foldr          233                 393300              
+pen2_dumb_opt       233                 318187              
 pen2_dumb           233                 318187              
 pen2                233                 318187              
 pen                 233                 833025              

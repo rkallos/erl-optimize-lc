@@ -17,10 +17,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 		       'module_info'/0,
 		       'module_info'/1,
 		       'nested_lc_gen'/1,
+		       'nested_lc_gen_opt'/1,
+		       'nested_lc_gen_opt_helper'/2,
 		       'pen'/1,
 		       'pen2'/1,
 		       'pen2_dumb'/1,
 		       'pen2_dumb_helper'/4,
+		       'pen2_dumb_opt'/1,
+		       'pen2_dumb_opt_helper'/5,
 		       'pen2_foldl'/1,
 		       'pen2_foldr'/1,
 		       'pen2_lazy'/1,
@@ -510,48 +514,52 @@ module 'lc_tests_opt' ['all_tests'/0,
 																															  -| [{'id',{0,0,'-all_tests/0-fun-3-'}}] ),[500]}|%% Line 128
 																																					   [{[112|[101|[110|[50|[95|[100|[117|[109|[98]]]]]]]]],( 'pen2_dumb'/1
 																																												  -| [{'id',{0,0,'-all_tests/0-fun-4-'}}] ),[500]}|%% Line 129
-																																																		   [{[112|[101|[110|[50|[95|[102|[111|[108|[100|[114]]]]]]]]]],( 'pen2_foldr'/1
-																																																										 -| [{'id',{0,0,'-all_tests/0-fun-5-'}}] ),[500]}|%% Line 130
-																																																																  [{[112|[101|[110|[50|[95|[102|[111|[108|[100|[108]]]]]]]]]],( 'pen2_foldl'/1
-																																																																								-| [{'id',{0,0,'-all_tests/0-fun-6-'}}] ),[500]}|%% Line 131
-																																																																														 [{[112|[101|[110|[50|[95|[108|[105|[115|[116|[115|[102|[117|[110|[115]]]]]]]]]]]]]],( 'pen2_listsfuns'/1
-																																																																																								       -| [{'id',{0,0,'-all_tests/0-fun-7-'}}] ),[500]}|%% Line 132
-																																																																																															[{[112|[101|[110|[50|[95|[109|[114]]]]]]],( 'pen2_mr'/1
-																																																																																																				    -| [{'id',{0,0,'-all_tests/0-fun-8-'}}] ),[500]}|%% Line 133
-																																																																																																										     [{[112|[101|[110|[50|[95|[108|[97|[122|[121]]]]]]]]],( 'pen2_lazy'/1
-																																																																																																																	    -| [{'id',{0,0,'-all_tests/0-fun-9-'}}] ),[500]}|%% Line 134
-																																																																																																																							     [{[112|[101|[110|[50|[95|[108|[97|[122|[121|[95|[99|[112|[115]]]]]]]]]]]]],( 'pen2_lazy_cps'/1
-																																																																																																																																	  -| [{'id',{0,0,'-all_tests/0-fun-10-'}}] ),[500]}|%% Line 135
-																																																																																																																																							    [{[115|[105|[110|[103|[108|[101|[95|[102|[105|[108|[116|[101|[114]]]]]]]]]]]]],( 'single_filter'/1
-																																																																																																																																																	     -| [{'id',{0,0,'-all_tests/0-fun-11-'}}] ),[LstArg|[]]}|%% Line 136
-																																																																																																																																																								     [{[114|[101|[99|[111|[114|[100|[95|[101|[120|[116|[114|[97|[99|[116]]]]]]]]]]]]]],( 'record_extract'/1
-																																																																																																																																																																			 -| [{'id',{0,0,'-all_tests/0-fun-12-'}}] ),[RecArg|[]]}|%% Line 137
-																																																																																																																																																																										 [{[102|[117|[110|[99|[116|[105|[111|[110|[95|[112|[97|[114|[97|[109]]]]]]]]]]]]]],( 'function_param_lc'/2
-																																																																																																																																																																																				     -| [{'id',{0,0,'-all_tests/0-fun-13-'}}] ),['param'|[LstArg|[]]]}|%% Line 138
-																																																																																																																																																																																												       [{[115|[111|[114|[116|[101|[100|[95|[103|[101|[110]]]]]]]]]],( 'sorted_gen'/1
-																																																																																																																																																																																																				      -| [{'id',{0,0,'-all_tests/0-fun-14-'}}] ),[RecArg|[]]}|%% Line 139
-																																																																																																																																																																																																											      [{[109|[97|[107|[101|[95|[110]]]]]],( 'make_n'/2
-																																																																																																																																																																																																																    -| [{'id',{0,0,'-all_tests/0-fun-15-'}}] ),[{'param1','param2'}|[500]]}|%% Line 140
-																																																																																																																																																																																																																									    [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116]]]]]]]]]]]]]]]]],( 'intermediary_list'/1
-																																																																																																																																																																																																																																						    -| [{'id',{0,0,'-all_tests/0-fun-16-'}}] ),[500]}|%% Line 141
-																																																																																																																																																																																																																																												      [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116|[50]]]]]]]]]]]]]]]]]],( 'intermediary_list2'/1
-																																																																																																																																																																																																																																																										   -| [{'id',{0,0,'-all_tests/0-fun-17-'}}] ),[500]}|%% Line 142
-																																																																																																																																																																																																																																																																     [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116|[51]]]]]]]]]]]]]]]]]],( 'intermediary_list3'/1
-																																																																																																																																																																																																																																																																														  -| [{'id',{0,0,'-all_tests/0-fun-18-'}}] ),[500]}|%% Line 143
-																																																																																																																																																																																																																																																																																				    [{[110|[101|[115|[116|[101|[100|[95|[108|[99|[95|[103|[101|[110]]]]]]]]]]]]],( 'nested_lc_gen'/1
-																																																																																																																																																																																																																																																																																														   -| [{'id',{0,0,'-all_tests/0-fun-19-'}}] ),[LstArg|[]]}|%% Line 144
-																																																																																																																																																																																																																																																																																																					   [{[117|[110|[117|[115|[101|[100]]]]]],( 'unused'/0
-																																																																																																																																																																																																																																																																																																										   -| [{'id',{0,0,'-all_tests/0-fun-20-'}}] ),[]}|%% Line 145
-																																																																																																																																																																																																																																																																																																																  []]]]]]]]]]]]]]]]]]]]]]
+																																																		   [{[112|[101|[110|[50|[95|[100|[117|[109|[98|[95|[111|[112|[116]]]]]]]]]]]]],( 'pen2_dumb_opt'/1
+																																																												 -| [{'id',{0,0,'-all_tests/0-fun-5-'}}] ),[500]}|%% Line 130
+																																																																		  [{[112|[101|[110|[50|[95|[102|[111|[108|[100|[114]]]]]]]]]],( 'pen2_foldr'/1
+																																																																										-| [{'id',{0,0,'-all_tests/0-fun-6-'}}] ),[500]}|%% Line 131
+																																																																																 [{[112|[101|[110|[50|[95|[102|[111|[108|[100|[108]]]]]]]]]],( 'pen2_foldl'/1
+																																																																																							       -| [{'id',{0,0,'-all_tests/0-fun-7-'}}] ),[500]}|%% Line 132
+																																																																																														[{[112|[101|[110|[50|[95|[108|[105|[115|[116|[115|[102|[117|[110|[115]]]]]]]]]]]]]],( 'pen2_listsfuns'/1
+																																																																																																								      -| [{'id',{0,0,'-all_tests/0-fun-8-'}}] ),[500]}|%% Line 133
+																																																																																																														       [{[112|[101|[110|[50|[95|[109|[114]]]]]]],( 'pen2_mr'/1
+																																																																																																																				   -| [{'id',{0,0,'-all_tests/0-fun-9-'}}] ),[500]}|%% Line 134
+																																																																																																																										    [{[112|[101|[110|[50|[95|[108|[97|[122|[121]]]]]]]]],( 'pen2_lazy'/1
+																																																																																																																																	   -| [{'id',{0,0,'-all_tests/0-fun-10-'}}] ),[500]}|%% Line 135
+																																																																																																																																							     [{[112|[101|[110|[50|[95|[108|[97|[122|[121|[95|[99|[112|[115]]]]]]]]]]]]],( 'pen2_lazy_cps'/1
+																																																																																																																																																	  -| [{'id',{0,0,'-all_tests/0-fun-11-'}}] ),[500]}|%% Line 136
+																																																																																																																																																							    [{[115|[105|[110|[103|[108|[101|[95|[102|[105|[108|[116|[101|[114]]]]]]]]]]]]],( 'single_filter'/1
+																																																																																																																																																																	     -| [{'id',{0,0,'-all_tests/0-fun-12-'}}] ),[LstArg|[]]}|%% Line 137
+																																																																																																																																																																								     [{[114|[101|[99|[111|[114|[100|[95|[101|[120|[116|[114|[97|[99|[116]]]]]]]]]]]]]],( 'record_extract'/1
+																																																																																																																																																																																			 -| [{'id',{0,0,'-all_tests/0-fun-13-'}}] ),[RecArg|[]]}|%% Line 138
+																																																																																																																																																																																										 [{[102|[117|[110|[99|[116|[105|[111|[110|[95|[112|[97|[114|[97|[109]]]]]]]]]]]]]],( 'function_param_lc'/2
+																																																																																																																																																																																																				     -| [{'id',{0,0,'-all_tests/0-fun-14-'}}] ),['param'|[LstArg|[]]]}|%% Line 139
+																																																																																																																																																																																																												       [{[115|[111|[114|[116|[101|[100|[95|[103|[101|[110]]]]]]]]]],( 'sorted_gen'/1
+																																																																																																																																																																																																																				      -| [{'id',{0,0,'-all_tests/0-fun-15-'}}] ),[RecArg|[]]}|%% Line 140
+																																																																																																																																																																																																																											      [{[109|[97|[107|[101|[95|[110]]]]]],( 'make_n'/2
+																																																																																																																																																																																																																																    -| [{'id',{0,0,'-all_tests/0-fun-16-'}}] ),[{'param1','param2'}|[500]]}|%% Line 141
+																																																																																																																																																																																																																																									    [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116]]]]]]]]]]]]]]]]],( 'intermediary_list'/1
+																																																																																																																																																																																																																																																						    -| [{'id',{0,0,'-all_tests/0-fun-17-'}}] ),[500]}|%% Line 142
+																																																																																																																																																																																																																																																												      [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116|[50]]]]]]]]]]]]]]]]]],( 'intermediary_list2'/1
+																																																																																																																																																																																																																																																																										   -| [{'id',{0,0,'-all_tests/0-fun-18-'}}] ),[500]}|%% Line 143
+																																																																																																																																																																																																																																																																																     [{[105|[110|[116|[101|[114|[109|[101|[100|[105|[97|[114|[121|[95|[108|[105|[115|[116|[51]]]]]]]]]]]]]]]]]],( 'intermediary_list3'/1
+																																																																																																																																																																																																																																																																																														  -| [{'id',{0,0,'-all_tests/0-fun-19-'}}] ),[500]}|%% Line 144
+																																																																																																																																																																																																																																																																																																				    [{[110|[101|[115|[116|[101|[100|[95|[108|[99|[95|[103|[101|[110]]]]]]]]]]]]],( 'nested_lc_gen'/1
+																																																																																																																																																																																																																																																																																																														   -| [{'id',{0,0,'-all_tests/0-fun-20-'}}] ),[LstArg|[]]}|%% Line 145
+																																																																																																																																																																																																																																																																																																																					   [{[110|[101|[115|[116|[101|[100|[95|[108|[99|[95|[103|[101|[110|[95|[111|[112|[116]]]]]]]]]]]]]]]]],( 'nested_lc_gen_opt'/1
+																																																																																																																																																																																																																																																																																																																																		 -| [{'id',{0,0,'-all_tests/0-fun-21-'}}] ),[LstArg|[]]}|%% Line 146
+																																																																																																																																																																																																																																																																																																																																									 [{[117|[110|[117|[115|[101|[100]]]]]],( 'unused'/0
+																																																																																																																																																																																																																																																																																																																																														 -| [{'id',{0,0,'-all_tests/0-fun-22-'}}] ),[]}|%% Line 147
+																																																																																																																																																																																																																																																																																																																																																				[]]]]]]]]]]]]]]]]]]]]]]]]
 'ss'/1 =
-    %% Line 150
+    %% Line 152
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <_cor7> =
-		  %% Line 151
+		  %% Line 153
 		  ( letrec
 			'lc$^0'/1 =
 			    fun (_cor4) ->
@@ -579,7 +587,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 			in  apply 'lc$^0'/1
 				(_cor3)
 		    -| ['list_comprehension'] )
-	      in  %% Line 151
+	      in  %% Line 153
 		  call 'lists':'sum'
 		      (_cor7)
 	  ( <_cor8> when 'true' ->
@@ -589,20 +597,20 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'ses'/1 =
-    %% Line 154
+    %% Line 156
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <_cor8> =
-		  %% Line 155
+		  %% Line 157
 		  ( letrec
 			'lc$^0'/1 =
 			    fun (_cor5) ->
 				case _cor5 of
 				  <[X|_cor2]>
-				      when %% Line 156
+				      when %% Line 158
 					try
 					    let <_cor3> =
 						call 'erlang':'rem'
@@ -639,7 +647,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 			in  apply 'lc$^0'/1
 				(_cor4)
 		    -| ['list_comprehension'] )
-	      in  %% Line 155
+	      in  %% Line 157
 		  call 'lists':'sum'
 		      (_cor8)
 	  ( <_cor9> when 'true' ->
@@ -649,19 +657,19 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen'/1 =
-    %% Line 159
+    %% Line 161
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
-	      %% Line 160
+	      %% Line 162
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor9) ->
 			    case _cor9 of
 			      <[X|_cor2]>
-				  when %% Line 161
+				  when %% Line 163
 				    try
 					let <_cor3> =
 					    call 'erlang':'rem'
@@ -676,9 +684,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 					'lc$^1'/1 =
 					    fun (_cor10) ->
 						case _cor10 of
-						  <[%% Line 162
+						  <[%% Line 164
 						    Y|_cor6]>
-						      when %% Line 163
+						      when %% Line 165
 							try
 							    let <_cor7> =
 								call 'erlang':'rem'
@@ -690,14 +698,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 							catch <T,R> ->
 							    'false' ->
 						      let <_cor11> =
-							  %% Line 162
+							  %% Line 164
 							  apply 'lc$^1'/1
 							      (_cor6)
 						      in  ( [[X|[Y|[]]]|_cor11]
 							    -| ['compiler_generated'] )
-						  ( <[%% Line 162
+						  ( <[%% Line 164
 						      Y|_cor6]> when 'true' ->
-							%% Line 162
+							%% Line 164
 							apply 'lc$^1'/1
 							    (_cor6)
 						    -| ['compiler_generated'] )
@@ -711,7 +719,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    -| ['compiler_generated'] )
 						end
 				    in  let <_cor8> =
-					    %% Line 162
+					    %% Line 164
 					    call 'lists':'seq'
 						(1, N)
 					in  apply 'lc$^1'/1
@@ -742,19 +750,19 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2'/1 =
-    %% Line 166
+    %% Line 168
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
-	      %% Line 167
+	      %% Line 169
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor13) ->
 			    case _cor13 of
 			      <[X|_cor2]>
-				  when %% Line 168
+				  when %% Line 170
 				    try
 					let <_cor3> =
 					    call 'erlang':'rem'
@@ -769,9 +777,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 					'lc$^1'/1 =
 					    fun (_cor14) ->
 						case _cor14 of
-						  <[%% Line 169
+						  <[%% Line 171
 						    Y|_cor6]>
-						      when %% Line 170
+						      when %% Line 172
 							try
 							    let <_cor7> =
 								call 'erlang':'rem'
@@ -780,15 +788,15 @@ module 'lc_tests_opt' ['all_tests'/0,
 								    call 'erlang':'=:='
 									(_cor7, 1)
 								in  let <_cor9> =
-									%% Line 171
+									%% Line 173
 									call 'erlang':'+'
 									    (X, Y)
 								    in  let <_cor10> =
-									    %% Line 171
+									    %% Line 173
 									    call 'erlang':'rem'
 										(_cor9, 5)
 									in  let <_cor11> =
-										%% Line 171
+										%% Line 173
 										call 'erlang':'=/='
 										    (_cor10, 0)
 									    in  call 'erlang':'and'
@@ -798,14 +806,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 							catch <T,R> ->
 							    'false' ->
 						      let <_cor15> =
-							  %% Line 169
+							  %% Line 171
 							  apply 'lc$^1'/1
 							      (_cor6)
 						      in  ( [[X|[Y|[]]]|_cor15]
 							    -| ['compiler_generated'] )
-						  ( <[%% Line 169
+						  ( <[%% Line 171
 						      Y|_cor6]> when 'true' ->
-							%% Line 169
+							%% Line 171
 							apply 'lc$^1'/1
 							    (_cor6)
 						    -| ['compiler_generated'] )
@@ -819,7 +827,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    -| ['compiler_generated'] )
 						end
 				    in  let <_cor12> =
-					    %% Line 169
+					    %% Line 171
 					    call 'lists':'seq'
 						(1, N)
 					in  apply 'lc$^1'/1
@@ -850,34 +858,34 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_dumb'/1 =
-    %% Line 174
+    %% Line 176
     fun (_cor0) ->
-	%% Line 175
+	%% Line 177
 	apply 'pen2_dumb_helper'/4
 	    (_cor0, 1, 1, [])
 'pen2_dumb_helper'/4 =
-    %% Line 176
+    %% Line 178
     fun (_cor3,_cor2,_cor1,_cor0) ->
 	case <_cor3,_cor2,_cor1,_cor0> of
 	  <N,X,_X_Y,L>
 	      when call 'erlang':'>'
 		    (X,
 		     N) ->
-	      %% Line 177
+	      %% Line 179
 	      L
-	  %% Line 178
+	  %% Line 180
 	  <N,X,Y,L>
 	      when call 'erlang':'>'
 		    (Y,
 		     N) ->
 	      let <_cor4> =
-		  %% Line 179
+		  %% Line 181
 		  call 'erlang':'+'
 		      (X, 1)
-	      in  %% Line 179
+	      in  %% Line 181
 		  apply 'pen2_dumb_helper'/4
 		      (N, _cor4, 0, L)
-	  %% Line 180
+	  %% Line 182
 	  <N,X,Y,L>
 	      when try
 		    let <_cor6> =
@@ -921,40 +929,126 @@ module 'lc_tests_opt' ['all_tests'/0,
 		catch <T,R> ->
 		    'false' ->
 	      let <_cor14> =
-		  %% Line 181
-		  call 'erlang':'+'
-		      (Y, 1)
-	      in  let <_cor15> =
-		      %% Line 181
-		      apply 'pen2_dumb_helper'/4
-			  (N, X, _cor14, L)
-		  in  %% Line 181
-		      [[X|[Y|[]]]|_cor15]
-	  %% Line 182
-	  <N,X,Y,L> when 'true' ->
-	      let <_cor16> =
 		  %% Line 183
 		  call 'erlang':'+'
 		      (Y, 1)
-	      in  %% Line 183
+	      in  let <_cor15> =
+		      %% Line 183
+		      apply 'pen2_dumb_helper'/4
+			  (N, X, _cor14, L)
+		  in  %% Line 183
+		      [[X|[Y|[]]]|_cor15]
+	  %% Line 184
+	  <N,X,Y,L> when 'true' ->
+	      let <_cor16> =
+		  %% Line 185
+		  call 'erlang':'+'
+		      (Y, 1)
+	      in  %% Line 185
 		  apply 'pen2_dumb_helper'/4
 		      (N, X, _cor16, L)
 	end
+'pen2_dumb_opt'/1 =
+    %% Line 189
+    fun (_cor0) ->
+	let <_cor1> =
+	    %% Line 190
+	    call 'lists':'seq'
+		(1, _cor0)
+	in  let <Lst> =
+		%% Line 190
+		call 'lists':'reverse'
+		    (_cor1)
+	    in  %% Line 191
+		apply 'pen2_dumb_opt_helper'/5
+		    (Lst, Lst, Lst, Lst, [])
+'pen2_dumb_opt_helper'/5 =
+    %% Line 192
+    fun (_cor4,_cor3,_cor2,_cor1,_cor0) ->
+	case <_cor4,_cor3,_cor2,_cor1,_cor0> of
+	  <[],_cor17,_cor18,_cor19,L> when 'true' ->
+	      L
+	  %% Line 193
+	  <[_X_X|Xs],[],XGen,YGen,L> when 'true' ->
+	      %% Line 194
+	      apply 'pen2_dumb_opt_helper'/5
+		  (Xs, YGen, XGen, YGen, L)
+	  %% Line 195
+	  <[X|Xs],_cor20,XGen,YGen,L>
+	      when try
+		    let <_cor5> =
+			call 'erlang':'rem'
+			    (X, 2)
+		    in  call 'erlang':'=/='
+			    (_cor5, 0)
+		of <Try> ->
+		    Try
+		catch <T,R> ->
+		    'false' ->
+	      %% Line 196
+	      apply 'pen2_dumb_opt_helper'/5
+		  (Xs, YGen, XGen, YGen, L)
+	  %% Line 197
+	  <AX = [X|_X_Xs],[Y|Ys],XGen,YGen,L>
+	      when try
+		    let <_cor7> =
+			call 'erlang':'rem'
+			    (Y, 2)
+		    in  ( case <> of
+			    ( <>
+				  when call 'erlang':'=:='
+					(_cor7,
+					 1) ->
+				  let <_cor8> =
+				      %% Line 198
+				      call 'erlang':'+'
+					  (X, Y)
+				  in  let <_cor9> =
+					  %% Line 198
+					  call 'erlang':'rem'
+					      (_cor8, 5)
+				      in  %% Line 198
+					  call 'erlang':'=/='
+					      (_cor9, 0)
+			      -| ['compiler_generated'] )
+			    ( <> when 'true' ->
+				  'false'
+			      -| ['compiler_generated'] )
+			  end
+			  -| ['compiler_generated'] )
+		of <Try> ->
+		    Try
+		catch <T,R> ->
+		    'false' ->
+	      %% Line 199
+	      apply 'pen2_dumb_opt_helper'/5
+		  (AX, Ys, XGen, YGen, [[X|[Y|[]]]|L])
+	  %% Line 200
+	  <AX,[_X_Y|Ys],XGen,YGen,L> when 'true' ->
+	      %% Line 201
+	      apply 'pen2_dumb_opt_helper'/5
+		  (AX, Ys, XGen, YGen, L)
+	  ( <_cor16,_cor15,_cor14,_cor13,_cor12> when 'true' ->
+		( primop 'match_fail'
+		      ({'function_clause',_cor16,_cor15,_cor14,_cor13,_cor12})
+		  -| [{'function_name',{'pen2_dumb_opt_helper',5}}] )
+	    -| ['compiler_generated'] )
+	end
 'pen2_foldl'/1 =
-    %% Line 186
+    %% Line 205
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 187
+		  %% Line 206
 		  call 'lists':'seq'
 		      (1, N)
 	      in  let <_cor19> =
-		      %% Line 189
+		      %% Line 208
 		      ( fun (_cor16,_cor15) ->
-			    %% Line 190
+			    %% Line 209
 			    case <> of
 			      <>
 				  when try
@@ -968,9 +1062,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 				    catch <T,R> ->
 					'false' ->
 				  let <_cor13> =
-				      %% Line 192
+				      %% Line 211
 				      ( fun (_cor10,_cor9) ->
-					    %% Line 193
+					    %% Line 212
 					    case <> of
 					      <>
 						  when try
@@ -1001,32 +1095,32 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    catch <T,R> ->
 							'false' ->
 						  [[_cor16|[_cor10|[]]]|_cor9]
-					      %% Line 194
+					      %% Line 213
 					      <> when 'true' ->
 						  _cor9
 					    end
 					-| [{'id',{0,0,'-pen2_foldl/1-fun-0-'}}] )
 				  in  let <_cor14> =
-					  %% Line 191
+					  %% Line 210
 					  call 'lists':'foldl'
-					      (_cor13, %% Line 197
-						       [], %% Line 197
+					      (_cor13, %% Line 216
+						       [], %% Line 216
 							   Gen)
-				      in  %% Line 197
+				      in  %% Line 216
 					  call 'erlang':'++'
 					      (_cor14, _cor15)
-			      %% Line 198
+			      %% Line 217
 			      <> when 'true' ->
 				  _cor15
 			    end
 			-| [{'id',{0,0,'-pen2_foldl/1-fun-1-'}}] )
 		  in  let <_cor20> =
-			  %% Line 188
+			  %% Line 207
 			  call 'lists':'foldl'
-			      (_cor19, %% Line 200
-				       [], %% Line 200
+			      (_cor19, %% Line 219
+				       [], %% Line 219
 					   Gen)
-		      in  %% Line 188
+		      in  %% Line 207
 			  call 'lists':'reverse'
 			      (_cor20)
 	  ( <_cor21> when 'true' ->
@@ -1036,20 +1130,20 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_foldr'/1 =
-    %% Line 202
+    %% Line 221
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 203
+		  %% Line 222
 		  call 'lists':'seq'
 		      (1, N)
 	      in  let <_cor19> =
-		      %% Line 205
+		      %% Line 224
 		      ( fun (_cor16,_cor15) ->
-			    %% Line 206
+			    %% Line 225
 			    case <> of
 			      <>
 				  when try
@@ -1063,9 +1157,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 				    catch <T,R> ->
 					'false' ->
 				  let <_cor13> =
-				      %% Line 208
+				      %% Line 227
 				      ( fun (_cor10,_cor9) ->
-					    %% Line 209
+					    %% Line 228
 					    case <> of
 					      <>
 						  when try
@@ -1096,29 +1190,29 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    catch <T,R> ->
 							'false' ->
 						  [[_cor16|[_cor10|[]]]|_cor9]
-					      %% Line 210
+					      %% Line 229
 					      <> when 'true' ->
 						  _cor9
 					    end
 					-| [{'id',{0,0,'-pen2_foldr/1-fun-0-'}}] )
 				  in  let <_cor14> =
-					  %% Line 207
+					  %% Line 226
 					  call 'lists':'foldr'
-					      (_cor13, %% Line 213
-						       [], %% Line 213
+					      (_cor13, %% Line 232
+						       [], %% Line 232
 							   Gen)
-				      in  %% Line 213
+				      in  %% Line 232
 					  call 'erlang':'++'
 					      (_cor14, _cor15)
-			      %% Line 214
+			      %% Line 233
 			      <> when 'true' ->
 				  _cor15
 			    end
 			-| [{'id',{0,0,'-pen2_foldr/1-fun-1-'}}] )
-		  in  %% Line 204
+		  in  %% Line 223
 		      call 'lists':'foldr'
-			  (_cor19, %% Line 216
-				   [], %% Line 216
+			  (_cor19, %% Line 235
+				   [], %% Line 235
 				       Gen)
 	  ( <_cor20> when 'true' ->
 		( primop 'match_fail'
@@ -1127,18 +1221,18 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_listsfuns'/1 =
-    %% Line 218
+    %% Line 237
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 219
+		  %% Line 238
 		  call 'lists':'seq'
 		      (1, N)
 	      in  let <_cor24> =
-		      %% Line 220
+		      %% Line 239
 		      ( fun (_cor22) ->
 			    case _cor22 of
 			      <[X|[Y|[]]]> when 'true' ->
@@ -1158,7 +1252,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 			    end
 			-| [{'id',{0,0,'-pen2_listsfuns/1-fun-0-'}}] )
 		  in  let <_cor19> =
-			  %% Line 221
+			  %% Line 240
 			  ( letrec
 				'lc$^0'/1 =
 				    fun (_cor16) ->
@@ -1168,10 +1262,10 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    'lc$^1'/1 =
 							fun (_cor17) ->
 							    case _cor17 of
-							      <[%% Line 222
+							      <[%% Line 241
 								Y|_cor10]> when 'true' ->
 								  let <_cor18> =
-								      %% Line 222
+								      %% Line 241
 								      apply 'lc$^1'/1
 									  (_cor10)
 								  in  ( [[X|[Y|[]]]|_cor18]
@@ -1186,7 +1280,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 								-| ['compiler_generated'] )
 							    end
 						in  let <_cor14> =
-							%% Line 222
+							%% Line 241
 							( fun (_cor12) ->
 							      let <_cor11> =
 								  call 'erlang':'rem'
@@ -1195,7 +1289,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 								      (_cor11, 1)
 							  -| [{'id',{0,0,'-pen2_listsfuns/1-fun-2-'}}] )
 						    in  let <_cor15> =
-							    %% Line 222
+							    %% Line 241
 							    call 'lists':'filter'
 								(_cor14, Gen)
 							in  apply 'lc$^1'/1
@@ -1223,7 +1317,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 				    in  apply 'lc$^0'/1
 					    (_cor8)
 			    -| ['list_comprehension'] )
-		      in  %% Line 220
+		      in  %% Line 239
 			  call 'lists':'filter'
 			      (_cor24, _cor19)
 	  ( <_cor25> when 'true' ->
@@ -1233,25 +1327,25 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_mr'/1 =
-    %% Line 225
+    %% Line 244
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 226
+		  %% Line 245
 		  call 'lists':'seq'
 		      (1, N)
 	      in  let <RedYs> =
-		      %% Line 227
+		      %% Line 246
 		      letrec
 			  'Red_ys'/3 =
 			      ( fun (_cor11,_cor10,_cor9) ->
 				    let <Red_ys> = 'Red_ys'/3
 				    in  case <_cor11,_cor10,_cor9> of
 					  <AX = [X|_X_Xs],[Y|Ys],MR> when 'true' ->
-					      %% Line 228
+					      %% Line 247
 					      case <> of
 						<>
 						    when try
@@ -1282,17 +1376,17 @@ module 'lc_tests_opt' ['all_tests'/0,
 						      catch <T,R> ->
 							  'false' ->
 						    let <_cor8> =
-							%% Line 229
+							%% Line 248
 							apply Red_ys
 							    (AX, Ys, MR)
-						    in  %% Line 229
+						    in  %% Line 248
 							[[X|[Y|[]]]|_cor8]
-						%% Line 230
+						%% Line 249
 						<> when 'true' ->
 						    apply Red_ys
 							(AX, Ys, MR)
 					      end
-					  %% Line 232
+					  %% Line 251
 					  <[_X_X|Xs],[],MR> when 'true' ->
 					      apply MR
 						  (Xs)
@@ -1305,14 +1399,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| [{'id',{0,0,'-pen2_mr/1-Red_ys-0-'}}] )
 		      in  'Red_ys'/3
 		  in  let <RedXs> =
-			  %% Line 233
+			  %% Line 252
 			  letrec
 			      'Red_xs'/1 =
 				  ( fun (_cor17) ->
 					let <Red_xs> = 'Red_xs'/1
 					in  case _cor17 of
 					      <AX = [X|Xs]> when 'true' ->
-						  %% Line 234
+						  %% Line 253
 						  case <> of
 						    <>
 							when try
@@ -1327,12 +1421,12 @@ module 'lc_tests_opt' ['all_tests'/0,
 							      'false' ->
 							apply RedYs
 							    (AX, Gen, Red_xs)
-						    %% Line 235
+						    %% Line 254
 						    <> when 'true' ->
 							apply Red_xs
 							    (Xs)
 						  end
-					      %% Line 237
+					      %% Line 256
 					      <[]> when 'true' ->
 						  []
 					      ( <_cor18> when 'true' ->
@@ -1343,7 +1437,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 					    end
 				    -| [{'id',{0,0,'-pen2_mr/1-Red_xs-1-'}}] )
 			  in  'Red_xs'/1
-		      in  %% Line 239
+		      in  %% Line 258
 			  apply RedXs
 			      (Gen)
 	  ( <_cor20> when 'true' ->
@@ -1353,25 +1447,25 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_lazy'/1 =
-    %% Line 242
+    %% Line 261
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 243
+		  %% Line 262
 		  apply 'lazy_seq'/2
 		      (1, N)
 	      in  let <RedYs> =
-		      %% Line 244
+		      %% Line 263
 		      letrec
 			  'Red_ys'/3 =
 			      ( fun (_cor14,_cor13,_cor12) ->
 				    let <Red_ys> = 'Red_ys'/3
 				    in  case <_cor14,_cor13,_cor12> of
 					  <AX = [X|_X_Xs],[Y|Ys],MR> when 'true' ->
-					      %% Line 245
+					      %% Line 264
 					      case <> of
 						<>
 						    when try
@@ -1402,16 +1496,16 @@ module 'lc_tests_opt' ['all_tests'/0,
 						      catch <T,R> ->
 							  'false' ->
 						    let <_cor8> =
-							%% Line 246
+							%% Line 265
 							apply Ys
 							    ()
 						    in  let <_cor9> =
-							    %% Line 246
+							    %% Line 265
 							    apply Red_ys
 								(AX, _cor8, MR)
-							in  %% Line 246
+							in  %% Line 265
 							    [[X|[Y|[]]]|_cor9]
-						%% Line 247
+						%% Line 266
 						<> when 'true' ->
 						    let <_cor10> =
 							apply Ys
@@ -1419,7 +1513,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    in  apply Red_ys
 							    (AX, _cor10, MR)
 					      end
-					  %% Line 248
+					  %% Line 267
 					  <[_X_X|Xs],[],MR> when 'true' ->
 					      let <_cor11> =
 						  apply Xs
@@ -1435,14 +1529,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| [{'id',{0,0,'-pen2_lazy/1-Red_ys-0-'}}] )
 		      in  'Red_ys'/3
 		  in  let <RedXs> =
-			  %% Line 249
+			  %% Line 268
 			  letrec
 			      'Red_xs'/1 =
 				  ( fun (_cor21) ->
 					let <Red_xs> = 'Red_xs'/1
 					in  case _cor21 of
 					      <AX = [X|Xs]> when 'true' ->
-						  %% Line 250
+						  %% Line 269
 						  case <> of
 						    <>
 							when try
@@ -1457,7 +1551,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 							      'false' ->
 							apply RedYs
 							    (AX, Gen, Red_xs)
-						    %% Line 251
+						    %% Line 270
 						    <> when 'true' ->
 							let <_cor20> =
 							    apply Xs
@@ -1465,7 +1559,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 							in  apply Red_xs
 								(_cor20)
 						  end
-					      %% Line 253
+					      %% Line 272
 					      <[]> when 'true' ->
 						  []
 					      ( <_cor22> when 'true' ->
@@ -1476,7 +1570,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 					    end
 				    -| [{'id',{0,0,'-pen2_lazy/1-Red_xs-1-'}}] )
 			  in  'Red_xs'/1
-		      in  %% Line 254
+		      in  %% Line 273
 			  apply RedXs
 			      (Gen)
 	  ( <_cor24> when 'true' ->
@@ -1486,25 +1580,25 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'pen2_lazy_cps'/1 =
-    %% Line 257
+    %% Line 276
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Gen> =
-		  %% Line 258
+		  %% Line 277
 		  apply 'lazy_cp_seq'/2
 		      (1, N)
 	      in  let <RedYs> =
-		      %% Line 259
+		      %% Line 278
 		      letrec
 			  'Red_ys'/3 =
 			      ( fun (_cor14,_cor13,_cor12) ->
 				    let <Red_ys> = 'Red_ys'/3
 				    in  case <_cor14,_cor13,_cor12> of
 					  <AX = [X|_X_Xs],[Y|Ys],MR> when 'true' ->
-					      %% Line 260
+					      %% Line 279
 					      case <> of
 						<>
 						    when try
@@ -1535,16 +1629,16 @@ module 'lc_tests_opt' ['all_tests'/0,
 						      catch <T,R> ->
 							  'false' ->
 						    let <_cor8> =
-							%% Line 261
+							%% Line 280
 							apply Ys
 							    ()
 						    in  let <_cor9> =
-							    %% Line 261
+							    %% Line 280
 							    apply Red_ys
 								(AX, _cor8, MR)
-							in  %% Line 261
+							in  %% Line 280
 							    [[X|[Y|[]]]|_cor9]
-						%% Line 262
+						%% Line 281
 						<> when 'true' ->
 						    let <_cor10> =
 							apply Ys
@@ -1552,7 +1646,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 						    in  apply Red_ys
 							    (AX, _cor10, MR)
 					      end
-					  %% Line 263
+					  %% Line 282
 					  <[_X_X|Xs],[],MR> when 'true' ->
 					      let <_cor11> =
 						  apply Xs
@@ -1568,14 +1662,14 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| [{'id',{0,0,'-pen2_lazy_cps/1-Red_ys-0-'}}] )
 		      in  'Red_ys'/3
 		  in  let <RedXs> =
-			  %% Line 264
+			  %% Line 283
 			  letrec
 			      'Red_xs'/1 =
 				  ( fun (_cor21) ->
 					let <Red_xs> = 'Red_xs'/1
 					in  case _cor21 of
 					      <AX = [X|Xs]> when 'true' ->
-						  %% Line 265
+						  %% Line 284
 						  case <> of
 						    <>
 							when try
@@ -1590,7 +1684,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 							      'false' ->
 							apply RedYs
 							    (AX, Gen, Red_xs)
-						    %% Line 266
+						    %% Line 285
 						    <> when 'true' ->
 							let <_cor20> =
 							    apply Xs
@@ -1598,7 +1692,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 							in  apply Red_xs
 								(_cor20)
 						  end
-					      %% Line 268
+					      %% Line 287
 					      <[]> when 'true' ->
 						  []
 					      ( <_cor22> when 'true' ->
@@ -1609,7 +1703,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 					    end
 				    -| [{'id',{0,0,'-pen2_lazy_cps/1-Red_xs-1-'}}] )
 			  in  'Red_xs'/1
-		      in  %% Line 269
+		      in  %% Line 288
 			  apply RedXs
 			      (Gen)
 	  ( <_cor24> when 'true' ->
@@ -1619,9 +1713,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'unused'/0 =
-    %% Line 273
+    %% Line 292
     fun () ->
-	do  %% Line 274
+	do  %% Line 293
 	    ( letrec
 		  'lc$^0'/1 =
 		      fun (_cor3) ->
@@ -1654,22 +1748,22 @@ module 'lc_tests_opt' ['all_tests'/0,
 		  in  apply 'lc$^0'/1
 			  (_cor2)
 	      -| ['list_comprehension'] )
-	    %% Line 275
+	    %% Line 294
 	    'ok'
 'single_filter'/1 =
-    %% Line 280
+    %% Line 299
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_list'
 		    (_cor0) ->
-	      %% Line 281
+	      %% Line 300
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor3) ->
 			    case _cor3 of
 			      <[Entry|_cor2]>
-				  when %% Line 282
+				  when %% Line 301
 				    call 'erlang':'is_integer'
 					(Entry) ->
 				  let <_cor4> =
@@ -1699,13 +1793,13 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'record_extract'/1 =
-    %% Line 286
+    %% Line 305
     fun (_cor0) ->
 	case _cor0 of
 	  <N>
 	      when call 'erlang':'is_list'
 		    (_cor0) ->
-	      %% Line 287
+	      %% Line 306
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor3) ->
@@ -1748,13 +1842,13 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'function_param_lc'/2 =
-    %% Line 290
+    %% Line 309
     fun (_cor1,_cor0) ->
 	case <_cor1,_cor0> of
 	  <P1,P2>
 	      when call 'erlang':'is_list'
 		    (P2) ->
-	      %% Line 291
+	      %% Line 310
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor4) ->
@@ -1783,24 +1877,24 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'sorted_gen'/1 =
-    %% Line 294
+    %% Line 313
     fun (_cor0) ->
 	case _cor0 of
 	  <L>
 	      when call 'erlang':'is_list'
 		    (_cor0) ->
-	      %% Line 295
+	      %% Line 314
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor13) ->
 			    case _cor13 of
-			      <[%% Line 296
+			      <[%% Line 315
 				Entry|_cor2]> when 'true' ->
 				  ( case Entry of
 				      ( <( {'test_record',_rec3,_cor18}
 					   -| ['compiler_generated'] )> when 'true' ->
 					    let <_cor16> =
-						%% Line 296
+						%% Line 315
 						apply 'lc$^0'/1
 						    (_cor2)
 					    in  ( [_rec3|_cor16]
@@ -1825,9 +1919,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| ['compiler_generated'] )
 			    end
 		in  let <_cor11> =
-			%% Line 296
+			%% Line 315
 			( fun (_cor8,_cor7) ->
-			      %% Line 297
+			      %% Line 316
 			      ( case _cor8 of
 				  ( <( {'test_record',_rec1,_cor20}
 				       -| ['compiler_generated'] )> when 'true' ->
@@ -1860,9 +1954,9 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| ['compiler_generated'] )
 			  -| [{'id',{0,0,'-sorted_gen/1-fun-0-'}}] )
 		    in  let <_cor12> =
-			    %% Line 296
+			    %% Line 315
 			    call 'lists':'sort'
-				(_cor11, %% Line 298
+				(_cor11, %% Line 317
 					 L)
 			in  apply 'lc$^0'/1
 				(_cor12)
@@ -1874,13 +1968,13 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'make_n'/2 =
-    %% Line 304
+    %% Line 323
     fun (_cor1,_cor0) ->
 	case <_cor1,_cor0> of
 	  <V,N>
 	      when call 'erlang':'is_integer'
 		    (N) ->
-	      %% Line 305
+	      %% Line 324
 	      ( letrec
 		    'lc$^0'/1 =
 			fun (_cor5) ->
@@ -1912,17 +2006,17 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'intermediary_list'/1 =
-    %% Line 308
+    %% Line 327
     fun (_cor0) ->
 	case _cor0 of
 	  <Len>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Inter> =
-		  %% Line 309
+		  %% Line 328
 		  apply 'random_test_records'/2
 		      (Len, 50)
-	      in  %% Line 310
+	      in  %% Line 329
 		  ( letrec
 			'lc$^0'/1 =
 			    fun (_cor4) ->
@@ -1965,18 +2059,18 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'intermediary_list2'/1 =
-    %% Line 312
+    %% Line 331
     fun (_cor0) ->
 	case _cor0 of
 	  <Len>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Inter1> =
-		  %% Line 313
+		  %% Line 332
 		  apply 'random_test_records'/2
 		      (Len, 50)
 	      in  let <_cor8> =
-		      %% Line 314
+		      %% Line 333
 		      ( letrec
 			    'lc$^0'/1 =
 				fun (_cor4) ->
@@ -2012,7 +2106,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 			in  apply 'lc$^0'/1
 				(Inter1)
 			-| ['list_comprehension'] )
-		  in  %% Line 315
+		  in  %% Line 334
 		      ( letrec
 			    'lc$^1'/1 =
 				fun (_cor12) ->
@@ -2044,18 +2138,18 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'intermediary_list3'/1 =
-    %% Line 317
+    %% Line 336
     fun (_cor0) ->
 	case _cor0 of
 	  <Len>
 	      when call 'erlang':'is_integer'
 		    (_cor0) ->
 	      let <Inter1> =
-		  %% Line 318
+		  %% Line 337
 		  apply 'random_test_records'/2
 		      (Len, 50)
 	      in  let <_cor7> =
-		      %% Line 319
+		      %% Line 338
 		      ( letrec
 			    'lc$^0'/1 =
 				fun (_cor4) ->
@@ -2081,7 +2175,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 				(Inter1)
 			-| ['list_comprehension'] )
 		  in  let <_cor14> =
-			  %% Line 320
+			  %% Line 339
 			  ( letrec
 				'lc$^1'/1 =
 				    fun (_cor11) ->
@@ -2106,7 +2200,7 @@ module 'lc_tests_opt' ['all_tests'/0,
 			    in  apply 'lc$^1'/1
 				    (_cor7)
 			    -| ['list_comprehension'] )
-		      in  %% Line 321
+		      in  %% Line 340
 			  ( letrec
 				'lc$^2'/1 =
 				    fun (_cor18) ->
@@ -2148,24 +2242,24 @@ module 'lc_tests_opt' ['all_tests'/0,
 	    -| ['compiler_generated'] )
 	end
 'nested_lc_gen'/1 =
-    %% Line 327
+    %% Line 346
     fun (_cor0) ->
 	case _cor0 of
 	  <Lst>
 	      when call 'erlang':'is_list'
 		    (_cor0) ->
-	      %% Line 328
+	      %% Line 347
 	      ( letrec
 		    'lc$^1'/1 =
 			fun (_cor9) ->
 			    case _cor9 of
-			      <[%% Line 329
+			      <[%% Line 348
 				Entry|_cor2]> when 'true' ->
 				  let <_cor10> =
 				      call 'erlang':'*'
 					  (Entry, Entry)
 				  in  let <_cor11> =
-					  %% Line 329
+					  %% Line 348
 					  apply 'lc$^1'/1
 					      (_cor2)
 				      in  ( [{'test_record',Entry,_cor10}|_cor11]
@@ -2179,13 +2273,13 @@ module 'lc_tests_opt' ['all_tests'/0,
 				-| ['compiler_generated'] )
 			    end
 		in  let <_cor8> =
-			%% Line 329
+			%% Line 348
 			( letrec
 			      'lc$^0'/1 =
 				  fun (_cor6) ->
 				      case _cor6 of
 					<[Val|_cor4]>
-					    when %% Line 330
+					    when %% Line 349
 					      try
 						  let <_cor5> =
 						      call 'erlang':'rem'
@@ -2223,6 +2317,74 @@ module 'lc_tests_opt' ['all_tests'/0,
 		( primop 'match_fail'
 		      ({'function_clause',_cor12})
 		  -| [{'function_name',{'nested_lc_gen',1}}] )
+	    -| ['compiler_generated'] )
+	end
+'nested_lc_gen_opt'/1 =
+    %% Line 351
+    fun (_cor0) ->
+	let <_cor6> =
+	    %% Line 352
+	    ( letrec
+		  'lc$^0'/1 =
+		      fun (_cor4) ->
+			  case _cor4 of
+			    <[Val|_cor2]>
+				when try
+				      let <_cor3> =
+					  call 'erlang':'rem'
+					      (Val, 2)
+				      in  call 'erlang':'=:='
+					      (_cor3, 1)
+				  of <Try> ->
+				      Try
+				  catch <T,R> ->
+				      'false' ->
+				let <_cor5> =
+				    apply 'lc$^0'/1
+					(_cor2)
+				in  ( [Val|_cor5]
+				      -| ['compiler_generated'] )
+			    ( <[Val|_cor2]> when 'true' ->
+				  apply 'lc$^0'/1
+				      (_cor2)
+			      -| ['compiler_generated'] )
+			    <[]> when 'true' ->
+				[]
+			    ( <_cor4> when 'true' ->
+				  ( primop 'match_fail'
+					({'function_clause',_cor4})
+				    -| [{'function_name',{'lc$^0',1}}] )
+			      -| ['compiler_generated'] )
+			  end
+	      in  apply 'lc$^0'/1
+		      (_cor0)
+	      -| ['list_comprehension'] )
+	in  let <Entries> =
+		%% Line 352
+		call 'lists':'reverse'
+		    (_cor6)
+	    in  %% Line 353
+		apply 'nested_lc_gen_opt_helper'/2
+		    (Entries, [])
+'nested_lc_gen_opt_helper'/2 =
+    %% Line 354
+    fun (_cor1,_cor0) ->
+	case <_cor1,_cor0> of
+	  <[Entry|Entries],Res> when 'true' ->
+	      let <_cor2> =
+		  %% Line 355
+		  call 'erlang':'*'
+		      (Entry, Entry)
+	      in  %% Line 355
+		  apply 'nested_lc_gen_opt_helper'/2
+		      (Entries, [{'test_record',Entry,_cor2}|Res])
+	  %% Line 356
+	  <[],Res> when 'true' ->
+	      Res
+	  ( <_cor4,_cor3> when 'true' ->
+		( primop 'match_fail'
+		      ({'function_clause',_cor4,_cor3})
+		  -| [{'function_name',{'nested_lc_gen_opt_helper',2}}] )
 	    -| ['compiler_generated'] )
 	end
 'module_info'/0 =

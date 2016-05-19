@@ -153,6 +153,7 @@ all_tests() ->
      {"pen",fun pen/1,[IntArg]},
      {"pen2",fun pen2/1,[IntArg]},
      {"pen2_dumb",fun pen2_dumb/1,[IntArg]},
+     {"pen2_dumb_opt",fun pen2_dumb_opt/1,[IntArg]},
      {"pen2_foldr",fun pen2_foldr/1,[IntArg]},
      {"pen2_foldl",fun pen2_foldl/1,[IntArg]},
      {"pen2_listsfuns",fun pen2_listsfuns/1,[IntArg]},
@@ -168,6 +169,7 @@ all_tests() ->
      {"intermediary_list2",fun intermediary_list2/1,[IntArg]},
      {"intermediary_list3",fun intermediary_list3/1,[IntArg]},
      {"nested_lc_gen",fun nested_lc_gen/1,[LstArg]},
+     {"nested_lc_gen_opt",fun nested_lc_gen_opt/1,[LstArg]},
      {"unused",fun unused/0,[]}].
 
 ss(N) when is_integer(N) ->
@@ -219,6 +221,25 @@ pen2_dumb_helper(N, X, Y, L)
     [[X,Y]|pen2_dumb_helper(N, X, Y + 1, L)];
 pen2_dumb_helper(N, X, Y, L) ->
     pen2_dumb_helper(N, X, Y + 1, L).
+
+pen2_dumb_opt(N) ->
+    Lst = lists:reverse(lists:seq(1, N)),
+    pen2_dumb_opt_helper(Lst, Lst, Lst, Lst, []).
+
+pen2_dumb_opt_helper([], _, _, _, L) ->
+    L;
+pen2_dumb_opt_helper([_X|Xs], [], XGen, YGen, L) ->
+    pen2_dumb_opt_helper(Xs, YGen, XGen, YGen, L);
+pen2_dumb_opt_helper([X|Xs], _, XGen, YGen, L) when X rem 2 /= 0 ->
+    pen2_dumb_opt_helper(Xs, YGen, XGen, YGen, L);
+pen2_dumb_opt_helper(AX = [X|_Xs], [Y|Ys], XGen, YGen, L)
+    when
+        Y rem 2 =:= 1
+        andalso
+        (X + Y) rem 5 /= 0 ->
+    pen2_dumb_opt_helper(AX, Ys, XGen, YGen, [[X,Y]|L]);
+pen2_dumb_opt_helper(AX, [_Y|Ys], XGen, YGen, L) ->
+    pen2_dumb_opt_helper(AX, Ys, XGen, YGen, L).
 
 pen2_foldl(N) when is_integer(N) ->
     Gen = lists:seq(1, N),
@@ -475,6 +496,23 @@ nested_lc_gen(Lst) when is_list(Lst) ->
                   Val rem 2 =:= 1
              ]
     ].
+
+nested_lc_gen_opt(Lst) ->
+    Entries =
+        lists:reverse([ 
+                       Val ||
+                           Val <- Lst,
+                           Val rem 2 =:= 1
+                      ]),
+    nested_lc_gen_opt_helper(Entries, []).
+
+nested_lc_gen_opt_helper([Entry|Entries], Res) ->
+    nested_lc_gen_opt_helper(Entries,
+                             [#test_record{num1 = Entry,
+                                           num2 = Entry * Entry}|
+                              Res]);
+nested_lc_gen_opt_helper([], Res) ->
+    Res.
 
 
 

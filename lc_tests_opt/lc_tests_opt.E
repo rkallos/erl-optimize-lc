@@ -168,68 +168,76 @@ all_tests() ->
       % fun-info: {0,0,'-all_tests/0-fun-4-'}
       fun pen2_dumb/1,
       [IntArg]},
-     {"pen2_foldr",
+     {"pen2_dumb_opt",
       % fun-info: {0,0,'-all_tests/0-fun-5-'}
+      fun pen2_dumb_opt/1,
+      [IntArg]},
+     {"pen2_foldr",
+      % fun-info: {0,0,'-all_tests/0-fun-6-'}
       fun pen2_foldr/1,
       [IntArg]},
      {"pen2_foldl",
-      % fun-info: {0,0,'-all_tests/0-fun-6-'}
+      % fun-info: {0,0,'-all_tests/0-fun-7-'}
       fun pen2_foldl/1,
       [IntArg]},
      {"pen2_listsfuns",
-      % fun-info: {0,0,'-all_tests/0-fun-7-'}
+      % fun-info: {0,0,'-all_tests/0-fun-8-'}
       fun pen2_listsfuns/1,
       [IntArg]},
      {"pen2_mr",
-      % fun-info: {0,0,'-all_tests/0-fun-8-'}
+      % fun-info: {0,0,'-all_tests/0-fun-9-'}
       fun pen2_mr/1,
       [IntArg]},
      {"pen2_lazy",
-      % fun-info: {0,0,'-all_tests/0-fun-9-'}
+      % fun-info: {0,0,'-all_tests/0-fun-10-'}
       fun pen2_lazy/1,
       [IntArg]},
      {"pen2_lazy_cps",
-      % fun-info: {0,0,'-all_tests/0-fun-10-'}
+      % fun-info: {0,0,'-all_tests/0-fun-11-'}
       fun pen2_lazy_cps/1,
       [IntArg]},
      {"single_filter",
-      % fun-info: {0,0,'-all_tests/0-fun-11-'}
+      % fun-info: {0,0,'-all_tests/0-fun-12-'}
       fun single_filter/1,
       [LstArg]},
      {"record_extract",
-      % fun-info: {0,0,'-all_tests/0-fun-12-'}
+      % fun-info: {0,0,'-all_tests/0-fun-13-'}
       fun record_extract/1,
       [RecArg]},
      {"function_param",
-      % fun-info: {0,0,'-all_tests/0-fun-13-'}
+      % fun-info: {0,0,'-all_tests/0-fun-14-'}
       fun function_param_lc/2,
       [param,LstArg]},
      {"sorted_gen",
-      % fun-info: {0,0,'-all_tests/0-fun-14-'}
+      % fun-info: {0,0,'-all_tests/0-fun-15-'}
       fun sorted_gen/1,
       [RecArg]},
      {"make_n",
-      % fun-info: {0,0,'-all_tests/0-fun-15-'}
+      % fun-info: {0,0,'-all_tests/0-fun-16-'}
       fun make_n/2,
       [{param1,param2},IntArg]},
      {"intermediary_list",
-      % fun-info: {0,0,'-all_tests/0-fun-16-'}
+      % fun-info: {0,0,'-all_tests/0-fun-17-'}
       fun intermediary_list/1,
       [IntArg]},
      {"intermediary_list2",
-      % fun-info: {0,0,'-all_tests/0-fun-17-'}
+      % fun-info: {0,0,'-all_tests/0-fun-18-'}
       fun intermediary_list2/1,
       [IntArg]},
      {"intermediary_list3",
-      % fun-info: {0,0,'-all_tests/0-fun-18-'}
+      % fun-info: {0,0,'-all_tests/0-fun-19-'}
       fun intermediary_list3/1,
       [IntArg]},
      {"nested_lc_gen",
-      % fun-info: {0,0,'-all_tests/0-fun-19-'}
+      % fun-info: {0,0,'-all_tests/0-fun-20-'}
       fun nested_lc_gen/1,
       [LstArg]},
+     {"nested_lc_gen_opt",
+      % fun-info: {0,0,'-all_tests/0-fun-21-'}
+      fun nested_lc_gen_opt/1,
+      [LstArg]},
      {"unused",
-      % fun-info: {0,0,'-all_tests/0-fun-20-'}
+      % fun-info: {0,0,'-all_tests/0-fun-22-'}
       fun unused/0,
       []}].
 
@@ -282,6 +290,25 @@ pen2_dumb_helper(N, X, Y, L)
     [[X,Y]|pen2_dumb_helper(N, X, Y + 1, L)];
 pen2_dumb_helper(N, X, Y, L) ->
     pen2_dumb_helper(N, X, Y + 1, L).
+
+pen2_dumb_opt(N) ->
+    Lst = lists:reverse(lists:seq(1, N)),
+    pen2_dumb_opt_helper(Lst, Lst, Lst, Lst, []).
+
+pen2_dumb_opt_helper([], _, _, _, L) ->
+    L;
+pen2_dumb_opt_helper([_X|Xs], [], XGen, YGen, L) ->
+    pen2_dumb_opt_helper(Xs, YGen, XGen, YGen, L);
+pen2_dumb_opt_helper([X|Xs], _, XGen, YGen, L) when X rem 2 /= 0 ->
+    pen2_dumb_opt_helper(Xs, YGen, XGen, YGen, L);
+pen2_dumb_opt_helper(AX = [X|_Xs], [Y|Ys], XGen, YGen, L)
+    when
+        Y rem 2 =:= 1
+        andalso
+        (X + Y) rem 5 /= 0 ->
+    pen2_dumb_opt_helper(AX, Ys, XGen, YGen, [[X,Y]|L]);
+pen2_dumb_opt_helper(AX, [_Y|Ys], XGen, YGen, L) ->
+    pen2_dumb_opt_helper(AX, Ys, XGen, YGen, L).
 
 pen2_foldl(N) when is_integer(N) ->
     Gen = lists:seq(1, N),
@@ -584,6 +611,21 @@ nested_lc_gen(Lst) when is_list(Lst) ->
                   Val rem 2 =:= 1
              ]
     ].
+
+nested_lc_gen_opt(Lst) ->
+    Entries =
+        lists:reverse([ 
+                       Val ||
+                           Val <- Lst,
+                           Val rem 2 =:= 1
+                      ]),
+    nested_lc_gen_opt_helper(Entries, []).
+
+nested_lc_gen_opt_helper([Entry|Entries], Res) ->
+    nested_lc_gen_opt_helper(Entries,
+                             [{test_record,Entry,Entry * Entry}|Res]);
+nested_lc_gen_opt_helper([], Res) ->
+    Res.
 
 module_info() ->
     erlang:get_module_info(lc_tests_opt).
