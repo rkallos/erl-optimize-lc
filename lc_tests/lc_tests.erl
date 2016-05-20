@@ -123,6 +123,10 @@ all_tests() ->
     RecArg = random_test_records(500, 50),
     [{"ss", fun ss/1, [IntArg]},
      {"ses", fun ses/1, [IntArg]},
+     {"pyth", fun pyth/1, [IntArg div 4]},
+     {"pyth1", fun pyth1/1, [IntArg div 4]},
+     {"pyth2", fun pyth2/0, []},
+     {"pyth3", fun pyth3/1, [IntArg div 4]},
      {"pen", fun pen/1, [IntArg]},
      {"pen2", fun pen2/1, [IntArg]},
      {"pen2_dumb", fun pen2_dumb/1, [IntArg]},
@@ -292,6 +296,56 @@ pen2_lazy_cps(N) when is_integer(N) ->
 unused() ->
     _ = [[X, timer:sleep(1)] || X <- lists:seq(1, 1000)],
     ok.
+
+% Examples from Erlang docs on list comprehensions
+% When compared with pyth2, this clearly behaves poorly.
+% Generators should be examined for whether or not they change
+pyth(N) ->
+    [ {A,B,C} || A <- lists:seq(1,N),
+                 B <- lists:seq(1,N),
+                 C <- lists:seq(1,N),
+                 A =< B,
+                 B =< C,
+                 A+B+C =< N,
+                 A*A+B*B =:= C*C ].
+
+% The Erlang docs claim this is more efficient because it reduces the search space.
+% However, I believe that it creates more conses than the original pyth.
+% Fun fact: I was wrong. This uses 4-8x less space than pyth(N).
+% Could this be because each time A is iterated through, it rebuilds B, and the
+% same for B and C?
+pyth1(N) ->
+    [ {A,B,C} || A <- lists:seq(1,N-2),
+                 B <- lists:seq(A+1,N-1),
+                 C <- lists:seq(B+1,N),
+                 A =< B,
+                 B =< C,
+                 A+B+C =< N,
+                 A*A+B*B =:= C*C ].
+
+% I'm shocked at how much memory this wastes!
+% There should be a check to see if a generator has no side-effects, then it should not be allocated again and again
+pyth2() ->
+    [ {A,B,C} || A <- lists:seq(1,125),
+                 B <- lists:seq(1,125),
+                 C <- lists:seq(1,125),
+                 A =< B,
+                 B =< C,
+                 A+B+C =< 125,
+                 A*A+B*B =:= C*C ].
+
+% This performs much better!!! It doesn't call and cons lists:seq N^2 times.
+pyth3(N) ->
+    Lst = lists:seq(1,N),
+    [ {A,B,C} || A <- Lst,
+                 B <- Lst,
+                 C <- Lst,
+                 A =< B,
+                 B =< C,
+                 A+B+C =< N,
+                 A*A+B*B =:= C*C ].
+
+
 
 % -------------------- Tests from rtb-boolean
 

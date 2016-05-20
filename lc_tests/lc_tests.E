@@ -156,88 +156,104 @@ all_tests() ->
       % fun-info: {0,0,'-all_tests/0-fun-1-'}
       fun ses/1,
       [IntArg]},
-     {"pen",
+     {"pyth",
       % fun-info: {0,0,'-all_tests/0-fun-2-'}
+      fun pyth/1,
+      [IntArg div 4]},
+     {"pyth1",
+      % fun-info: {0,0,'-all_tests/0-fun-3-'}
+      fun pyth1/1,
+      [IntArg div 4]},
+     {"pyth2",
+      % fun-info: {0,0,'-all_tests/0-fun-4-'}
+      fun pyth2/0,
+      []},
+     {"pyth3",
+      % fun-info: {0,0,'-all_tests/0-fun-5-'}
+      fun pyth3/1,
+      [IntArg div 4]},
+     {"pen",
+      % fun-info: {0,0,'-all_tests/0-fun-6-'}
       fun pen/1,
       [IntArg]},
      {"pen2",
-      % fun-info: {0,0,'-all_tests/0-fun-3-'}
+      % fun-info: {0,0,'-all_tests/0-fun-7-'}
       fun pen2/1,
       [IntArg]},
      {"pen2_dumb",
-      % fun-info: {0,0,'-all_tests/0-fun-4-'}
+      % fun-info: {0,0,'-all_tests/0-fun-8-'}
       fun pen2_dumb/1,
       [IntArg]},
      {"pen2_dumb_opt",
-      % fun-info: {0,0,'-all_tests/0-fun-5-'}
+      % fun-info: {0,0,'-all_tests/0-fun-9-'}
       fun pen2_dumb_opt/1,
       [IntArg]},
      {"pen2_foldr",
-      % fun-info: {0,0,'-all_tests/0-fun-6-'}
+      % fun-info: {0,0,'-all_tests/0-fun-10-'}
       fun pen2_foldr/1,
       [IntArg]},
      {"pen2_foldl",
-      % fun-info: {0,0,'-all_tests/0-fun-7-'}
+      % fun-info: {0,0,'-all_tests/0-fun-11-'}
       fun pen2_foldl/1,
       [IntArg]},
      {"pen2_listsfuns",
-      % fun-info: {0,0,'-all_tests/0-fun-8-'}
+      % fun-info: {0,0,'-all_tests/0-fun-12-'}
       fun pen2_listsfuns/1,
       [IntArg]},
      {"pen2_mr",
-      % fun-info: {0,0,'-all_tests/0-fun-9-'}
+      % fun-info: {0,0,'-all_tests/0-fun-13-'}
       fun pen2_mr/1,
       [IntArg]},
      {"pen2_lazy",
-      % fun-info: {0,0,'-all_tests/0-fun-10-'}
+      % fun-info: {0,0,'-all_tests/0-fun-14-'}
       fun pen2_lazy/1,
       [IntArg]},
      {"pen2_lazy_cps",
-      % fun-info: {0,0,'-all_tests/0-fun-11-'}
+      % fun-info: {0,0,'-all_tests/0-fun-15-'}
       fun pen2_lazy_cps/1,
       [IntArg]},
      {"single_filter",
-      % fun-info: {0,0,'-all_tests/0-fun-12-'}
+      % fun-info: {0,0,'-all_tests/0-fun-16-'}
       fun single_filter/1,
       [LstArg]},
      {"record_extract",
-      % fun-info: {0,0,'-all_tests/0-fun-13-'}
+      % fun-info: {0,0,'-all_tests/0-fun-17-'}
       fun record_extract/1,
       [RecArg]},
      {"function_param",
-      % fun-info: {0,0,'-all_tests/0-fun-14-'}
+      % fun-info: {0,0,'-all_tests/0-fun-18-'}
       fun function_param_lc/2,
       [param,LstArg]},
      {"sorted_gen",
-      % fun-info: {0,0,'-all_tests/0-fun-15-'}
+      % fun-info: {0,0,'-all_tests/0-fun-19-'}
       fun sorted_gen/1,
       [RecArg]},
      {"make_n",
-      % fun-info: {0,0,'-all_tests/0-fun-16-'}
+      % fun-info: {0,0,'-all_tests/0-fun-20-'}
       fun make_n/2,
       [{param1,param2},IntArg]},
      {"intermediary_list",
-      % fun-info: {0,0,'-all_tests/0-fun-17-'}
+      % fun-info: {0,0,'-all_tests/0-fun-21-'}
       fun intermediary_list/1,
       [IntArg]},
      {"intermediary_list2",
-      % fun-info: {0,0,'-all_tests/0-fun-18-'}
+      % fun-info: {0,0,'-all_tests/0-fun-22-'}
       fun intermediary_list2/1,
       [IntArg]},
      {"intermediary_list3",
-      % fun-info: {0,0,'-all_tests/0-fun-19-'}
+      % fun-info: {0,0,'-all_tests/0-fun-23-'}
       fun intermediary_list3/1,
       [IntArg]},
      {"nested_lc_gen",
-      % fun-info: {0,0,'-all_tests/0-fun-20-'}
+      % fun-info: {0,0,'-all_tests/0-fun-24-'}
       fun nested_lc_gen/1,
       [LstArg]},
      {"nested_lc_gen_opt",
-      % fun-info: {0,0,'-all_tests/0-fun-21-'}
+      % fun-info: {0,0,'-all_tests/0-fun-25-'}
       fun nested_lc_gen_opt/1,
       [LstArg]},
      {"unused",
-      % fun-info: {0,0,'-all_tests/0-fun-22-'}
+      % fun-info: {0,0,'-all_tests/0-fun-26-'}
       fun unused/0,
       []}].
 
@@ -496,6 +512,55 @@ unused() ->
              X <- lists:seq(1, 1000)
         ],
     ok.
+
+pyth(N) ->
+    [ 
+     {A,B,C} ||
+         A <- lists:seq(1, N),
+         B <- lists:seq(1, N),
+         C <- lists:seq(1, N),
+         A =< B,
+         B =< C,
+         A + B + C =< N,
+         A * A + B * B =:= C * C
+    ].
+
+pyth1(N) ->
+    [ 
+     {A,B,C} ||
+         A <- lists:seq(1, N - 2),
+         B <- lists:seq(A + 1, N - 1),
+         C <- lists:seq(B + 1, N),
+         A =< B,
+         B =< C,
+         A + B + C =< N,
+         A * A + B * B =:= C * C
+    ].
+
+pyth2() ->
+    [ 
+     {A,B,C} ||
+         A <- lists:seq(1, 125),
+         B <- lists:seq(1, 125),
+         C <- lists:seq(1, 125),
+         A =< B,
+         B =< C,
+         A + B + C =< 125,
+         A * A + B * B =:= C * C
+    ].
+
+pyth3(N) ->
+    Lst = lists:seq(1, N),
+    [ 
+     {A,B,C} ||
+         A <- Lst,
+         B <- Lst,
+         C <- Lst,
+         A =< B,
+         B =< C,
+         A + B + C =< N,
+         A * A + B * B =:= C * C
+    ].
 
 single_filter(N) when is_list(N) ->
     [ 
